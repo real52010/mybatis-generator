@@ -35,6 +35,9 @@ public class MainUI extends Application {
 	}
 
 	public static void main(String[] args) {
+//		 String pattern = "ac.*";
+//		 System.out.println(pattern);
+//		System.out.println( "acrr".matches(pattern) );
 		String version = System.getProperty("java.version");
 		if (Integer.parseInt(version.substring(2, 3)) >= 8 && Integer.parseInt(version.substring(6)) >= 60) {
 			launch(args);

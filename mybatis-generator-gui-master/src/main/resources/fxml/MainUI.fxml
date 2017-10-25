@@ -38,10 +38,15 @@
     <center>
         <SplitPane dividerPositions="0.15">
             <items>
-                <AnchorPane maxWidth="500.0" minWidth="100.0" prefHeight="618.0" prefWidth="200.0">
-                    <children>
-                        <TreeView fx:id="leftDBTree" layoutX="-14.0" maxWidth="0.0" prefHeight="545.0" prefWidth="126.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                    </children>
+                <AnchorPane maxWidth="500.0" minWidth="200.0" prefHeight="618.0" prefWidth="200.0">
+               		 <children>
+                  		  <Label layoutX="8.0" layoutY="8.0" style="-fx-font: NORMAL 12 Tahoma;" text="Filter:" />
+                  		        <TextField   fx:id="filterTableField" prefHeight="27.0" onKeyReleased="#filterTableName" prefWidth="348.0" promptText="要查找的表名" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="2.0">
+                                                  
+                                </TextField>
+                                              
+                          <TreeView fx:id="leftDBTree" layoutX="-14.0" maxWidth="0.0" prefHeight="545.0" prefWidth="180.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0" />
+                   	 </children>
                 </AnchorPane>
             <AnchorPane minWidth="400.0">
                <children>
