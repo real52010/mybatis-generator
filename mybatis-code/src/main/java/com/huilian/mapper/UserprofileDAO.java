@@ -5,12 +5,12 @@ import com.huilian.dao.UserprofileExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface UserprofileMapper {
+public interface UserprofileDAO {
     long countByExample(UserprofileExample example);
 
     int deleteByExample(UserprofileExample example);
 
-    int deleteByPrimaryKey(String userid);
+    int deleteByPrimaryKey(Long id);
 
     int insert(Userprofile record);
 
@@ -18,7 +18,7 @@ public interface UserprofileMapper {
 
     List<Userprofile> selectByExample(UserprofileExample example);
 
-    Userprofile selectByPrimaryKey(String userid);
+    Userprofile selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(@Param("record") Userprofile record, @Param("example") UserprofileExample example);
 

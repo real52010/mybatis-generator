@@ -1,380 +1,630 @@
-package com.huilian.dao;
+/* https://github.com/real52010/mybatis-generator.git */
+package com.huilian.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-/**
- * @author 
- */
-public class Userprofile implements Serializable {
-    private static final long serialVersionUID = 8153373614423905037L;
+public class UserProfile implements Serializable {
+    //串行版本ID
+    private static final long serialVersionUID = -3855577294529131146L;
 
-    /**
+    /** 
      * id
-     */
+     */ 
     private Long id;
 
-    /**
+    /** 
      * 用户ID UUID
-     */
+     */ 
     private String userid;
 
     private String phonenum;
 
-    /**
+    /** 
      * 密码
-     */
+     */ 
     private String password;
 
-    /**
+    /** 
      * 用户状态
             1 正常
             2 锁定
-     */
+     * 默认：1
+     */ 
     private String status;
 
-    /**
+    /** 
      * 在线状态
             1 在线
             2离线
-     */
+     */ 
     private String onlinestatus;
 
-    /**
+    /** 
      * 在线状态更新时间
-     */
+     */ 
     private Date onlinestatusupdate;
 
-    /**
+    /** 
      * 注册时间
-     */
+     */ 
     private Date regdate;
 
-    /**
+    /** 
      * 帐户资金
-     */
+     */ 
     private BigDecimal amount;
 
-    /**
+    /** 
      * 账户冻结资金
-     */
+     */ 
     private BigDecimal frozenamount;
 
-    /**
+    /** 
      * 备注
-     */
+     */ 
     private String remark;
 
     private Long hlcId;
 
     private Short dataSource;
 
-    /**
+    /** 
      * 用户来源(0 线上注册 1 线下刷卡 2 汇理财用户 3 后台管理员创建  )
-     */
+     * 默认：0
+     */ 
     private String source;
 
-    /**
+    /** 
      * 推荐人
-     */
+     */ 
     private String referee;
 
     private String usrchannel;
 
-    /**
+    /** 
      * 渠道来源编码id
-     */
+     */ 
     private String qqopenid;
 
-    /**
+    /** 
      * 成为C端经纪人时间
-     */
+     */ 
     private Date bectime;
 
-    /**
+    /** 
      * 更新时间
-     */
+     */ 
     private Date updatetime;
 
-    /**
+    /** 
      * 用户标签，C:C端经纪人
-     */
+     */ 
     private String usertag;
 
-    /**
+    /** 
      * 用户联系方式
-     */
+     */ 
     private String contactway;
 
-    /**
+    /** 
      * 顺风openid
-     */
+     */ 
     private String sfopenid;
 
-    /**
+    /** 
      * 顺风channelNo
-     */
+     */ 
     private String sfchannelno;
 
-    /**
+    /** 
      * 上次登录时间
-     */
+     */ 
     private Date lastlogintime;
 
-    /**
+    /** 
      * 密码修改延期次数
-     */
+     * 默认：1
+     */ 
     private Integer pwdmodifydelay;
 
-    /**
+    /** 
      * 密码修改时间
-     */
+     */ 
     private Date pwdmodifytime;
 
-    /**
+    /** 
      * 统一支付密码
-     */
+     */ 
     private String dealpwd;
 
-    /**
+    /** 
      * 大数据数据来源
-     */
+     */ 
     private String bigdatasource;
 
-    /**
+    /** 
      * 用户大数据一级渠道标记导入日期
-     */
+     */ 
     private String bigdatasourcetime;
 
+    /** 
+     * 获取 id userprofile.id
+     * @return id
+     */
     public Long getId() {
         return id;
     }
 
+    /** 
+     * 设置 id userprofile.id
+     * @param id id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /** 
+     * 获取 用户ID UUID userprofile.UserID
+     * @return 用户ID UUID
+     */
     public String getUserid() {
         return userid;
     }
 
+    /** 
+     * 设置 用户ID UUID userprofile.UserID
+     * @param userid 用户ID UUID
+     */
     public void setUserid(String userid) {
         this.userid = userid;
     }
 
+    /** 
+     * 获取 userprofile.PhoneNum
+     * @return userprofile.PhoneNum
+     */
     public String getPhonenum() {
         return phonenum;
     }
 
+    /** 
+     * 设置 userprofile.PhoneNum
+     * @param phonenum userprofile.PhoneNum
+     */
     public void setPhonenum(String phonenum) {
         this.phonenum = phonenum;
     }
 
+    /** 
+     * 获取 密码 userprofile.Password
+     * @return 密码
+     */
     public String getPassword() {
         return password;
     }
 
+    /** 
+     * 设置 密码 userprofile.Password
+     * @param password 密码
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /** 
+     * 获取 用户状态
+            1 正常
+            2 锁定 userprofile.Status
+     * @return 用户状态
+            1 正常
+            2 锁定
+     */
     public String getStatus() {
         return status;
     }
 
+    /** 
+     * 设置 用户状态
+            1 正常
+            2 锁定 userprofile.Status
+     * @param status 用户状态
+            1 正常
+            2 锁定
+     */
     public void setStatus(String status) {
         this.status = status;
     }
 
+    /** 
+     * 获取 在线状态
+            1 在线
+            2离线 userprofile.OnlineStatus
+     * @return 在线状态
+            1 在线
+            2离线
+     */
     public String getOnlinestatus() {
         return onlinestatus;
     }
 
+    /** 
+     * 设置 在线状态
+            1 在线
+            2离线 userprofile.OnlineStatus
+     * @param onlinestatus 在线状态
+            1 在线
+            2离线
+     */
     public void setOnlinestatus(String onlinestatus) {
         this.onlinestatus = onlinestatus;
     }
 
+    /** 
+     * 获取 在线状态更新时间 userprofile.OnlineStatusUpdate
+     * @return 在线状态更新时间
+     */
     public Date getOnlinestatusupdate() {
         return onlinestatusupdate;
     }
 
+    /** 
+     * 设置 在线状态更新时间 userprofile.OnlineStatusUpdate
+     * @param onlinestatusupdate 在线状态更新时间
+     */
     public void setOnlinestatusupdate(Date onlinestatusupdate) {
         this.onlinestatusupdate = onlinestatusupdate;
     }
 
+    /** 
+     * 获取 注册时间 userprofile.RegDate
+     * @return 注册时间
+     */
     public Date getRegdate() {
         return regdate;
     }
 
+    /** 
+     * 设置 注册时间 userprofile.RegDate
+     * @param regdate 注册时间
+     */
     public void setRegdate(Date regdate) {
         this.regdate = regdate;
     }
 
+    /** 
+     * 获取 帐户资金 userprofile.Amount
+     * @return 帐户资金
+     */
     public BigDecimal getAmount() {
         return amount;
     }
 
+    /** 
+     * 设置 帐户资金 userprofile.Amount
+     * @param amount 帐户资金
+     */
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
+    /** 
+     * 获取 账户冻结资金 userprofile.FrozenAmount
+     * @return 账户冻结资金
+     */
     public BigDecimal getFrozenamount() {
         return frozenamount;
     }
 
+    /** 
+     * 设置 账户冻结资金 userprofile.FrozenAmount
+     * @param frozenamount 账户冻结资金
+     */
     public void setFrozenamount(BigDecimal frozenamount) {
         this.frozenamount = frozenamount;
     }
 
+    /** 
+     * 获取 备注 userprofile.Remark
+     * @return 备注
+     */
     public String getRemark() {
         return remark;
     }
 
+    /** 
+     * 设置 备注 userprofile.Remark
+     * @param remark 备注
+     */
     public void setRemark(String remark) {
         this.remark = remark;
     }
 
+    /** 
+     * 获取 userprofile.hlc_id
+     * @return userprofile.hlc_id
+     */
     public Long getHlcId() {
         return hlcId;
     }
 
+    /** 
+     * 设置 userprofile.hlc_id
+     * @param hlcId userprofile.hlc_id
+     */
     public void setHlcId(Long hlcId) {
         this.hlcId = hlcId;
     }
 
+    /** 
+     * 获取 userprofile.data_source
+     * @return userprofile.data_source
+     */
     public Short getDataSource() {
         return dataSource;
     }
 
+    /** 
+     * 设置 userprofile.data_source
+     * @param dataSource userprofile.data_source
+     */
     public void setDataSource(Short dataSource) {
         this.dataSource = dataSource;
     }
 
+    /** 
+     * 获取 用户来源(0 线上注册 1 线下刷卡 2 汇理财用户 3 后台管理员创建  ) userprofile.Source
+     * @return 用户来源(0 线上注册 1 线下刷卡 2 汇理财用户 3 后台管理员创建  )
+     */
     public String getSource() {
         return source;
     }
 
+    /** 
+     * 设置 用户来源(0 线上注册 1 线下刷卡 2 汇理财用户 3 后台管理员创建  ) userprofile.Source
+     * @param source 用户来源(0 线上注册 1 线下刷卡 2 汇理财用户 3 后台管理员创建  )
+     */
     public void setSource(String source) {
         this.source = source;
     }
 
+    /** 
+     * 获取 推荐人 userprofile.referee
+     * @return 推荐人
+     */
     public String getReferee() {
         return referee;
     }
 
+    /** 
+     * 设置 推荐人 userprofile.referee
+     * @param referee 推荐人
+     */
     public void setReferee(String referee) {
         this.referee = referee;
     }
 
+    /** 
+     * 获取 userprofile.usrChannel
+     * @return userprofile.usrChannel
+     */
     public String getUsrchannel() {
         return usrchannel;
     }
 
+    /** 
+     * 设置 userprofile.usrChannel
+     * @param usrchannel userprofile.usrChannel
+     */
     public void setUsrchannel(String usrchannel) {
         this.usrchannel = usrchannel;
     }
 
+    /** 
+     * 获取 渠道来源编码id userprofile.qqOpenId
+     * @return 渠道来源编码id
+     */
     public String getQqopenid() {
         return qqopenid;
     }
 
+    /** 
+     * 设置 渠道来源编码id userprofile.qqOpenId
+     * @param qqopenid 渠道来源编码id
+     */
     public void setQqopenid(String qqopenid) {
         this.qqopenid = qqopenid;
     }
 
+    /** 
+     * 获取 成为C端经纪人时间 userprofile.beCTime
+     * @return 成为C端经纪人时间
+     */
     public Date getBectime() {
         return bectime;
     }
 
+    /** 
+     * 设置 成为C端经纪人时间 userprofile.beCTime
+     * @param bectime 成为C端经纪人时间
+     */
     public void setBectime(Date bectime) {
         this.bectime = bectime;
     }
 
+    /** 
+     * 获取 更新时间 userprofile.updateTime
+     * @return 更新时间
+     */
     public Date getUpdatetime() {
         return updatetime;
     }
 
+    /** 
+     * 设置 更新时间 userprofile.updateTime
+     * @param updatetime 更新时间
+     */
     public void setUpdatetime(Date updatetime) {
         this.updatetime = updatetime;
     }
 
+    /** 
+     * 获取 用户标签，C:C端经纪人 userprofile.userTag
+     * @return 用户标签，C:C端经纪人
+     */
     public String getUsertag() {
         return usertag;
     }
 
+    /** 
+     * 设置 用户标签，C:C端经纪人 userprofile.userTag
+     * @param usertag 用户标签，C:C端经纪人
+     */
     public void setUsertag(String usertag) {
         this.usertag = usertag;
     }
 
+    /** 
+     * 获取 用户联系方式 userprofile.contactway
+     * @return 用户联系方式
+     */
     public String getContactway() {
         return contactway;
     }
 
+    /** 
+     * 设置 用户联系方式 userprofile.contactway
+     * @param contactway 用户联系方式
+     */
     public void setContactway(String contactway) {
         this.contactway = contactway;
     }
 
+    /** 
+     * 获取 顺风openid userprofile.sfOpenId
+     * @return 顺风openid
+     */
     public String getSfopenid() {
         return sfopenid;
     }
 
+    /** 
+     * 设置 顺风openid userprofile.sfOpenId
+     * @param sfopenid 顺风openid
+     */
     public void setSfopenid(String sfopenid) {
         this.sfopenid = sfopenid;
     }
 
+    /** 
+     * 获取 顺风channelNo userprofile.sfChannelNo
+     * @return 顺风channelNo
+     */
     public String getSfchannelno() {
         return sfchannelno;
     }
 
+    /** 
+     * 设置 顺风channelNo userprofile.sfChannelNo
+     * @param sfchannelno 顺风channelNo
+     */
     public void setSfchannelno(String sfchannelno) {
         this.sfchannelno = sfchannelno;
     }
 
+    /** 
+     * 获取 上次登录时间 userprofile.LastLoginTime
+     * @return 上次登录时间
+     */
     public Date getLastlogintime() {
         return lastlogintime;
     }
 
+    /** 
+     * 设置 上次登录时间 userprofile.LastLoginTime
+     * @param lastlogintime 上次登录时间
+     */
     public void setLastlogintime(Date lastlogintime) {
         this.lastlogintime = lastlogintime;
     }
 
+    /** 
+     * 获取 密码修改延期次数 userprofile.pwdModifyDelay
+     * @return 密码修改延期次数
+     */
     public Integer getPwdmodifydelay() {
         return pwdmodifydelay;
     }
 
+    /** 
+     * 设置 密码修改延期次数 userprofile.pwdModifyDelay
+     * @param pwdmodifydelay 密码修改延期次数
+     */
     public void setPwdmodifydelay(Integer pwdmodifydelay) {
         this.pwdmodifydelay = pwdmodifydelay;
     }
 
+    /** 
+     * 获取 密码修改时间 userprofile.pwdModifyTime
+     * @return 密码修改时间
+     */
     public Date getPwdmodifytime() {
         return pwdmodifytime;
     }
 
+    /** 
+     * 设置 密码修改时间 userprofile.pwdModifyTime
+     * @param pwdmodifytime 密码修改时间
+     */
     public void setPwdmodifytime(Date pwdmodifytime) {
         this.pwdmodifytime = pwdmodifytime;
     }
 
+    /** 
+     * 获取 统一支付密码 userprofile.dealpwd
+     * @return 统一支付密码
+     */
     public String getDealpwd() {
         return dealpwd;
     }
 
+    /** 
+     * 设置 统一支付密码 userprofile.dealpwd
+     * @param dealpwd 统一支付密码
+     */
     public void setDealpwd(String dealpwd) {
         this.dealpwd = dealpwd;
     }
 
+    /** 
+     * 获取 大数据数据来源 userprofile.bigdataSource
+     * @return 大数据数据来源
+     */
     public String getBigdatasource() {
         return bigdatasource;
     }
 
+    /** 
+     * 设置 大数据数据来源 userprofile.bigdataSource
+     * @param bigdatasource 大数据数据来源
+     */
     public void setBigdatasource(String bigdatasource) {
         this.bigdatasource = bigdatasource;
     }
 
+    /** 
+     * 获取 用户大数据一级渠道标记导入日期 userprofile.bigdataSourceTime
+     * @return 用户大数据一级渠道标记导入日期
+     */
     public String getBigdatasourcetime() {
         return bigdatasourcetime;
     }
 
+    /** 
+     * 设置 用户大数据一级渠道标记导入日期 userprofile.bigdataSourceTime
+     * @param bigdatasourcetime 用户大数据一级渠道标记导入日期
+     */
     public void setBigdatasourcetime(String bigdatasourcetime) {
         this.bigdatasourcetime = bigdatasourcetime;
     }
@@ -390,7 +640,7 @@ public class Userprofile implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        Userprofile other = (Userprofile) that;
+        UserProfile other = (UserProfile) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getUserid() == null ? other.getUserid() == null : this.getUserid().equals(other.getUserid()))
             && (this.getPhonenum() == null ? other.getPhonenum() == null : this.getPhonenum().equals(other.getPhonenum()))

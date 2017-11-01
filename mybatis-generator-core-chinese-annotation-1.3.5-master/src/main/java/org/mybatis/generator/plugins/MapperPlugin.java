@@ -50,7 +50,7 @@ public class MapperPlugin extends PluginAdapter {
         interfaceType = new FullyQualifiedJavaType(interfacePack + "." + interfaceName);
         return true;
     }
-
+    
     /**
      * 生成的Mapper接口
      *
@@ -83,6 +83,7 @@ public class MapperPlugin extends PluginAdapter {
             interfaze.addImportedType(exampleType);
 
             if (introspectedTable.getPrimaryKeyColumns() == null) {
+            	
                 interfaze.addImportedType(new FullyQualifiedJavaType("该表没设置主键"));
             } else {
                 interfaze.addImportedType(introspectedTable.getPrimaryKeyColumns().get(0).getFullyQualifiedJavaType());

@@ -1,56 +1,91 @@
-package com.huilian.dao;
+/* https://github.com/orange1438 */
+package orange1438.entity;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class UserprofileExample {
+/**
+ * 本文件由工具类自居动生成 https://github.com/real52010/mybatis-generator.git
+ * @author orange1438
+ * date:2017/10/30 20:26
+ */
+public class UserCriteria {
+    // 排序字段
     protected String orderByClause;
 
+    // 过滤重复数据
     protected boolean distinct;
 
+    // 查询条件
     protected List<Criteria> oredCriteria;
 
-    private Integer limit;
-
-    private Integer offset;
-
-    public UserprofileExample() {
+    /** 
+     * 构造查询条件
+     */
+    public final UserCriteria() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
-    public void setOrderByClause(String orderByClause) {
+    /** 
+     * 设置排序字段
+     * @param orderByClause 排序字段
+     */
+    public final void setOrderByClause(String orderByClause) {
         this.orderByClause = orderByClause;
     }
 
-    public String getOrderByClause() {
+    /** 
+     * 获取排序字段
+     */
+    public final String getOrderByClause() {
         return orderByClause;
     }
 
-    public void setDistinct(boolean distinct) {
+    /** 
+     * 设置过滤重复数据
+     * @param distinct 是否过滤重复数据
+     */
+    public final void setDistinct(boolean distinct) {
         this.distinct = distinct;
     }
 
-    public boolean isDistinct() {
+    /** 
+     * 是否过滤重复数据
+     */
+    public final boolean isDistinct() {
         return distinct;
     }
 
-    public List<Criteria> getOredCriteria() {
+    /** 
+     * 获取当前的查询条件实例
+     */
+    public final List<Criteria> getOredCriteria() {
         return oredCriteria;
     }
 
-    public void or(Criteria criteria) {
+    /** 
+     * 增加或者的查询条件,用于构建或者查询
+     * @param criteria 过滤条件实例
+     */
+    public final void or(Criteria criteria) {
         oredCriteria.add(criteria);
     }
 
-    public Criteria or() {
+    /** 
+     * 创建一个新的或者查询条件
+     */
+    public final Criteria or() {
         Criteria criteria = createCriteriaInternal();
         oredCriteria.add(criteria);
         return criteria;
     }
 
-    public Criteria createCriteria() {
+    /** 
+     * 创建一个查询条件
+     */
+    public final Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
         if (oredCriteria.size() == 0) {
             oredCriteria.add(criteria);
@@ -58,33 +93,26 @@ public class UserprofileExample {
         return criteria;
     }
 
-    protected Criteria createCriteriaInternal() {
+    /** 
+     * 内部构建查询条件对象
+     */
+    protected final Criteria createCriteriaInternal() {
         Criteria criteria = new Criteria();
         return criteria;
     }
 
-    public void clear() {
+    /** 
+     * 清除查询条件
+     */
+    public final void clear() {
         oredCriteria.clear();
         orderByClause = null;
         distinct = false;
     }
 
-    public void setLimit(Integer limit) {
-        this.limit = limit;
-    }
-
-    public Integer getLimit() {
-        return limit;
-    }
-
-    public void setOffset(Integer offset) {
-        this.offset = offset;
-    }
-
-    public Integer getOffset() {
-        return offset;
-    }
-
+    /**
+     * 用户帐号信息userprofile的基本动态SQL对象.
+     */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
 
@@ -2038,6 +2066,7 @@ public class UserprofileExample {
     }
 
     /**
+     * 用户帐号信息userprofile的映射实体
      */
     public static class Criteria extends GeneratedCriteria {
 
@@ -2046,6 +2075,9 @@ public class UserprofileExample {
         }
     }
 
+    /**
+     * 用户帐号信息userprofile的动态SQL对象.
+     */
     public static class Criterion {
         private String condition;
 

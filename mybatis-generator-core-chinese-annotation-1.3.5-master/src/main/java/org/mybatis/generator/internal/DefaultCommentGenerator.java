@@ -188,7 +188,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
             return;
         }
         javaElement.addJavaDocLine("/**");
-        javaElement.addJavaDocLine(" * 本文件由 https://github.com/orange1438/mybatis-generator-core-chinese-annotation1.3.5-chinese-annotation 自动生成");
+        javaElement.addJavaDocLine(" * 本文件由工具类自居动生成 https://github.com/real52010/mybatis-generator.git");
         //    javaElement.addJavaDocLine(" * 本文件由 橙子 自动生成");
         addJavadocTag(javaElement, false);
         javaElement.addJavaDocLine(" */");

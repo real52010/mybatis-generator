@@ -1,0 +1,782 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huilian.dao.UserprofileDAO">
+  <resultMap id="BaseResultMap" type="com.huilian.model.Userprofile">
+    <id column="UserID" jdbcType="VARCHAR" property="userid" />
+    <result column="PhoneNum" jdbcType="VARCHAR" property="phonenum" />
+    <result column="Password" jdbcType="VARCHAR" property="password" />
+    <result column="Status" jdbcType="VARCHAR" property="status" />
+    <result column="OnlineStatus" jdbcType="VARCHAR" property="onlinestatus" />
+    <result column="OnlineStatusUpdate" jdbcType="TIMESTAMP" property="onlinestatusupdate" />
+    <result column="RegDate" jdbcType="TIMESTAMP" property="regdate" />
+    <result column="Amount" jdbcType="DECIMAL" property="amount" />
+    <result column="FrozenAmount" jdbcType="DECIMAL" property="frozenamount" />
+    <result column="Remark" jdbcType="VARCHAR" property="remark" />
+    <result column="hlc_id" jdbcType="BIGINT" property="hlcId" />
+    <result column="data_source" jdbcType="SMALLINT" property="dataSource" />
+    <result column="Source" jdbcType="VARCHAR" property="source" />
+    <result column="referee" jdbcType="VARCHAR" property="referee" />
+    <result column="usrChannel" jdbcType="VARCHAR" property="usrchannel" />
+    <result column="qqOpenId" jdbcType="VARCHAR" property="qqopenid" />
+    <result column="beCTime" jdbcType="TIMESTAMP" property="bectime" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="userTag" jdbcType="VARCHAR" property="usertag" />
+    <result column="contactway" jdbcType="VARCHAR" property="contactway" />
+    <result column="sfOpenId" jdbcType="VARCHAR" property="sfopenid" />
+    <result column="sfChannelNo" jdbcType="VARCHAR" property="sfchannelno" />
+    <result column="LastLoginTime" jdbcType="TIMESTAMP" property="lastlogintime" />
+    <result column="pwdModifyDelay" jdbcType="INTEGER" property="pwdmodifydelay" />
+    <result column="pwdModifyTime" jdbcType="TIMESTAMP" property="pwdmodifytime" />
+    <result column="dealpwd" jdbcType="VARCHAR" property="dealpwd" />
+    <result column="bigdataSource" jdbcType="VARCHAR" property="bigdatasource" />
+    <result column="bigdataSourceTime" jdbcType="VARCHAR" property="bigdatasourcetime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    UserID, PhoneNum, Password, Status, OnlineStatus, OnlineStatusUpdate, RegDate, Amount, 
+    FrozenAmount, Remark, hlc_id, data_source, Source, referee, usrChannel, qqOpenId, 
+    beCTime, updateTime, userTag, contactway, sfOpenId, sfChannelNo, LastLoginTime, pwdModifyDelay, 
+    pwdModifyTime, dealpwd, bigdataSource, bigdataSourceTime
+  </sql>
+  <select id="selectByExample" parameterType="com.huilian.model.UserprofileExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from userprofile
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from userprofile
+    where UserID = #{userid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from userprofile
+    where UserID = #{userid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.huilian.model.UserprofileExample">
+    delete from userprofile
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.huilian.model.Userprofile">
+    insert into userprofile (UserID, PhoneNum, Password, 
+      Status, OnlineStatus, OnlineStatusUpdate, 
+      RegDate, Amount, FrozenAmount, 
+      Remark, hlc_id, data_source, 
+      Source, referee, usrChannel, 
+      qqOpenId, beCTime, updateTime, 
+      userTag, contactway, sfOpenId, 
+      sfChannelNo, LastLoginTime, pwdModifyDelay, 
+      pwdModifyTime, dealpwd, bigdataSource, 
+      bigdataSourceTime)
+    values (#{userid,jdbcType=VARCHAR}, #{phonenum,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{onlinestatus,jdbcType=VARCHAR}, #{onlinestatusupdate,jdbcType=TIMESTAMP}, 
+      #{regdate,jdbcType=TIMESTAMP}, #{amount,jdbcType=DECIMAL}, #{frozenamount,jdbcType=DECIMAL}, 
+      #{remark,jdbcType=VARCHAR}, #{hlcId,jdbcType=BIGINT}, #{dataSource,jdbcType=SMALLINT}, 
+      #{source,jdbcType=VARCHAR}, #{referee,jdbcType=VARCHAR}, #{usrchannel,jdbcType=VARCHAR}, 
+      #{qqopenid,jdbcType=VARCHAR}, #{bectime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, 
+      #{usertag,jdbcType=VARCHAR}, #{contactway,jdbcType=VARCHAR}, #{sfopenid,jdbcType=VARCHAR}, 
+      #{sfchannelno,jdbcType=VARCHAR}, #{lastlogintime,jdbcType=TIMESTAMP}, #{pwdmodifydelay,jdbcType=INTEGER}, 
+      #{pwdmodifytime,jdbcType=TIMESTAMP}, #{dealpwd,jdbcType=VARCHAR}, #{bigdatasource,jdbcType=VARCHAR}, 
+      #{bigdatasourcetime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.huilian.model.Userprofile">
+    insert into userprofile
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        UserID,
+      </if>
+      <if test="phonenum != null">
+        PhoneNum,
+      </if>
+      <if test="password != null">
+        Password,
+      </if>
+      <if test="status != null">
+        Status,
+      </if>
+      <if test="onlinestatus != null">
+        OnlineStatus,
+      </if>
+      <if test="onlinestatusupdate != null">
+        OnlineStatusUpdate,
+      </if>
+      <if test="regdate != null">
+        RegDate,
+      </if>
+      <if test="amount != null">
+        Amount,
+      </if>
+      <if test="frozenamount != null">
+        FrozenAmount,
+      </if>
+      <if test="remark != null">
+        Remark,
+      </if>
+      <if test="hlcId != null">
+        hlc_id,
+      </if>
+      <if test="dataSource != null">
+        data_source,
+      </if>
+      <if test="source != null">
+        Source,
+      </if>
+      <if test="referee != null">
+        referee,
+      </if>
+      <if test="usrchannel != null">
+        usrChannel,
+      </if>
+      <if test="qqopenid != null">
+        qqOpenId,
+      </if>
+      <if test="bectime != null">
+        beCTime,
+      </if>
+      <if test="updatetime != null">
+        updateTime,
+      </if>
+      <if test="usertag != null">
+        userTag,
+      </if>
+      <if test="contactway != null">
+        contactway,
+      </if>
+      <if test="sfopenid != null">
+        sfOpenId,
+      </if>
+      <if test="sfchannelno != null">
+        sfChannelNo,
+      </if>
+      <if test="lastlogintime != null">
+        LastLoginTime,
+      </if>
+      <if test="pwdmodifydelay != null">
+        pwdModifyDelay,
+      </if>
+      <if test="pwdmodifytime != null">
+        pwdModifyTime,
+      </if>
+      <if test="dealpwd != null">
+        dealpwd,
+      </if>
+      <if test="bigdatasource != null">
+        bigdataSource,
+      </if>
+      <if test="bigdatasourcetime != null">
+        bigdataSourceTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenum != null">
+        #{phonenum,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="onlinestatus != null">
+        #{onlinestatus,jdbcType=VARCHAR},
+      </if>
+      <if test="onlinestatusupdate != null">
+        #{onlinestatusupdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="regdate != null">
+        #{regdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="frozenamount != null">
+        #{frozenamount,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="hlcId != null">
+        #{hlcId,jdbcType=BIGINT},
+      </if>
+      <if test="dataSource != null">
+        #{dataSource,jdbcType=SMALLINT},
+      </if>
+      <if test="source != null">
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="referee != null">
+        #{referee,jdbcType=VARCHAR},
+      </if>
+      <if test="usrchannel != null">
+        #{usrchannel,jdbcType=VARCHAR},
+      </if>
+      <if test="qqopenid != null">
+        #{qqopenid,jdbcType=VARCHAR},
+      </if>
+      <if test="bectime != null">
+        #{bectime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usertag != null">
+        #{usertag,jdbcType=VARCHAR},
+      </if>
+      <if test="contactway != null">
+        #{contactway,jdbcType=VARCHAR},
+      </if>
+      <if test="sfopenid != null">
+        #{sfopenid,jdbcType=VARCHAR},
+      </if>
+      <if test="sfchannelno != null">
+        #{sfchannelno,jdbcType=VARCHAR},
+      </if>
+      <if test="lastlogintime != null">
+        #{lastlogintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pwdmodifydelay != null">
+        #{pwdmodifydelay,jdbcType=INTEGER},
+      </if>
+      <if test="pwdmodifytime != null">
+        #{pwdmodifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dealpwd != null">
+        #{dealpwd,jdbcType=VARCHAR},
+      </if>
+      <if test="bigdatasource != null">
+        #{bigdatasource,jdbcType=VARCHAR},
+      </if>
+      <if test="bigdatasourcetime != null">
+        #{bigdatasourcetime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into userprofile (UserID, PhoneNum, Password, 
+      Status, OnlineStatus, OnlineStatusUpdate, 
+      RegDate, Amount, FrozenAmount, 
+      Remark, hlc_id, data_source, 
+      Source, referee, usrChannel, 
+      qqOpenId, beCTime, updateTime, 
+      userTag, contactway, sfOpenId, 
+      sfChannelNo, LastLoginTime, 
+      pwdModifyDelay, pwdModifyTime, 
+      dealpwd, bigdataSource, bigdataSourceTime
+      )
+    values 
+    <foreach collection="list" index="index" item="item" separator=",">
+      (#{item.userid,jdbcType=VARCHAR}, #{item.phonenum,jdbcType=VARCHAR}, #{item.password,jdbcType=VARCHAR}, 
+        #{item.status,jdbcType=VARCHAR}, #{item.onlinestatus,jdbcType=VARCHAR}, #{item.onlinestatusupdate,jdbcType=TIMESTAMP}, 
+        #{item.regdate,jdbcType=TIMESTAMP}, #{item.amount,jdbcType=DECIMAL}, #{item.frozenamount,jdbcType=DECIMAL}, 
+        #{item.remark,jdbcType=VARCHAR}, #{item.hlcId,jdbcType=BIGINT}, #{item.dataSource,jdbcType=SMALLINT}, 
+        #{item.source,jdbcType=VARCHAR}, #{item.referee,jdbcType=VARCHAR}, #{item.usrchannel,jdbcType=VARCHAR}, 
+        #{item.qqopenid,jdbcType=VARCHAR}, #{item.bectime,jdbcType=TIMESTAMP}, #{item.updatetime,jdbcType=TIMESTAMP}, 
+        #{item.usertag,jdbcType=VARCHAR}, #{item.contactway,jdbcType=VARCHAR}, #{item.sfopenid,jdbcType=VARCHAR}, 
+        #{item.sfchannelno,jdbcType=VARCHAR}, #{item.lastlogintime,jdbcType=TIMESTAMP}, 
+        #{item.pwdmodifydelay,jdbcType=INTEGER}, #{item.pwdmodifytime,jdbcType=TIMESTAMP}, 
+        #{item.dealpwd,jdbcType=VARCHAR}, #{item.bigdatasource,jdbcType=VARCHAR}, #{item.bigdatasourcetime,jdbcType=VARCHAR}
+        )
+    </foreach>
+  </insert>
+  <insert id="insertBatchSelective" parameterType="java.util.List">
+    insert into userprofile
+    (UserID, PhoneNum, Password, Status, OnlineStatus, OnlineStatusUpdate, RegDate, Amount, 
+      FrozenAmount, Remark, hlc_id, data_source, Source, referee, usrChannel, qqOpenId, 
+      beCTime, updateTime, userTag, contactway, sfOpenId, sfChannelNo, LastLoginTime, 
+      pwdModifyDelay, pwdModifyTime, dealpwd, bigdataSource, bigdataSourceTime)
+    values 
+    <foreach collection="list" index="index" item="item" separator=",">
+      <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="item.userid != null">
+          #{item.userid,jdbcType=VARCHAR},
+        </if>
+        <if test="item.userid == null">
+          NULL,
+        </if>
+        <if test="item.phonenum != null">
+          #{item.phonenum,jdbcType=VARCHAR},
+        </if>
+        <if test="item.phonenum == null">
+          NULL,
+        </if>
+        <if test="item.password != null">
+          #{item.password,jdbcType=VARCHAR},
+        </if>
+        <if test="item.password == null">
+          NULL,
+        </if>
+        <if test="item.status != null">
+          #{item.status,jdbcType=VARCHAR},
+        </if>
+        <if test="item.status == null">
+          NULL,
+        </if>
+        <if test="item.onlinestatus != null">
+          #{item.onlinestatus,jdbcType=VARCHAR},
+        </if>
+        <if test="item.onlinestatus == null">
+          NULL,
+        </if>
+        <if test="item.onlinestatusupdate != null">
+          #{item.onlinestatusupdate,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.onlinestatusupdate == null">
+          NULL,
+        </if>
+        <if test="item.regdate != null">
+          #{item.regdate,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.regdate == null">
+          NULL,
+        </if>
+        <if test="item.amount != null">
+          #{item.amount,jdbcType=DECIMAL},
+        </if>
+        <if test="item.amount == null">
+          NULL,
+        </if>
+        <if test="item.frozenamount != null">
+          #{item.frozenamount,jdbcType=DECIMAL},
+        </if>
+        <if test="item.frozenamount == null">
+          NULL,
+        </if>
+        <if test="item.remark != null">
+          #{item.remark,jdbcType=VARCHAR},
+        </if>
+        <if test="item.remark == null">
+          NULL,
+        </if>
+        <if test="item.hlcId != null">
+          #{item.hlcId,jdbcType=BIGINT},
+        </if>
+        <if test="item.hlcId == null">
+          NULL,
+        </if>
+        <if test="item.dataSource != null">
+          #{item.dataSource,jdbcType=SMALLINT},
+        </if>
+        <if test="item.dataSource == null">
+          NULL,
+        </if>
+        <if test="item.source != null">
+          #{item.source,jdbcType=VARCHAR},
+        </if>
+        <if test="item.source == null">
+          NULL,
+        </if>
+        <if test="item.referee != null">
+          #{item.referee,jdbcType=VARCHAR},
+        </if>
+        <if test="item.referee == null">
+          NULL,
+        </if>
+        <if test="item.usrchannel != null">
+          #{item.usrchannel,jdbcType=VARCHAR},
+        </if>
+        <if test="item.usrchannel == null">
+          NULL,
+        </if>
+        <if test="item.qqopenid != null">
+          #{item.qqopenid,jdbcType=VARCHAR},
+        </if>
+        <if test="item.qqopenid == null">
+          NULL,
+        </if>
+        <if test="item.bectime != null">
+          #{item.bectime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.bectime == null">
+          NULL,
+        </if>
+        <if test="item.updatetime != null">
+          #{item.updatetime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.updatetime == null">
+          NULL,
+        </if>
+        <if test="item.usertag != null">
+          #{item.usertag,jdbcType=VARCHAR},
+        </if>
+        <if test="item.usertag == null">
+          NULL,
+        </if>
+        <if test="item.contactway != null">
+          #{item.contactway,jdbcType=VARCHAR},
+        </if>
+        <if test="item.contactway == null">
+          NULL,
+        </if>
+        <if test="item.sfopenid != null">
+          #{item.sfopenid,jdbcType=VARCHAR},
+        </if>
+        <if test="item.sfopenid == null">
+          NULL,
+        </if>
+        <if test="item.sfchannelno != null">
+          #{item.sfchannelno,jdbcType=VARCHAR},
+        </if>
+        <if test="item.sfchannelno == null">
+          NULL,
+        </if>
+        <if test="item.lastlogintime != null">
+          #{item.lastlogintime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.lastlogintime == null">
+          NULL,
+        </if>
+        <if test="item.pwdmodifydelay != null">
+          #{item.pwdmodifydelay,jdbcType=INTEGER},
+        </if>
+        <if test="item.pwdmodifydelay == null">
+          NULL,
+        </if>
+        <if test="item.pwdmodifytime != null">
+          #{item.pwdmodifytime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="item.pwdmodifytime == null">
+          NULL,
+        </if>
+        <if test="item.dealpwd != null">
+          #{item.dealpwd,jdbcType=VARCHAR},
+        </if>
+        <if test="item.dealpwd == null">
+          NULL,
+        </if>
+        <if test="item.bigdatasource != null">
+          #{item.bigdatasource,jdbcType=VARCHAR},
+        </if>
+        <if test="item.bigdatasource == null">
+          NULL,
+        </if>
+        <if test="item.bigdatasourcetime != null">
+          #{item.bigdatasourcetime,jdbcType=VARCHAR},
+        </if>
+        <if test="item.bigdatasourcetime == null">
+          NULL,
+        </if>
+      </trim>
+    </foreach>
+  </insert>
+  <select id="countByExample" parameterType="com.huilian.model.UserprofileExample" resultType="java.lang.Long">
+    select count(*) from userprofile
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update userprofile
+    <set>
+      <if test="record.userid != null">
+        UserID = #{record..userid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phonenum != null">
+        PhoneNum = #{record..phonenum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null">
+        Password = #{record..password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        Status = #{record..status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.onlinestatus != null">
+        OnlineStatus = #{record..onlinestatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.onlinestatusupdate != null">
+        OnlineStatusUpdate = #{record..onlinestatusupdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.regdate != null">
+        RegDate = #{record..regdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.amount != null">
+        Amount = #{record..amount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.frozenamount != null">
+        FrozenAmount = #{record..frozenamount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.remark != null">
+        Remark = #{record..remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hlcId != null">
+        hlc_id = #{record..hlcId,jdbcType=BIGINT},
+      </if>
+      <if test="record.dataSource != null">
+        data_source = #{record..dataSource,jdbcType=SMALLINT},
+      </if>
+      <if test="record.source != null">
+        Source = #{record..source,jdbcType=VARCHAR},
+      </if>
+      <if test="record.referee != null">
+        referee = #{record..referee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usrchannel != null">
+        usrChannel = #{record..usrchannel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qqopenid != null">
+        qqOpenId = #{record..qqopenid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bectime != null">
+        beCTime = #{record..bectime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatetime != null">
+        updateTime = #{record..updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.usertag != null">
+        userTag = #{record..usertag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactway != null">
+        contactway = #{record..contactway,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sfopenid != null">
+        sfOpenId = #{record..sfopenid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sfchannelno != null">
+        sfChannelNo = #{record..sfchannelno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastlogintime != null">
+        LastLoginTime = #{record..lastlogintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.pwdmodifydelay != null">
+        pwdModifyDelay = #{record..pwdmodifydelay,jdbcType=INTEGER},
+      </if>
+      <if test="record.pwdmodifytime != null">
+        pwdModifyTime = #{record..pwdmodifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.dealpwd != null">
+        dealpwd = #{record..dealpwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bigdatasource != null">
+        bigdataSource = #{record..bigdatasource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bigdatasourcetime != null">
+        bigdataSourceTime = #{record..bigdatasourcetime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update userprofile
+    set UserID = #{record..userid,jdbcType=VARCHAR},
+      PhoneNum = #{record..phonenum,jdbcType=VARCHAR},
+      Password = #{record..password,jdbcType=VARCHAR},
+      Status = #{record..status,jdbcType=VARCHAR},
+      OnlineStatus = #{record..onlinestatus,jdbcType=VARCHAR},
+      OnlineStatusUpdate = #{record..onlinestatusupdate,jdbcType=TIMESTAMP},
+      RegDate = #{record..regdate,jdbcType=TIMESTAMP},
+      Amount = #{record..amount,jdbcType=DECIMAL},
+      FrozenAmount = #{record..frozenamount,jdbcType=DECIMAL},
+      Remark = #{record..remark,jdbcType=VARCHAR},
+      hlc_id = #{record..hlcId,jdbcType=BIGINT},
+      data_source = #{record..dataSource,jdbcType=SMALLINT},
+      Source = #{record..source,jdbcType=VARCHAR},
+      referee = #{record..referee,jdbcType=VARCHAR},
+      usrChannel = #{record..usrchannel,jdbcType=VARCHAR},
+      qqOpenId = #{record..qqopenid,jdbcType=VARCHAR},
+      beCTime = #{record..bectime,jdbcType=TIMESTAMP},
+      updateTime = #{record..updatetime,jdbcType=TIMESTAMP},
+      userTag = #{record..usertag,jdbcType=VARCHAR},
+      contactway = #{record..contactway,jdbcType=VARCHAR},
+      sfOpenId = #{record..sfopenid,jdbcType=VARCHAR},
+      sfChannelNo = #{record..sfchannelno,jdbcType=VARCHAR},
+      LastLoginTime = #{record..lastlogintime,jdbcType=TIMESTAMP},
+      pwdModifyDelay = #{record..pwdmodifydelay,jdbcType=INTEGER},
+      pwdModifyTime = #{record..pwdmodifytime,jdbcType=TIMESTAMP},
+      dealpwd = #{record..dealpwd,jdbcType=VARCHAR},
+      bigdataSource = #{record..bigdatasource,jdbcType=VARCHAR},
+      bigdataSourceTime = #{record..bigdatasourcetime,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.huilian.model.Userprofile">
+    update userprofile
+    <set>
+      <if test="phonenum != null">
+        PhoneNum = #{phonenum,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        Password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        Status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="onlinestatus != null">
+        OnlineStatus = #{onlinestatus,jdbcType=VARCHAR},
+      </if>
+      <if test="onlinestatusupdate != null">
+        OnlineStatusUpdate = #{onlinestatusupdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="regdate != null">
+        RegDate = #{regdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="amount != null">
+        Amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="frozenamount != null">
+        FrozenAmount = #{frozenamount,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null">
+        Remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="hlcId != null">
+        hlc_id = #{hlcId,jdbcType=BIGINT},
+      </if>
+      <if test="dataSource != null">
+        data_source = #{dataSource,jdbcType=SMALLINT},
+      </if>
+      <if test="source != null">
+        Source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="referee != null">
+        referee = #{referee,jdbcType=VARCHAR},
+      </if>
+      <if test="usrchannel != null">
+        usrChannel = #{usrchannel,jdbcType=VARCHAR},
+      </if>
+      <if test="qqopenid != null">
+        qqOpenId = #{qqopenid,jdbcType=VARCHAR},
+      </if>
+      <if test="bectime != null">
+        beCTime = #{bectime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usertag != null">
+        userTag = #{usertag,jdbcType=VARCHAR},
+      </if>
+      <if test="contactway != null">
+        contactway = #{contactway,jdbcType=VARCHAR},
+      </if>
+      <if test="sfopenid != null">
+        sfOpenId = #{sfopenid,jdbcType=VARCHAR},
+      </if>
+      <if test="sfchannelno != null">
+        sfChannelNo = #{sfchannelno,jdbcType=VARCHAR},
+      </if>
+      <if test="lastlogintime != null">
+        LastLoginTime = #{lastlogintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pwdmodifydelay != null">
+        pwdModifyDelay = #{pwdmodifydelay,jdbcType=INTEGER},
+      </if>
+      <if test="pwdmodifytime != null">
+        pwdModifyTime = #{pwdmodifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dealpwd != null">
+        dealpwd = #{dealpwd,jdbcType=VARCHAR},
+      </if>
+      <if test="bigdatasource != null">
+        bigdataSource = #{bigdatasource,jdbcType=VARCHAR},
+      </if>
+      <if test="bigdatasourcetime != null">
+        bigdataSourceTime = #{bigdatasourcetime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where UserID = #{userid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.huilian.model.Userprofile">
+    update userprofile
+    set PhoneNum = #{phonenum,jdbcType=VARCHAR},
+      Password = #{password,jdbcType=VARCHAR},
+      Status = #{status,jdbcType=VARCHAR},
+      OnlineStatus = #{onlinestatus,jdbcType=VARCHAR},
+      OnlineStatusUpdate = #{onlinestatusupdate,jdbcType=TIMESTAMP},
+      RegDate = #{regdate,jdbcType=TIMESTAMP},
+      Amount = #{amount,jdbcType=DECIMAL},
+      FrozenAmount = #{frozenamount,jdbcType=DECIMAL},
+      Remark = #{remark,jdbcType=VARCHAR},
+      hlc_id = #{hlcId,jdbcType=BIGINT},
+      data_source = #{dataSource,jdbcType=SMALLINT},
+      Source = #{source,jdbcType=VARCHAR},
+      referee = #{referee,jdbcType=VARCHAR},
+      usrChannel = #{usrchannel,jdbcType=VARCHAR},
+      qqOpenId = #{qqopenid,jdbcType=VARCHAR},
+      beCTime = #{bectime,jdbcType=TIMESTAMP},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      userTag = #{usertag,jdbcType=VARCHAR},
+      contactway = #{contactway,jdbcType=VARCHAR},
+      sfOpenId = #{sfopenid,jdbcType=VARCHAR},
+      sfChannelNo = #{sfchannelno,jdbcType=VARCHAR},
+      LastLoginTime = #{lastlogintime,jdbcType=TIMESTAMP},
+      pwdModifyDelay = #{pwdmodifydelay,jdbcType=INTEGER},
+      pwdModifyTime = #{pwdmodifytime,jdbcType=TIMESTAMP},
+      dealpwd = #{dealpwd,jdbcType=VARCHAR},
+      bigdataSource = #{bigdatasource,jdbcType=VARCHAR},
+      bigdataSourceTime = #{bigdatasourcetime,jdbcType=VARCHAR}
+    where UserID = #{userid,jdbcType=VARCHAR}
+  </update>
+</mapper>
