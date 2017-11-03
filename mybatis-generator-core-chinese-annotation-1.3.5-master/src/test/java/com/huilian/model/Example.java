@@ -7,9 +7,9 @@ import java.util.List;
 /**
  * 本文件由 工具自动生成自动生成 https://github.com/real52010/mybatis-generator.git
  * @author real code generator
- * date:2017-11-02 19:15:10
+ * date:2017-11-02 19:07:09
  */
-public class UserProfileExample {
+public class Example {
     /** 排序字段**/
     protected String orderByClause;
 
@@ -28,7 +28,7 @@ public class UserProfileExample {
     /** 
      * 构造查询条件
      */
-    public UserProfileExample() {
+    public Example() {
         oredCriteria = new ArrayList<Criteria>();
     }
 

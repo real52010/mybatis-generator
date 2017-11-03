@@ -283,8 +283,10 @@ public class DefaultCommentGenerator implements CommentGenerator {
             sb.append(" 排序字段");
         } else if ("oredCriteria".equals(field.getName())) {
             sb.append(" 查询条件");
-        } else if ("serialVersionUID".equals(field.getName())) {
-            sb.append("串行版本ID");
+        } else if ("paginLimit".equals(field.getName())) {
+            sb.append(" 查询条数");
+        } else if ("paginOffset".equals(field.getName())) {
+            sb.append(" 查询开始数");
         }
         if (sb.length() > 0) {
             field.addJavaDocLine("//" + sb.toString());

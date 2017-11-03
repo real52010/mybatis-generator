@@ -17,11 +17,16 @@ import org.real.generator.codegen.xmlmapper.UpdateBySelectiveElementGenerator;
 import org.real.generator.codegen.xmlmapper.InsertBatchElementGenerator;
 import org.real.generator.codegen.xmlmapper.BaseInsertColumnListElementGenerator;
 import org.real.generator.codegen.xmlmapper.BaseUpdateColumnListElementGenerator;
+import org.real.generator.codegen.xmlmapper.CountByExampleElementGenerator;
 import org.real.generator.codegen.xmlmapper.DeleteByExampleElementGenerator;
 import org.real.generator.codegen.xmlmapper.DeleteByPrimaryKeyElementGenerator;
+import org.real.generator.codegen.xmlmapper.ExampleOrderByClauseElementGenerator;
+import org.real.generator.codegen.xmlmapper.ExamplePaginClauseElementGenerator;
 import org.real.generator.codegen.xmlmapper.ExampleWhereClauseElementGenerator;
 import org.real.generator.codegen.xmlmapper.InsertElementGenerator;
 import org.real.generator.codegen.xmlmapper.ResultMapWithoutBLOBsElementGenerator;
+import org.real.generator.codegen.xmlmapper.SelectByExampleElementGenerator;
+import org.real.generator.codegen.xmlmapper.SelectByPrimaryKeyElementGenerator;
 import org.real.generator.codegen.xmlmapper.UpdateBatchBySelectiveElementGenerator;
 import org.real.generator.codegen.xmlmapper.UpdateByExampleElementGenerator;
 import org.mybatis.generator.exception.InvalidConfigurationException;
@@ -53,6 +58,8 @@ public class RealXMLMapperGenerator extends XMLMapperGenerator {
 
 		addResultMapWithoutBLOBsElement(answer);
 		addExampleWhereClauseElement(answer);
+		addExampleOrderByClauseElement(answer);
+		addExamplePaginClauseElement(answer);
 		addBaseColumnListElement(answer);
 		addBaseInsertColumnListElement(answer);
 		addBaseUpdateColumnListElement(answer);
@@ -64,6 +71,9 @@ public class RealXMLMapperGenerator extends XMLMapperGenerator {
 		addUpdateByExampleElement(answer);
 		addUpdateBySelectiveElement(answer);
 		addUpdateBatchBySelectiveElement(answer);
+		addSelectByPrimaryKeyElementElement(answer);
+		addSelectByExampleElementElement(answer);
+		addCountByExampleElementElement(answer);
 //		addResultMapWithBLOBsElement(answer);
 //		addMyBatis3UpdateByExampleWhereClauseElement(answer);
 //		addBaseColumnListElement(answer);
@@ -97,6 +107,11 @@ public class RealXMLMapperGenerator extends XMLMapperGenerator {
 		  AbstractXmlElementGenerator elementGenerator = new ExampleWhereClauseElementGenerator(true);
         initializeAndExecuteGenerator(elementGenerator, parentElement);
 	}
+	protected void addExampleOrderByClauseElement(XmlElement parentElement) {
+		  AbstractXmlElementGenerator elementGenerator = new ExampleOrderByClauseElementGenerator(true);
+        initializeAndExecuteGenerator(elementGenerator, parentElement);
+	}
+	
 	@Override
 	protected void addInsertElement(XmlElement parentElement) {
 		  AbstractXmlElementGenerator elementGenerator = new InsertElementGenerator(false);
@@ -146,6 +161,24 @@ public class RealXMLMapperGenerator extends XMLMapperGenerator {
 		  AbstractXmlElementGenerator elementGenerator = new UpdateBatchBySelectiveElementGenerator(false);
 		  initializeAndExecuteGenerator(elementGenerator, parentElement);
 	}
-	  
+	protected void addSelectByPrimaryKeyElementElement(XmlElement parentElement) {
+		  AbstractXmlElementGenerator elementGenerator = new SelectByPrimaryKeyElementGenerator();
+		  initializeAndExecuteGenerator(elementGenerator, parentElement);
+	}
+	
+	protected void addSelectByExampleElementElement(XmlElement parentElement) {
+		  AbstractXmlElementGenerator elementGenerator = new SelectByExampleElementGenerator();
+		  initializeAndExecuteGenerator(elementGenerator, parentElement);
+	} 
+	
+	protected void addCountByExampleElementElement(XmlElement parentElement) {
+		  AbstractXmlElementGenerator elementGenerator = new CountByExampleElementGenerator();
+		  initializeAndExecuteGenerator(elementGenerator, parentElement);
+	} 
+	protected void addExamplePaginClauseElement(XmlElement parentElement) {
+		  AbstractXmlElementGenerator elementGenerator = new ExamplePaginClauseElementGenerator(true);
+		  initializeAndExecuteGenerator(elementGenerator, parentElement);
+	}   
+	
 	
 }

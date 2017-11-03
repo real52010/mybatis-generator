@@ -210,6 +210,13 @@ public class RealJavaMapperGenerator extends JavaMapperGenerator {
 		sb.append("example");
 		sb.append("\")"); //$NON-NLS-1$
 		parameter.addAnnotation(sb.toString());
+		
+		sb = new StringBuilder(); 
+		
+		sb.setLength(0);
+		sb.append("@Deprecated"); //$NON-NLS-1$
+		method.addAnnotation(sb.toString());
+				
 		method.addParameter(parameter);
 		method.setVisibility(JavaVisibility.PUBLIC);
 		context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);

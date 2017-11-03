@@ -61,6 +61,21 @@
       </foreach>
     </where>
   </sql>
+  <sql id="Example_OrderBy_Clause">
+    <if test="example.orderByClause != null">
+      order by ${example.orderByClause}
+    </if>
+  </sql>
+  <sql id="Example_Pagin_Clause">
+    <if test="example.paginLimit != null">
+      <if test="model.paginOffset != null">
+        limit ${model.paginOffset}, ${model.paginLimit}
+      </if>
+      <if test="model.paginOffset == null">
+        limit ${model.paginLimit}
+      </if>
+    </if>
+  </sql>
   <sql id="Base_Column_List">
     id, UserID, PhoneNum, Password, Status, OnlineStatus, OnlineStatusUpdate, RegDate, 
     Amount, FrozenAmount, Remark, hlc_id, data_source, Source, referee, usrChannel, qqOpenId, 
@@ -375,4 +390,26 @@
       where id = #{record.id,jdbcType=BIGINT}
     </foreach>
   </update>
+  <select id="select" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from userprofile
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByExample" parameterType="com.huilian.model.UserProfileExample" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from userprofile
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <include refid="Example_OrderBy_Clause" />
+    <include refid="Example_Pagin_Clause" />
+  </select>
+  <select id="countByExample" parameterType="com.huilian.model.UserProfileExample" resultType="java.lang.Long">
+    select count(*) from userprofile
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
 </mapper>

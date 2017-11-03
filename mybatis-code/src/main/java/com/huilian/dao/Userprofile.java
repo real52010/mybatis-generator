@@ -8,7 +8,7 @@ import java.util.Date;
  * @author 
  */
 public class Userprofile implements Serializable {
-    private static final long serialVersionUID = 8153373614423905037L;
+    private static final long serialVersionUID = -6669050863824274219L;
 
     /**
      * id

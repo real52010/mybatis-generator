@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Param;
 /**
  * 本文件由 工具自动生成自动生成 https://github.com/real52010/mybatis-generator.git
  * @author real code generator
- * date:2017-11-01 15:01:54
+ * date:2017-11-02 19:15:10
  */
 public interface UserProfileDAO {
     /** 
@@ -28,12 +28,13 @@ public interface UserProfileDAO {
      * 根据主键删除
      * @param id 主键ID
      */
-    int delete(List<Long> ids);
+    int delete(Long id);
 
     /** 
-     * 根据条件删除
+     *  <strong>根据条件删除,该方法要谨慎使用，如果example为空或其属性为空，会删除整表数据 </strong>
      * @param example 条件对象
      */
+    @Deprecated
     int deleteByExample(@Param("example") UserProfileExample example);
 
     /** 

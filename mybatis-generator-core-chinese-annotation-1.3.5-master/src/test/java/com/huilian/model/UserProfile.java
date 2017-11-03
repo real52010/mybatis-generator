@@ -6,8 +6,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class UserProfile implements Serializable {
-    //串行版本ID
-    private static final long serialVersionUID = -3855577294529131146L;
+    /**串行版本ID**/
+    private static final long serialVersionUID = 1269985155759772886L;
 
     /** 
      * id
