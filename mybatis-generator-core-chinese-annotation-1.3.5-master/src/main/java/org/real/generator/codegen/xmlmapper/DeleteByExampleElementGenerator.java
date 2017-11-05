@@ -55,6 +55,7 @@ public class DeleteByExampleElementGenerator extends
                 .getAliasedFullyQualifiedTableNameAtRuntime());
         answer.addElement(new TextElement(sb.toString()));
         answer.addElement(getExampleIncludeElement());
+        answer.addElement(getUnExampleIncludeElement());
 
         if (context.getPlugins().sqlMapDeleteByExampleElementGenerated(
                 answer, introspectedTable)) {
@@ -70,6 +71,15 @@ public class DeleteByExampleElementGenerator extends
         includeElement.addAttribute(new Attribute("refid", //$NON-NLS-1$
                 "Example_Where_Clause"));
         ifElement.addElement(includeElement);
+
+        return ifElement;
+    }
+    protected XmlElement getUnExampleIncludeElement() {
+        XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
+        ifElement.addAttribute(new Attribute("test", "_parameter == null")); //$NON-NLS-1$ //$NON-NLS-2$
+
+    
+        ifElement.addElement(new TextElement("  where 1=2 "));
 
         return ifElement;
     }

@@ -17,6 +17,7 @@ package org.mybatis.generator.codegen.mybatis3;
 
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.GeneratedXmlFile;
+import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
@@ -37,7 +38,9 @@ import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.ObjectFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The Class IntrospectedTableMyBatis3Impl.
@@ -61,13 +64,16 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
      */
     protected AbstractXmlGenerator xmlMapperGenerator;
 
+    
+    
+
     /**
      * Instantiates a new introspected table my batis3 impl.
      */
     public IntrospectedTableMyBatis3Impl() {
         super(TargetRuntime.MYBATIS3);
         javaModelGenerators = new ArrayList<AbstractJavaGenerator>();
-        clientGenerators = new ArrayList<AbstractJavaGenerator>();
+        clientGenerators = new ArrayList<AbstractJavaGenerator>(); 
     }
 
     /* (non-Javadoc)

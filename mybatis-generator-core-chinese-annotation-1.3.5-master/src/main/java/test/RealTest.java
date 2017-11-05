@@ -127,7 +127,10 @@ public class RealTest {
             pluginConfiguration3.setConfigurationType("org.real.generator.plugins.GeneratIDPlugin");
             context.addPluginConfiguration(pluginConfiguration3);
             
-            
+            PluginConfiguration pluginConfiguration4 = new PluginConfiguration();
+            pluginConfiguration4.addProperty("type", "org.real.generator.plugins.GeneratIndexColumnPlugin");
+            pluginConfiguration4.setConfigurationType("org.real.generator.plugins.GeneratIndexColumnPlugin");
+            context.addPluginConfiguration(pluginConfiguration4);
             
 //            PluginConfiguration pluginConfiguration3 = new PluginConfiguration();
 //            pluginConfiguration3.addProperty("type", "org.mybatis.generator.plugins.MapperPlugin");

@@ -121,6 +121,9 @@ public class BaseInsertColumnListElementGenerator extends AbstractXmlElementGene
 			sb.setLength(0);
 			sb.append(introspectedColumn.getJavaProperty());
 			sb.append(" != null"); //$NON-NLS-1$
+			sb.append(" and "); //$NON-NLS-1$
+			sb.append(introspectedColumn.getJavaProperty("record."));
+			sb.append(" != ''"); //$NON-NLS
 			insertNotNullElement.addAttribute(new Attribute("test", sb.toString())); //$NON-NLS-1$
 
 			sb.setLength(0);
@@ -133,6 +136,10 @@ public class BaseInsertColumnListElementGenerator extends AbstractXmlElementGene
 			sb.setLength(0);
 			sb.append(introspectedColumn.getJavaProperty());
 			sb.append(" != null"); //$NON-NLS-1$
+
+			sb.append(" and "); //$NON-NLS-1$
+			sb.append(introspectedColumn.getJavaProperty("record."));
+			sb.append(" != ''"); //$NON-NLS-1$
 			valuesNotNullElement.addAttribute(new Attribute("test", sb.toString())); //$NON-NLS-1$
 
 			sb.setLength(0);

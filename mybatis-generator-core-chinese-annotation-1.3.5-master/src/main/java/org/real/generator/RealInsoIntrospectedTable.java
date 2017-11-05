@@ -3,9 +3,12 @@ package org.real.generator;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.generator.api.GeneratedXmlFile;
+import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.codegen.AbstractJavaClientGenerator;
@@ -17,13 +20,27 @@ import org.mybatis.generator.codegen.mybatis3.model.PrimaryKeyGenerator;
 import org.mybatis.generator.codegen.mybatis3.model.RecordWithBLOBsGenerator;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.real.generator.codegen.RealJavaMapperGenerator;
+import org.real.generator.codegen.TableIndex;
 
 import test.RealTest;
 
 public class RealInsoIntrospectedTable extends IntrospectedTableMyBatis3Impl {
+
+    protected Map<String, TableIndex> indexColumns;
+    
 	public RealInsoIntrospectedTable() {
 		super();
+		indexColumns= new HashMap<String, TableIndex>();
 	}
+	
+	public Map<String, TableIndex> getIndexColumns() {
+		return indexColumns;
+	}
+
+	public void setIndexColumns(Map<String, TableIndex> indexColumns) {
+		this.indexColumns = indexColumns;
+	}
+
 	public static void main(String[] args) throws SQLException, IOException, InterruptedException, InvalidConfigurationException {
 		RealTest.main(null);
 	}
@@ -32,6 +49,7 @@ public class RealInsoIntrospectedTable extends IntrospectedTableMyBatis3Impl {
 		return new RealJavaMapperGenerator();
 	}
 
+	 
 	@Override
 	public List<GeneratedXmlFile> getGeneratedXmlFiles() {
 		List<GeneratedXmlFile> answer = new ArrayList<GeneratedXmlFile>();

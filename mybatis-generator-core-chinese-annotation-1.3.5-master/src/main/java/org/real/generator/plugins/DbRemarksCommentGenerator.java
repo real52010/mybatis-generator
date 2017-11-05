@@ -361,9 +361,15 @@ public class DbRemarksCommentGenerator implements CommentGenerator {
 		} else if ("countByExample".equals(method_name)) {
 			sb.append(" 查询数量");
 		} else if ("delete".equals(method_name)) {
-			sb.append(" 根据主键删除");
+			sb.append(" 根据主键删除,该方法为物理删除");
 		} else if ("deleteByExample".equals(method_name)) {
+			sb.append("  <strong>根据条件删除,该方法为虚拟删除,该方法要谨慎使用，如果example为空或其属性为空，会删除整表数据 </strong>");
+			
+		} else if ("virtualDelete".equals(method_name)) {
+			sb.append(" 根据主键删除,该方法为物理删除");
+		} else if ("virtualDeleteByExample".equals(method_name)) {
 			sb.append("  <strong>根据条件删除,该方法要谨慎使用，如果example为空或其属性为空，会删除整表数据 </strong>");
+			
 		} else if ("deleteByPrimaryKey".equals(method_name)) {
 			sb.append(" 根据ID删除");
 		} else if ("insert".equals(method_name)) {

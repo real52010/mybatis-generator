@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class UserProfile implements Serializable {
     /**串行版本ID**/
-    private static final long serialVersionUID = 1269985155759772886L;
+    private static final long serialVersionUID = 4791339217757282769L;
 
     /** 
      * id

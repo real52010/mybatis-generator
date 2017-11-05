@@ -25,6 +25,8 @@ import org.mybatis.generator.config.*;
 import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.logging.Log;
 import org.mybatis.generator.logging.LogFactory;
+import org.real.generator.RealInsoIntrospectedTable;
+import org.real.generator.codegen.TableIndex;
 
 import java.sql.*;
 import java.util.*;
@@ -759,13 +761,52 @@ public class DatabaseIntrospector {
             calculatePrimaryKey(table, introspectedTable);
 
             enhanceIntrospectedTable(introspectedTable);
-
+            
+            calculateUniqueColumns(table, introspectedTable);
             answer.add(introspectedTable);
         }
 
         return answer;
     }
+   private void calculateUniqueColumns(FullyQualifiedTable table,
+                                     IntrospectedTable introspectedTable) throws SQLException {
+	   if(!(introspectedTable instanceof RealInsoIntrospectedTable)) {
+		   return ;
+	   }
+	   RealInsoIntrospectedTable  realInsoIntrospectedTable=(RealInsoIntrospectedTable)introspectedTable;
+	   Map<String,IntrospectedColumn> mapColumns= new HashMap<String, IntrospectedColumn>();
 
+	   List<IntrospectedColumn> listColumns= introspectedTable.getAllColumns();
+	   for (IntrospectedColumn introspectedColumn : listColumns) {
+		   mapColumns.put(introspectedColumn.getJavaProperty().toLowerCase(), introspectedColumn);
+	   }
+	   
+       if ("MYSQL".equals(databaseProductName)) {
+           //设置数据库表的备注信息
+           //start mysql
+           Statement stmt = this.databaseMetaData.getConnection().createStatement();
+           ResultSet rs = stmt.executeQuery(new StringBuilder().append("show keys from ").append(table.getIntrospectedTableName()).append("").toString());
+           while (rs.next()) {
+        	 String keyName=rs.getString("Key_name");
+        	 String keyColumn=rs.getString("Column_name");
+        	TableIndex index=null;
+        	 if(!realInsoIntrospectedTable.getIndexColumns().containsKey(keyName)) {
+        		 index= new TableIndex();
+        		 index.setUnique(rs.getString("Non_unique").equals("0"));
+        		 }else {
+        		 index=realInsoIntrospectedTable.getIndexColumns().get(keyName);
+        	        	
+        	 }
+        	 index.getIntrospectedColumns().add(mapColumns.get(keyColumn.toLowerCase()));
+        	 realInsoIntrospectedTable.getIndexColumns().put(keyName, index);
+           }
+         
+           closeResultSet(rs);
+           stmt.close();
+           //end
+       } 
+	   
+   }
     /**
      * This method calls database metadata to retrieve some extra information about the table
      * such as remarks associated with the table and the type.
