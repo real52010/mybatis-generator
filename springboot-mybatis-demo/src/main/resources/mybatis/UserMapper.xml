@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zt.ccty.springboot_mybatis_demo.dao.UserDAO">
+ 
+  <select id="getUserInfo" resultType="org.zt.ccty.springboot_mybatis_demo.model.User">
+    select * from t_users
+  </select>
+ <select id="getUserInfoById" resultType="org.zt.ccty.springboot_mybatis_demo.model.User">
+    select * from t_users where id= #{id}
+  </select>
+  
+ 
+  
+   <insert id="insert" keyColumn="id" keyProperty="id" 
+   parameterType="org.zt.ccty.springboot_mybatis_demo.model.User"
+    useGeneratedKeys="false">
+   INSERT INTO t_users ( name, sex, age, phone) 
+   VALUES ( #{name}, #{sex}, #{age}, #{phone});
+  
+  </insert>
+  
+  
+</mapper>
