@@ -16,6 +16,7 @@ import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3Impl;
 import org.mybatis.generator.codegen.mybatis3.model.BaseRecordGenerator;
 import org.real.generator.codegen.model.ExampleGenerator;
+import org.springframework.util.StringUtils;
 import org.mybatis.generator.codegen.mybatis3.model.PrimaryKeyGenerator;
 import org.mybatis.generator.codegen.mybatis3.model.RecordWithBLOBsGenerator;
 import org.mybatis.generator.exception.InvalidConfigurationException;
@@ -26,13 +27,13 @@ import test.RealTest;
 
 public class RealInsoIntrospectedTable extends IntrospectedTableMyBatis3Impl {
 
-    protected Map<String, TableIndex> indexColumns;
-    
+	protected Map<String, TableIndex> indexColumns;
+
 	public RealInsoIntrospectedTable() {
 		super();
-		indexColumns= new HashMap<String, TableIndex>();
+		indexColumns = new HashMap<String, TableIndex>();
 	}
-	
+
 	public Map<String, TableIndex> getIndexColumns() {
 		return indexColumns;
 	}
@@ -41,15 +42,16 @@ public class RealInsoIntrospectedTable extends IntrospectedTableMyBatis3Impl {
 		this.indexColumns = indexColumns;
 	}
 
-	public static void main(String[] args) throws SQLException, IOException, InterruptedException, InvalidConfigurationException {
+	public static void main(String[] args)
+			throws SQLException, IOException, InterruptedException, InvalidConfigurationException {
 		RealTest.main(null);
 	}
+
 	@Override
 	protected AbstractJavaClientGenerator createJavaClientGenerator() {
 		return new RealJavaMapperGenerator();
 	}
 
-	 
 	@Override
 	public List<GeneratedXmlFile> getGeneratedXmlFiles() {
 		List<GeneratedXmlFile> answer = new ArrayList<GeneratedXmlFile>();
@@ -66,39 +68,52 @@ public class RealInsoIntrospectedTable extends IntrospectedTableMyBatis3Impl {
 
 		return answer;
 	}
-	 /**
-     * Calculate model attributes.
-     */
-    protected void calculateModelAttributes() {
-        String pakkage = calculateJavaModelPackage();
 
-        StringBuilder sb = new StringBuilder();
-        sb.append(pakkage);
-        sb.append('.');
-        sb.append(fullyQualifiedTable.getDomainObjectName());
-        sb.append("Key"); //$NON-NLS-1$
-        setPrimaryKeyType(sb.toString());
+	/**
+	 * Calculate model attributes.
+	 */
+	protected void calculateModelAttributes() {
+		String pakkage = calculateJavaModelPackage();
 
-        sb.setLength(0);
-        sb.append(pakkage);
-        sb.append('.');
-        sb.append(fullyQualifiedTable.getDomainObjectName());
-        setBaseRecordType(sb.toString());
+		StringBuilder sb = new StringBuilder();
+		sb.append(pakkage);
+		sb.append('.');
+		sb.append(fullyQualifiedTable.getDomainObjectName());
+		sb.append("Key"); //$NON-NLS-1$
+		setPrimaryKeyType(sb.toString());
 
-        sb.setLength(0);
-        sb.append(pakkage);
-        sb.append('.');
-        sb.append(fullyQualifiedTable.getDomainObjectName());
-        sb.append("WithBLOBs"); //$NON-NLS-1$
-        setRecordWithBLOBsType(sb.toString());
+		sb.setLength(0);
+		sb.append(pakkage);
+		sb.append('.');
+		sb.append(fullyQualifiedTable.getDomainObjectName());
+		setBaseRecordType(sb.toString());
 
-        sb.setLength(0);
-        sb.append(pakkage);
-        sb.append('.');
-        sb.append(fullyQualifiedTable.getDomainObjectName());
-        sb.append("Example"); //$NON-NLS-1$
-        setExampleType(sb.toString());
-    }
+		sb.setLength(0);
+		sb.append(pakkage);
+		sb.append('.');
+		sb.append(fullyQualifiedTable.getDomainObjectName());
+		sb.append("WithBLOBs"); //$NON-NLS-1$
+		setRecordWithBLOBsType(sb.toString());
+
+		sb.setLength(0);
+
+		if (!StringUtils.isEmpty(tableConfiguration.getProperty("exampleName"))) {
+			sb.append(tableConfiguration.getProperty("exampleTargetPackage"));
+		}else {
+			sb.append(pakkage);
+		}
+		sb.append('.');
+		
+		if (!StringUtils.isEmpty(tableConfiguration.getProperty("exampleName"))) {
+			sb.append(tableConfiguration.getProperty("exampleName"));
+		} else {
+			sb.append(fullyQualifiedTable.getDomainObjectName());
+			sb.append("Example"); //$NON-NLS-1$
+		}
+
+		setExampleType(sb.toString());
+	}
+
 	protected void calculateJavaModelGenerators(List<String> warnings, ProgressCallback progressCallback) {
 		if (getRules().generateExampleClass()) {
 			AbstractJavaGenerator javaGenerator = new ExampleGenerator();

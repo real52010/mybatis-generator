@@ -181,7 +181,8 @@ public class DefaultCommentGenerator implements CommentGenerator {
      * @param javaElement
      */
     @Override
-    public void addExampleClassComment(JavaElement javaElement) {
+    public void addExampleClassComment(JavaElement javaElement,
+            IntrospectedTable introspectedTable) {
         // * @author Acooly Code Generator
         // * Date: 2016-04-05 20:12:59
         if (suppressAllComments) {
@@ -189,7 +190,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
         }
         javaElement.addJavaDocLine("/**");
         javaElement.addJavaDocLine(" * 本文件由工具类自居动生成 https://github.com/real52010/mybatis-generator.git");
-        //    javaElement.addJavaDocLine(" * 本文件由 橙子 自动生成");
+            javaElement.addJavaDocLine(" * 本文件由 橙子 自动生成");
         addJavadocTag(javaElement, false);
         javaElement.addJavaDocLine(" */");
     }

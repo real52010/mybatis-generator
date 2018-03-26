@@ -36,10 +36,11 @@ public class UpdateByIndexColumnElementGenerator extends IndexColumnElementGener
 
 	private boolean isSimple;
 
-    private TableIndex tableIndex;
+	private TableIndex tableIndex;
+
 	public UpdateByIndexColumnElementGenerator(TableIndex tableIndex) {
 		super();
-    	this.tableIndex=tableIndex;
+		this.tableIndex = tableIndex;
 	}
 
 	@Override

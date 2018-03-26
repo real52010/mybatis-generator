@@ -792,4 +792,5 @@ public class Context extends PropertyHolder {
     public void setConnectionFactoryConfiguration(ConnectionFactoryConfiguration connectionFactoryConfiguration) {
         this.connectionFactoryConfiguration = connectionFactoryConfiguration;
     }
+    
 }

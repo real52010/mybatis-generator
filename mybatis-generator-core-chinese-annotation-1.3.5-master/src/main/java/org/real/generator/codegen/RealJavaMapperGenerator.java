@@ -69,7 +69,7 @@ public class RealJavaMapperGenerator extends JavaMapperGenerator {
 		commentGenerator.addJavaFileComment(interfaze);
 
 		// 添加类注释
-		commentGenerator.addExampleClassComment(interfaze);
+		commentGenerator.addExampleClassComment(interfaze, introspectedTable);
 
 		String rootInterface = introspectedTable.getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
 		if (!stringHasValue(rootInterface)) {
@@ -136,12 +136,13 @@ public class RealJavaMapperGenerator extends JavaMapperGenerator {
 
 		StringBuffer sb = new StringBuffer();
 
-		sb.append("* " + String.format(comment, colNames)+ "\r\n");
+		sb.append("* " + String.format(comment, colNames) + "\r\n");
 		sb.append(paramNames.substring(0, paramNames.length() - 2));
 		return sb.toString();
 	}
 
 	private String getTabIndexJavaMethodName(String preix, TableIndex tableIndex) {
+
 		List<IntrospectedColumn> listColumns = tableIndex.getIntrospectedColumns();
 		StringBuffer sb = new StringBuffer();
 		sb.setLength(0);
@@ -161,6 +162,9 @@ public class RealJavaMapperGenerator extends JavaMapperGenerator {
 	}
 
 	private void addUpdateIndexColumnMethod(Interface interfaze) {
+		if (!"true".equals(introspectedTable.getTableConfiguration().getProperty("createIndexMethod"))) {
+			return;
+		}
 		if (!(introspectedTable instanceof RealInsoIntrospectedTable)) {
 			return;
 		}
@@ -173,6 +177,9 @@ public class RealJavaMapperGenerator extends JavaMapperGenerator {
 	}
 
 	private void addDeleteIndexColumnMethod(Interface interfaze) {
+		if (!"true".equals(introspectedTable.getTableConfiguration().getProperty("createIndexMethod"))) {
+			return;
+		}
 		if (!(introspectedTable instanceof RealInsoIntrospectedTable)) {
 			return;
 		}
@@ -187,6 +194,9 @@ public class RealJavaMapperGenerator extends JavaMapperGenerator {
 	}
 
 	private void addSelectIndexColumnMethod(Interface interfaze) {
+		if (!"true".equals(introspectedTable.getTableConfiguration().getProperty("createIndexMethod"))) {
+			return;
+		}
 		if (!(introspectedTable instanceof RealInsoIntrospectedTable)) {
 			return;
 		}
@@ -201,7 +211,14 @@ public class RealJavaMapperGenerator extends JavaMapperGenerator {
 	}
 
 	private void addVirtualDeleteIndexColumnMethod(Interface interfaze) {
+
 		if (!(introspectedTable instanceof RealInsoIntrospectedTable)) {
+			return;
+		}
+		if (!"true".equals(introspectedTable.getTableConfiguration().getProperty("createIndexMethod"))) {
+			return;
+		}
+		if (!"true".equals(introspectedTable.getTableConfiguration().getProperty("createVirtualDelete"))) {
 			return;
 		}
 		RealInsoIntrospectedTable realInsoIntrospectedTable = (RealInsoIntrospectedTable) introspectedTable;
@@ -399,7 +416,7 @@ public class RealJavaMapperGenerator extends JavaMapperGenerator {
 	protected void addInsertMethod(Interface interfaze) {
 		// FullyQualifiedJavaType parameterType = new
 		// FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
-
+		System.out.println(introspectedTable.getRules());
 		interfaze.addImportedType(baseRecordType);
 		Method method = new Method();
 		method.setName("insert");
@@ -442,7 +459,9 @@ public class RealJavaMapperGenerator extends JavaMapperGenerator {
 	 * @param interfaze
 	 */
 	protected void addVirtualDeleteMethod(Interface interfaze) {
-
+		if (!"true".equals(introspectedTable.getTableConfiguration().getProperty("createVirtualDelete"))) {
+			return;
+		}
 		Method method = new Method();
 		method.setName("virtualDelete");
 		method.setReturnType(FullyQualifiedJavaType.getIntInstance());
@@ -487,7 +506,9 @@ public class RealJavaMapperGenerator extends JavaMapperGenerator {
 	 * @param interfaze
 	 */
 	protected void addVirtualDeleteByExampleMethod(Interface interfaze) {
-
+		if (!"true".equals(introspectedTable.getTableConfiguration().getProperty("createVirtualDelete"))) {
+			return;
+		}
 		FullyQualifiedJavaType parameterType = new FullyQualifiedJavaType(introspectedTable.getExampleType());
 		Parameter parameter = new Parameter(parameterType, "example");
 		StringBuilder sb = new StringBuilder();

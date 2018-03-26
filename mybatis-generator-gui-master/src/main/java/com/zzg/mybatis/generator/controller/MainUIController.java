@@ -87,7 +87,22 @@ public class MainUIController extends BaseFXController {
 	private TreeView<String> leftDBTree;
 	@FXML
 	private TextField filterTableField;
-
+	@FXML
+	private CheckBox createBaseExpCheckBox;
+	@FXML
+	private CheckBox createIndexMethodCheckBox;
+	@FXML
+	private CheckBox overwriteExtFilesCheckBox;
+	@FXML
+	private CheckBox createVirtualDeleteCheckBox;
+	@FXML
+	private TextField virtualDeleteSqlFeild;
+	@FXML
+	private TextField exampleNameField;
+	@FXML
+	private TextField exampleTargetPackage;
+	@FXML
+	private TextField exampleTargetProject;
 	// Current selected databaseConfig
 	private DatabaseConfig selectedDatabaseConfig;
 	// Current selected tableName
@@ -96,6 +111,10 @@ public class MainUIController extends BaseFXController {
 	private List<IgnoredColumn> ignoredColumns;
 
 	private List<ColumnOverride> columnOverrides;
+	
+
+
+	private String configName;
 
 	private TreeMap<String, List<String>> tableNameMap = new TreeMap<String, List<String>>();
 
@@ -188,6 +207,7 @@ public class MainUIController extends BaseFXController {
 			return cell;
 		});
 		loadLeftDBTree();
+		loadDisPostConfig();
 	}
 
 	void initTableTree(ObservableList<TreeItem<String>> children, List<String> tables) {
@@ -226,6 +246,17 @@ public class MainUIController extends BaseFXController {
 			AlertUtil.showErrorAlert(e.getMessage() + "\n" + ExceptionUtils.getStackTrace(e));
 		}
 	}
+	void loadDisPostConfig() {
+		GeneratorConfig generatorConfig;
+		try {
+			generatorConfig = ConfigHelper.loadSysConfig("DisPostConfig");
+			setGeneratorConfigIntoUI(generatorConfig);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			AlertUtil.showErrorAlert(e.getMessage() + "\n" + ExceptionUtils.getStackTrace(e));
+		}
+	}
 
 	@FXML
 	public void chooseProjectFolder() {
@@ -235,7 +266,10 @@ public class MainUIController extends BaseFXController {
 			projectFolderField.setText(selectedFolder.getAbsolutePath());
 		}
 	}
-
+	@FXML
+	public void setVirtualEnable() {
+		virtualDeleteSqlFeild.setDisable(!createVirtualDeleteCheckBox.isSelected());
+	}
 	@FXML
 	public void filterTableName() {
 		String filterTab = this.filterTableField.getText().trim();
@@ -334,29 +368,36 @@ public class MainUIController extends BaseFXController {
 
 	@FXML
 	public void saveGeneratorConfig() {
-		TextInputDialog dialog = new TextInputDialog("");
-		dialog.setTitle("保存当前配置");
-		dialog.setContentText("请输入配置名称");
-		Optional<String> result = dialog.showAndWait();
-		if (result.isPresent()) {
-			String name = result.get();
-			if (StringUtils.isEmpty(name)) {
-				AlertUtil.showErrorAlert("名称不能为空");
-				return;
-			}
-			_LOG.info("user choose name: {}", name);
-			try {
-				GeneratorConfig generatorConfig = getGeneratorConfigFromUI();
-				generatorConfig.setName(name);
-				ConfigHelper.saveGeneratorConfig(generatorConfig);
-			} catch (Exception e) {
-				AlertUtil.showErrorAlert("删除配置失败");
-			}
-		}
+//		TextInputDialog dialog = new TextInputDialog("");
+//		dialog.setTitle("保存当前配置");
+//		dialog.setContentText("请输入配置名称");
+//		Optional<String> result = dialog.showAndWait();
+//		if (result.isPresent()) {
+//			String name = result.get();
+//			if (StringUtils.isEmpty(name)) {
+//				AlertUtil.showErrorAlert("名称不能为空");
+//				return;
+//			}
+//			_LOG.info("user choose name: {}", name);
+//			try {
+//				GeneratorConfig generatorConfig = getGeneratorConfigFromUI();
+//				generatorConfig.setName(name);
+//				ConfigHelper.saveGeneratorConfig(generatorConfig);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//				AlertUtil.showErrorAlert("删除配置失败");
+//			}
+//		}
+		
+			SaveConfigController controller = (SaveConfigController) loadFXMLPage("保存配置",
+					FXMLPage.SAVE_CONFIG, false);
+			controller.setMainUIController(this);
+			controller.showDialogStage();
 	}
 
 	public GeneratorConfig getGeneratorConfigFromUI() {
 		GeneratorConfig generatorConfig = new GeneratorConfig();
+		generatorConfig.setName(this.getConfigName());
 		generatorConfig.setProjectFolder(projectFolderField.getText());
 		generatorConfig.setModelPackage(modelTargetPackage.getText());
 		generatorConfig.setGenerateKeys(generateKeysField.getText());
@@ -372,7 +413,15 @@ public class MainUIController extends BaseFXController {
 		generatorConfig.setComment(commentCheckBox.isSelected());
 		generatorConfig.setNeedToStringHashcodeEquals(needToStringHashcodeEquals.isSelected());
 		generatorConfig.setAnnotation(annotationCheckBox.isSelected());
-		generatorConfig.setUseActualColumnNames(useActualColumnNamesCheckbox.isSelected());
+		generatorConfig.setUseActualColumnNames(useActualColumnNamesCheckbox.isSelected());  
+		generatorConfig.setCreateBaseExp(createBaseExpCheckBox.isSelected());
+		generatorConfig.setCreateIndexMethod(createIndexMethodCheckBox.isSelected()); 
+		generatorConfig.setOverwriteExtFiles(overwriteExtFilesCheckBox.isSelected());
+		generatorConfig.setCreateVirtualDelete(createVirtualDeleteCheckBox.isSelected());
+		generatorConfig.setVirtualDeleteSql(virtualDeleteSqlFeild.getText());
+		generatorConfig.setExampleName(exampleNameField.getText());
+		generatorConfig.setExampleTargetPackage(exampleTargetPackage.getText());
+		generatorConfig.setExampleTargetProject(exampleTargetProject.getText());
 		return generatorConfig;
 	}
 
@@ -385,6 +434,20 @@ public class MainUIController extends BaseFXController {
 		daoTargetProject.setText(generatorConfig.getDaoTargetFolder());
 		mapperTargetPackage.setText(generatorConfig.getMappingXMLPackage());
 		mappingTargetProject.setText(generatorConfig.getMappingXMLTargetFolder());
+		offsetLimitCheckBox.setSelected(generatorConfig.isOffsetLimit());
+		commentCheckBox.setSelected(generatorConfig.isComment());
+		needToStringHashcodeEquals.setSelected(generatorConfig.isNeedToStringHashcodeEquals());
+		annotationCheckBox.setSelected(generatorConfig.isAnnotation());
+		useActualColumnNamesCheckbox.setSelected(generatorConfig.isUseActualColumnNames());
+		createBaseExpCheckBox.setSelected(generatorConfig.isCreateBaseExp());
+		createIndexMethodCheckBox.setSelected(generatorConfig.isCreateIndexMethod());
+		overwriteExtFilesCheckBox.setSelected(generatorConfig.isOverwriteExtFiles());
+		createVirtualDeleteCheckBox.setSelected(generatorConfig.isCreateVirtualDelete());
+		virtualDeleteSqlFeild.setText(generatorConfig.getVirtualDeleteSql());
+		exampleNameField.setText(generatorConfig.getExampleName());
+		exampleTargetPackage.setText(generatorConfig.getExampleTargetPackage());
+		exampleTargetProject.setText(generatorConfig.getExampleTargetProject());
+		setConfigName(generatorConfig.getName()); 
 	}
 
 	@FXML
@@ -458,6 +521,14 @@ public class MainUIController extends BaseFXController {
 			}
 		}
 		return true;
+	}
+
+	public String getConfigName() {
+		return configName;
+	}
+
+	public void setConfigName(String configName) {
+		this.configName = configName;
 	}
 
 }

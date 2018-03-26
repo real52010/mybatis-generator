@@ -32,17 +32,18 @@ public class VirtualDeleteByIndexColumnElementGenerator extends IndexColumnEleme
 
 	private boolean isSimple;
 
-    private TableIndex tableIndex;
+	private TableIndex tableIndex;
+
 	public VirtualDeleteByIndexColumnElementGenerator(TableIndex tableIndex) {
 		super();
-    	this.tableIndex=tableIndex;
+		this.tableIndex = tableIndex;
 	}
 
 	@Override
 	public void addElements(XmlElement parentElement) {
 		XmlElement answer = new XmlElement("update"); //$NON-NLS-1$
 
-		answer.addAttribute(new Attribute("id", getTabIndexJavaMethodName("virtualDeleteBy", tableIndex))); //$NON-ON-NLS-1$
+		answer.addAttribute(new Attribute("id", getTabIndexJavaMethodName("virtualDeleteBy", tableIndex))); // $NON-ON-NLS-1$
 		String parameterClass;
 		if (!isSimple && introspectedTable.getRules().generatePrimaryKeyClass()) {
 			parameterClass = introspectedTable.getPrimaryKeyType();
@@ -63,7 +64,8 @@ public class VirtualDeleteByIndexColumnElementGenerator extends IndexColumnEleme
 		StringBuilder sb = new StringBuilder();
 		sb.append("update "); //$NON-NLS-1$
 		sb.append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
-		sb.append(" set data_status=1 ");
+		String virtualDeleteSql=introspectedTable.getTableConfiguration().getProperty("virtualDeleteSql");
+		sb.append(virtualDeleteSql==null?" set data_status=1 ":" "+virtualDeleteSql.trim()+" ");
 		answer.addElement(new TextElement(sb.toString()));
 
 		boolean and = false;
@@ -82,8 +84,8 @@ public class VirtualDeleteByIndexColumnElementGenerator extends IndexColumnEleme
 			answer.addElement(new TextElement(sb.toString()));
 		}
 
-		if (context.getPlugins().sqlMapDeleteByPrimaryKeyElementGenerated(answer, introspectedTable)) {
+//		if (context.getPlugins().sqlMapDeleteByPrimaryKeyElementGenerated(answer, introspectedTable)) {
 			parentElement.addElement(answer);
-		}
+//		}
 	}
 }

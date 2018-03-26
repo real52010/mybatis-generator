@@ -55,15 +55,19 @@ public class DbRemarksCommentGenerator implements CommentGenerator {
 	private boolean suppressDate;
 
 	/**
-	 * The suppress all comments.
+	 * 所有注解
 	 */
 	private boolean suppressAllComments;
 
 	/**
-	 * The addition of table remark's comments. If suppressAllComments is true, this
-	 * option is ignored
+	 * 类注解
 	 */
 	private boolean addRemarkComments;
+
+	/**
+	 * JPA注解
+	 */
+	private boolean isAnnotations;
 
 	private SimpleDateFormat dateFormat;
 
@@ -71,6 +75,8 @@ public class DbRemarksCommentGenerator implements CommentGenerator {
 	private boolean addMethodFinal;
 
 	private String author;
+
+	private static final String SOURCEURL = "https://github.com/real52010/mybatis-generator.git";
 
 	/**
 	 * Instantiates a new default comment generator.
@@ -80,52 +86,11 @@ public class DbRemarksCommentGenerator implements CommentGenerator {
 		properties = new Properties();
 		suppressDate = false;
 		suppressAllComments = false;
-		addRemarkComments = false;
+		addRemarkComments = true;
 		addMethodFinal = true;
 		author = "real code generator";
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.mybatis.generator.api.CommentGenerator#addJavaFileComment(org.mybatis.
-	 * generator.api.dom.java.CompilationUnit)
-	 */
-	public void addJavaFileComment(CompilationUnit compilationUnit) {
-		// add no file level comments by default
-		compilationUnit.addFileCommentLine("/* https://github.com/real52010/mybatis-generator.git */");
-	}
-
-	/**
-	 * Adds a suitable comment to warn users that the element was generated, and
-	 * when it was generated. 删除mapper.xml中的注释
-	 *
-	 * @param xmlElement
-	 *            the xml element
-	 */
-	public void addComment(XmlElement xmlElement) {
-		// add no document level comments by default
-		// 删除mapper.xml中的注释
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.mybatis.generator.api.CommentGenerator#addRootComment(org.mybatis.
-	 * generator.api.dom.xml.XmlElement)
-	 */
-	public void addRootComment(XmlElement rootElement) {
-		// add no document level comments by default
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.mybatis.generator.api.CommentGenerator#addConfigurationProperties(java.
-	 * util.Properties)
-	 */
 	public void addConfigurationProperties(Properties properties) {
 		this.properties.putAll(properties);
 
@@ -136,6 +101,8 @@ public class DbRemarksCommentGenerator implements CommentGenerator {
 		addRemarkComments = isTrue(properties.getProperty(PropertyRegistry.COMMENT_GENERATOR_ADD_REMARK_COMMENTS));
 
 		addMethodFinal = isTrue(properties.getProperty(PropertyRegistry.COMMENT_GENERATOR_ADD_METHOD_FINAL));
+
+		isAnnotations = isTrue(properties.getProperty(PropertyRegistry.COMMENT_GENERATOR_ADD_JPAANNOTATIONS));
 
 		String dateFormatString = properties.getProperty(PropertyRegistry.COMMENT_GENERATOR_DATE_FORMAT);
 		if (StringUtility.stringHasValue(dateFormatString)) {
@@ -148,146 +115,55 @@ public class DbRemarksCommentGenerator implements CommentGenerator {
 		}
 	}
 
-	/**
-	 * This method adds the custom javadoc tag for. You may do nothing if you do not
-	 * wish to include the Javadoc tag - however, if you do not include the Javadoc
-	 * tag then the Java merge capability of the eclipse plugin will break.
-	 *
-	 * @param javaElement
-	 *            the java element
-	 * @param markAsDoNotDelete
-	 *            the mark as do not delete
-	 */
-	protected void addJavadocTag(JavaElement javaElement, boolean markAsDoNotDelete) {
-		StringBuilder sb = new StringBuilder();
-		if (markAsDoNotDelete) {
-			sb.append(" * do_not_delete_during_merge\n");
-		}
-		sb.append(" * @author " + author);
-		String s = getDateString();
-		if (s != null) {
-			sb.append("\n * date:");
-			sb.append(s);
-		}
-		javaElement.addJavaDocLine(sb.toString());
-	}
-
-	/**
-	 * This method returns a formated date string to include in the Javadoc tag and
-	 * XML comments. You may return null if you do not want the date in these
-	 * documentation elements.
-	 *
-	 * @return a string representing the current timestamp, or null
-	 */
-	protected String getDateString() {
-		if (suppressDate) {
-			return null;
-		} else if (dateFormat != null) {
-			return dateFormat.format(new Date());
-		} else {
-			// 我就喜欢这个格式化，不服自己修改
-			return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-		}
-	}
-
-	/**
-	 * 我的类注释,用于非实体类Criteria的注释
-	 *
-	 * @param javaElement
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.mybatis.generator.api.CommentGenerator#addJavaFileComment(org.mybatis.
+	 * generator.api.dom.java.CompilationUnit)
 	 */
 	@Override
-	public void addExampleClassComment(JavaElement javaElement) {
-		// * @author Acooly Code Generator
-		// * Date: 2016-04-05 20:12:59
+	public void addJavaFileComment(CompilationUnit compilationUnit) {
 		if (suppressAllComments) {
 			return;
 		}
-		javaElement.addJavaDocLine("/**");
-		javaElement.addJavaDocLine(" * 本文件由 工具自动生成自动生成 https://github.com/real52010/mybatis-generator.git");
-		// javaElement.addJavaDocLine(" * 本文件由 橙子 自动生成");
-		addJavadocTag(javaElement, false);
-		javaElement.addJavaDocLine(" */");
+		if (isAnnotations) {
+			compilationUnit.addImportedType(new FullyQualifiedJavaType("javax.persistence.Table"));
+			compilationUnit.addImportedType(new FullyQualifiedJavaType("javax.persistence.Id"));
+			compilationUnit.addImportedType(new FullyQualifiedJavaType("javax.persistence.Column"));
+			compilationUnit.addImportedType(new FullyQualifiedJavaType("javax.persistence.GeneratedValue"));
+			compilationUnit.addImportedType(new FullyQualifiedJavaType("org.hibernate.validator.constraints.NotEmpty"));
+		}
+		compilationUnit.addFileCommentLine(" /** 本文件由 工具自动生成自动生成 " + SOURCEURL + "*/");
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.mybatis.generator.api.CommentGenerator#addTopLevelClassComment(org.
-	 * mybatis.generator.api.dom.java.TopLevelClass,
+	 * @see org.mybatis.generator.api.CommentGenerator#addClassComment(org.mybatis.
+	 * generator.api.dom.java.InnerClass,
 	 * org.mybatis.generator.api.IntrospectedTable)
 	 */
 	@Override
-	public void addModelClassComment(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-		// 添加类注释
-		if (suppressAllComments || !addRemarkComments) {
-			return;
-		}
-
-		topLevelClass.addJavaDocLine("/** "); //$NON-NLS-1$
-
-		String remarks = introspectedTable.getFullyQualifiedTable().getRemark();
-		// String remarks = introspectedTable.getRemarks();
-		if (addRemarkComments && StringUtility.stringHasValue(remarks)) {
-			String[] remarkLines = remarks.split(System.getProperty("line.separator")); //$NON-NLS-1$
-			for (String remarkLine : remarkLines) {
-				topLevelClass.addJavaDocLine(" * " + remarkLine + " " + introspectedTable.getFullyQualifiedTable()); //$NON-NLS-1$
-			}
-		}
-
-		addJavadocTag(topLevelClass, false);
-
-		topLevelClass.addJavaDocLine(" */"); //$NON-NLS-1$
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.mybatis.generator.api.CommentGenerator#addEnumComment(org.mybatis.
-	 * generator.api.dom.java.InnerEnum,
-	 * org.mybatis.generator.api.IntrospectedTable)
-	 */
-	public void addEnumComment(InnerEnum innerEnum, IntrospectedTable introspectedTable) {
+	public void addClassComment(InnerClass innerClass, IntrospectedTable introspectedTable) {
+		// add no document level comments by default
+		// 删除生成GeneratedCriteria对象的注释信息的注释
 		if (suppressAllComments) {
 			return;
 		}
-
 		StringBuilder sb = new StringBuilder();
-
-		innerEnum.addJavaDocLine("/**"); //$NON-NLS-1$
-
-		sb.append(" * This addEnumComment,中文注释自行修改、编译源码"); //$NON-NLS-1$
-		sb.append(introspectedTable.getFullyQualifiedTable());
-		innerEnum.addJavaDocLine(sb.toString());
-
-		addJavadocTag(innerEnum, false);
-
-		innerEnum.addJavaDocLine(" */"); //$NON-NLS-1$
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.mybatis.generator.api.CommentGenerator#addFieldComment(org.mybatis.
-	 * generator.api.dom.java.Field, org.mybatis.generator.api.IntrospectedTable,
-	 * org.mybatis.generator.api.IntrospectedColumn)
-	 */
-	public void addFieldComment(Field field, IntrospectedTable introspectedTable,
-			IntrospectedColumn introspectedColumn) {
-		if (suppressAllComments) {
-			return;
-		}
-		// 添加字段注释
-		// StringBuffer sb = new StringBuffer();
-		// 对应表中字段的备注(数据库中自己写的备注信息)
-		if (introspectedColumn.getRemarks() != null && !introspectedColumn.getRemarks().equals("")) {
-			field.addJavaDocLine("/** ");
-			field.addJavaDocLine(" * " + introspectedColumn.getRemarks());
-			if (introspectedColumn.getDefaultValue() != null && !introspectedColumn.getDefaultValue().isEmpty()) {
-				field.addJavaDocLine(" * 默认：" + introspectedColumn.getDefaultValue());
-			}
-			field.addJavaDocLine(" */ ");
+		String shortName = innerClass.getType().getShortName();
+		innerClass.addJavaDocLine("/**"); //$NON-NLS-1$
+		sb.append(" * ").append(introspectedTable.getFullyQualifiedTable().getRemark())
+				.append(introspectedTable.getFullyQualifiedTable());
+		if ("GeneratedCriteria".equals(shortName)) {
+			sb.append("的基本动态SQL对象.");
+		} else if ("Criterion".equals(shortName)) {
+			sb.append("的动态SQL对象.");
 		}
 
+		innerClass.addJavaDocLine(sb.toString());
+		innerClass.addJavaDocLine(" */");
 	}
 
 	/*
@@ -296,6 +172,7 @@ public class DbRemarksCommentGenerator implements CommentGenerator {
 	 * @see org.mybatis.generator.api.CommentGenerator#addFieldComment(org.mybatis.
 	 * generator.api.dom.java.Field, org.mybatis.generator.api.IntrospectedTable)
 	 */
+	@Override
 	public void addFieldComment(Field field, IntrospectedTable introspectedTable) {
 		if (suppressAllComments) {
 			return;
@@ -311,13 +188,236 @@ public class DbRemarksCommentGenerator implements CommentGenerator {
 			sb.append(" 查询条件");
 		} else if ("serialVersionUID".equals(field.getName())) {
 			sb.append("串行版本ID");
-		}  else if ("paginLimit".equals(field.getName())) {
-            sb.append(" 查询条数");
-        } else if ("paginOffset".equals(field.getName())) {
-            sb.append(" 查询开始数");
-        }
+		} else if ("paginLimit".equals(field.getName())) {
+			sb.append(" 查询条数");
+		} else if ("paginOffset".equals(field.getName())) {
+			sb.append(" 查询开始数");
+		}
 		if (sb.length() > 0) {
-			field.addJavaDocLine("/**" + sb.toString()+"**/");
+			field.addJavaDocLine("/**" + sb.toString() + "**/");
+		}
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.mybatis.generator.api.CommentGenerator#addFieldComment(org.mybatis.
+	 * generator.api.dom.java.Field, org.mybatis.generator.api.IntrospectedTable,
+	 * org.mybatis.generator.api.IntrospectedColumn)
+	 */
+	@Override
+	public void addFieldComment(Field field, IntrospectedTable introspectedTable,
+			IntrospectedColumn introspectedColumn) {
+		if (suppressAllComments) {
+			return;
+		}
+		// 添加字段注释
+		// StringBuffer sb = new StringBuffer();
+		// 对应表中字段的备注(数据库中自己写的备注信息)
+
+		if (addRemarkComments && introspectedColumn.getRemarks() != null
+				&& !introspectedColumn.getRemarks().equals("")) {
+			field.addJavaDocLine("/** ");
+			field.addJavaDocLine(" * " + introspectedColumn.getRemarks());
+			if (introspectedColumn.getDefaultValue() != null && !introspectedColumn.getDefaultValue().isEmpty()) {
+				field.addJavaDocLine(" * 默认：" + introspectedColumn.getDefaultValue());
+			}
+			field.addJavaDocLine(" */ ");
+		}
+
+		if (isAnnotations) {
+			boolean isId = false;
+			for (IntrospectedColumn column : introspectedTable.getPrimaryKeyColumns()) {
+				if (introspectedColumn == column) {
+					isId = true;
+					field.addAnnotation("@Id");
+					field.addAnnotation("@GeneratedValue");
+					break;
+				}
+			}
+			if (!introspectedColumn.isNullable() && !isId) {
+				field.addAnnotation("@NotEmpty");
+			}
+			if (introspectedColumn.isIdentity()) {
+				if (introspectedTable.getTableConfiguration().getGeneratedKey().getRuntimeSqlStatement()
+						.equals("JDBC")) {
+					field.addAnnotation("@GeneratedValue(generator = \"JDBC\")");
+				} else {
+					field.addAnnotation("@GeneratedValue(strategy = GenerationType.IDENTITY)");
+				}
+			} else if (introspectedColumn.isSequenceColumn()) {
+				field.addAnnotation("@SequenceGenerator(name=\"\",sequenceName=\""
+						+ introspectedTable.getTableConfiguration().getGeneratedKey().getRuntimeSqlStatement() + "\")");
+			}
+		}
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.mybatis.generator.api.CommentGenerator#addGetterComment(org.mybatis.
+	 * generator.api.dom.java.Method, org.mybatis.generator.api.IntrospectedTable,
+	 * org.mybatis.generator.api.IntrospectedColumn)
+	 */
+	@Override
+	public void addGetterComment(Method method, IntrospectedTable introspectedTable,
+			IntrospectedColumn introspectedColumn) {
+		if (suppressAllComments) {
+			return;
+		}
+		method.setFinal(addMethodFinal);
+		 if (addRemarkComments) {
+		method.addJavaDocLine("/** "); //$NON-NLS-1$
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(" * 获取 "); //$NON-NLS-1$
+		if ( introspectedColumn.getRemarks() != null
+				&& !introspectedColumn.getRemarks().equals("")) {
+			sb.append(introspectedColumn.getRemarks()).append(" ");
+		} else {
+			sb.append(introspectedTable.getFullyQualifiedTable()).append('.')
+					.append(introspectedColumn.getActualColumnName());
+		}
+
+		method.addJavaDocLine(sb.toString());
+
+		sb.setLength(0);
+
+		sb.append(" * @return "); //$NON-NLS-1$
+		if (introspectedColumn.getRemarks() != null
+				&& !introspectedColumn.getRemarks().equals("")) {
+			sb.append(introspectedColumn.getRemarks());
+		} else {
+			sb.append(introspectedTable.getFullyQualifiedTable()).append('.')
+					.append(introspectedColumn.getActualColumnName());
+		}
+		method.addJavaDocLine(sb.toString());
+		method.addJavaDocLine(" */"); //$NON-NLS-1$
+		 }
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.mybatis.generator.api.CommentGenerator#addSetterComment(org.mybatis.
+	 * generator.api.dom.java.Method, org.mybatis.generator.api.IntrospectedTable,
+	 * org.mybatis.generator.api.IntrospectedColumn)
+	 */
+	@Override
+	public void addSetterComment(Method method, IntrospectedTable introspectedTable,
+			IntrospectedColumn introspectedColumn) {
+		if (suppressAllComments) {
+			return;
+		}
+
+		method.setFinal(addMethodFinal);
+		if (addRemarkComments) {
+			method.addJavaDocLine("/** "); //$NON-NLS-1$
+
+			StringBuilder sb = new StringBuilder();
+			sb.append(" * 设置 "); //$NON-NLS-1$
+			if (introspectedColumn.getRemarks() != null && !introspectedColumn.getRemarks().equals("")) {
+				sb.append(introspectedColumn.getRemarks()).append(" ");
+			} else {
+				sb.append(introspectedTable.getFullyQualifiedTable()).append('.')
+						.append(introspectedColumn.getActualColumnName());
+			}
+
+			method.addJavaDocLine(sb.toString());
+
+			// 参数
+			Parameter parm = method.getParameters().get(0);
+			sb.setLength(0);
+			sb.append(" * @param ").append(parm.getName() + " ");
+			if (introspectedColumn.getRemarks() != null && !introspectedColumn.getRemarks().equals("")) {
+				sb.append(introspectedColumn.getRemarks());
+			} else {
+				sb.append(introspectedTable.getFullyQualifiedTable()).append('.')
+						.append(introspectedColumn.getActualColumnName());
+			}
+			method.addJavaDocLine(sb.toString());
+			method.addJavaDocLine(" */"); //$NON-NLS-1$
+		}
+	}
+
+	@Override
+	public void addModelClassComment(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+		// 添加类注释
+		if (suppressAllComments) {
+			return;
+		}
+		if (addRemarkComments) {
+			topLevelClass.addJavaDocLine("/** "); //$NON-NLS-1$
+
+			String remarks = introspectedTable.getFullyQualifiedTable().getRemark();
+			// String remarks = introspectedTable.getRemarks();
+			if (StringUtility.stringHasValue(remarks)) {
+				String[] remarkLines = remarks.split(System.getProperty("line.separator")); //$NON-NLS-1$
+				for (String remarkLine : remarkLines) {
+					topLevelClass.addJavaDocLine(" * " + remarkLine + " " + introspectedTable.getRemarks()); //$NON-NLS-1$
+				}
+			}
+
+			addJavadocTag(topLevelClass);
+
+			topLevelClass.addJavaDocLine(" */"); //$NON-NLS-1$
+		}
+		if (isAnnotations) {
+			topLevelClass
+					.addAnnotation("@Table(name=\"" + introspectedTable.getFullyQualifiedTableNameAtRuntime() + "\")");
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.mybatis.generator.api.CommentGenerator#addExampleClassComment(org.mybatis
+	 * .generator.api.dom.java.JavaElement,
+	 * org.mybatis.generator.api.IntrospectedTable)
+	 */
+	@Override
+	public void addExampleClassComment(JavaElement javaElement, IntrospectedTable introspectedTable) {
+		// * @author Acooly Code Generator
+		// * Date: 2016-04-05 20:12:59
+		if (suppressAllComments) {
+			return;
+		}
+		javaElement.addJavaDocLine("/**");
+		String remarks = introspectedTable.getFullyQualifiedTable().getRemark();
+		if (addRemarkComments && StringUtility.stringHasValue(remarks)) {
+			String[] remarkLines = remarks.split(System.getProperty("line.separator")); //$NON-NLS-1$
+			for (String remarkLine : remarkLines) {
+				javaElement.addJavaDocLine(" * " + remarkLine + " " + introspectedTable.getRemarks() + "<br/>"); //$NON-NLS-1$
+			}
+		}
+		addJavadocTag(javaElement);
+		javaElement.addJavaDocLine(" */");
+
+	}
+
+	protected void addJavadocTag(JavaElement javaElement) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(" * @author " + author);
+		String s = getDateString();
+		if (s != null) {
+			sb.append("\n * date:");
+			sb.append(s);
+		}
+		javaElement.addJavaDocLine(sb.toString());
+	}
+
+	protected String getDateString() {
+		if (suppressDate) {
+			return null;
+		} else if (dateFormat != null) {
+			return dateFormat.format(new Date());
+		} else {
+			// 我就喜欢这个格式化，不服自己修改
+			return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 		}
 	}
 
@@ -326,9 +426,11 @@ public class DbRemarksCommentGenerator implements CommentGenerator {
 	 * 
 	 * @see org.mybatis.generator.api.CommentGenerator#addGeneralMethodComment(org.
 	 * mybatis.generator.api.dom.java.Method,
-	 * org.mybatis.generator.api.IntrospectedTable) 修改mapper接口中的注释
+	 * org.mybatis.generator.api.IntrospectedTable)
 	 */
+	@Override
 	public void addGeneralMethodComment(Method method, IntrospectedTable introspectedTable) {
+
 		if (suppressAllComments) {
 			return;
 		}
@@ -364,12 +466,12 @@ public class DbRemarksCommentGenerator implements CommentGenerator {
 			sb.append(" 根据主键删除,该方法为物理删除");
 		} else if ("deleteByExample".equals(method_name)) {
 			sb.append("  <strong>根据条件删除,该方法为虚拟删除,该方法要谨慎使用，如果example为空或其属性为空，会删除整表数据 </strong>");
-			
+
 		} else if ("virtualDelete".equals(method_name)) {
 			sb.append(" 根据主键删除,该方法为物理删除");
 		} else if ("virtualDeleteByExample".equals(method_name)) {
 			sb.append("  <strong>根据条件删除,该方法要谨慎使用，如果example为空或其属性为空，会删除整表数据 </strong>");
-			
+
 		} else if ("deleteByPrimaryKey".equals(method_name)) {
 			sb.append(" 根据ID删除");
 		} else if ("insert".equals(method_name)) {
@@ -394,10 +496,9 @@ public class DbRemarksCommentGenerator implements CommentGenerator {
 			sb.append(" 根据条件修改对应字段");
 		} else if ("updateByExample".equals(method_name)) {
 			sb.append(" 根据条件修改所有字段");
-		}else if ("updateBatchBySelective".equals(method_name)) {
+		} else if ("updateBatchBySelective".equals(method_name)) {
 			sb.append(" 根据列表里的字段批量修改");
-		}
-		else if ("updateByPrimaryKeySelective".equals(method_name)) {
+		} else if ("updateByPrimaryKeySelective".equals(method_name)) {
 			sb.append(" 根据ID修改对应字段");
 		} else if ("updateByPrimaryKey".equals(method_name)) {
 			sb.append(" 根据ID修改所有字段(必须含ID）");
@@ -453,130 +554,23 @@ public class DbRemarksCommentGenerator implements CommentGenerator {
 		}
 
 		method.addJavaDocLine(" */"); //$NON-NLS-1$
+
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.mybatis.generator.api.CommentGenerator#addGetterComment(org.mybatis.
-	 * generator.api.dom.java.Method, org.mybatis.generator.api.IntrospectedTable,
-	 * org.mybatis.generator.api.IntrospectedColumn) getter方法
-	 */
-	public void addGetterComment(Method method, IntrospectedTable introspectedTable,
-			IntrospectedColumn introspectedColumn) {
-		if (suppressAllComments) {
-			return;
-		}
-		method.setFinal(addMethodFinal);
-		method.addJavaDocLine("/** "); //$NON-NLS-1$
+	@Override
+	public void addEnumComment(InnerEnum innerEnum, IntrospectedTable introspectedTable) {
+		// TODO Auto-generated method stub
 
-		StringBuilder sb = new StringBuilder();
-		sb.append(" * 获取 "); //$NON-NLS-1$
-		if (introspectedColumn.getRemarks() != null && !introspectedColumn.getRemarks().equals("")) {
-			sb.append(introspectedColumn.getRemarks()).append(" ");
-		}
-		sb.append(introspectedTable.getFullyQualifiedTable()).append('.')
-				.append(introspectedColumn.getActualColumnName());
-
-		method.addJavaDocLine(sb.toString());
-
-		sb.setLength(0);
-
-		sb.append(" * @return "); //$NON-NLS-1$
-		if (introspectedColumn.getRemarks() != null && !introspectedColumn.getRemarks().equals("")) {
-			sb.append(introspectedColumn.getRemarks());
-		} else {
-			sb.append(introspectedTable.getFullyQualifiedTable()).append('.')
-					.append(introspectedColumn.getActualColumnName());
-		}
-		method.addJavaDocLine(sb.toString());
-		method.addJavaDocLine(" */"); //$NON-NLS-1$
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.mybatis.generator.api.CommentGenerator#addSetterComment(org.mybatis.
-	 * generator.api.dom.java.Method, org.mybatis.generator.api.IntrospectedTable,
-	 * org.mybatis.generator.api.IntrospectedColumn) setter方法
-	 */
-	public void addSetterComment(Method method, IntrospectedTable introspectedTable,
-			IntrospectedColumn introspectedColumn) {
-		if (suppressAllComments) {
-			return;
-		}
+	@Override
+	public void addComment(XmlElement xmlElement) {
 
-		method.setFinal(addMethodFinal);
-		method.addJavaDocLine("/** "); //$NON-NLS-1$
-
-		StringBuilder sb = new StringBuilder();
-		sb.append(" * 设置 "); //$NON-NLS-1$
-		if (introspectedColumn.getRemarks() != null && !introspectedColumn.getRemarks().equals("")) {
-			sb.append(introspectedColumn.getRemarks()).append(" ");
-		}
-		sb.append(introspectedTable.getFullyQualifiedTable()).append('.')
-				.append(introspectedColumn.getActualColumnName());
-
-		method.addJavaDocLine(sb.toString());
-
-		// 参数
-		Parameter parm = method.getParameters().get(0);
-		sb.setLength(0);
-		sb.append(" * @param ").append(parm.getName() + " ");
-		if (introspectedColumn.getRemarks() != null && !introspectedColumn.getRemarks().equals("")) {
-			sb.append(introspectedColumn.getRemarks());
-		} else {
-			sb.append(introspectedTable.getFullyQualifiedTable()).append('.')
-					.append(introspectedColumn.getActualColumnName());
-		}
-		method.addJavaDocLine(sb.toString());
-		method.addJavaDocLine(" */"); //$NON-NLS-1$
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.mybatis.generator.api.CommentGenerator#addClassComment(org.mybatis.
-	 * generator.api.dom.java.InnerClass,
-	 * org.mybatis.generator.api.IntrospectedTable)
-	 */
-	public void addClassComment(InnerClass innerClass, IntrospectedTable introspectedTable) {
-		// add no document level comments by default
-		// 删除生成GeneratedCriteria对象的注释信息的注释
-		if (suppressAllComments) {
-			return;
-		}
-		StringBuilder sb = new StringBuilder();
-		String shortName = innerClass.getType().getShortName();
-		innerClass.addJavaDocLine("/**"); //$NON-NLS-1$
-		sb.append(" * ").append(introspectedTable.getFullyQualifiedTable().getRemark())
-				.append(introspectedTable.getFullyQualifiedTable());
-		if ("GeneratedCriteria".equals(shortName)) {
-			sb.append("的基本动态SQL对象.");
-		} else if ("Criterion".equals(shortName)) {
-			sb.append("的动态SQL对象.");
-		}
+	@Override
+	public void addRootComment(XmlElement rootElement) {
 
-		innerClass.addJavaDocLine(sb.toString());
-		innerClass.addJavaDocLine(" */");
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.mybatis.generator.api.CommentGenerator#addClassComment(org.mybatis.
-	 * generator.api.dom.java.InnerClass,
-	 * org.mybatis.generator.api.IntrospectedTable, boolean) 删除生成Criteria对象的注释信息的注释
-	 */
-	public void addClassComment(InnerClass innerClass, IntrospectedTable introspectedTable, boolean markAsDoNotDelete) {
-		// add no document level comments by default
-		// 生成Criteria对象的注释信息的注释
-		StringBuilder sb = new StringBuilder();
-		innerClass.addJavaDocLine("/**");
-		sb.append(" * ").append(introspectedTable.getFullyQualifiedTable().getRemark())
-				.append(introspectedTable.getFullyQualifiedTable()).append("的映射实体");
-
-		innerClass.addJavaDocLine(sb.toString());
-		innerClass.addJavaDocLine(" */");
-	}
 }

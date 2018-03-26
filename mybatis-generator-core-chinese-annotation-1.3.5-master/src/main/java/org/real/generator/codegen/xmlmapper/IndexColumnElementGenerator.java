@@ -6,8 +6,7 @@ import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.AbstractXmlElementGenerator;
 import org.real.generator.codegen.TableIndex;
 
-public abstract class IndexColumnElementGenerator extends
-AbstractXmlElementGenerator {
+public abstract class IndexColumnElementGenerator extends AbstractXmlElementGenerator {
 
 	protected String getTabIndexJavaMethodName(String preix, TableIndex tableIndex) {
 		List<IntrospectedColumn> listColumns = tableIndex.getIntrospectedColumns();
@@ -27,6 +26,5 @@ AbstractXmlElementGenerator {
 		return preix + sb.toString();
 
 	}
-
 
 }

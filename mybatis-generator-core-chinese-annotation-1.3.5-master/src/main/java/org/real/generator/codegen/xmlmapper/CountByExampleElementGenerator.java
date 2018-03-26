@@ -29,54 +29,51 @@ import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.AbstractXmlElem
  * @author Jeff Butler
  *
  */
-public class CountByExampleElementGenerator extends
-        AbstractXmlElementGenerator {
+public class CountByExampleElementGenerator extends AbstractXmlElementGenerator {
 
-    public CountByExampleElementGenerator() {
-        super();
-    }
+	public CountByExampleElementGenerator() {
+		super();
+	}
 
-    @Override
-    public void addElements(XmlElement parentElement) {
-        XmlElement answer = new XmlElement("select"); //$NON-NLS-1$
+	@Override
+	public void addElements(XmlElement parentElement) {
+		XmlElement answer = new XmlElement("select"); //$NON-NLS-1$
 
-        String fqjt = introspectedTable.getExampleType();
+		String fqjt = introspectedTable.getExampleType();
 
-        answer.addAttribute(new Attribute(
-                "id", "countByExample")); //$NON-NLS-1$
-        answer.addAttribute(new Attribute("parameterType", fqjt)); //$NON-NLS-1$
-        answer.addAttribute(new Attribute("resultType", "java.lang.Long")); //$NON-NLS-1$ //$NON-NLS-2$
+		answer.addAttribute(new Attribute("id", "countByExample")); //$NON-NLS-1$
+		answer.addAttribute(new Attribute("parameterType", fqjt)); //$NON-NLS-1$
+		answer.addAttribute(new Attribute("resultType", "java.lang.Long")); //$NON-NLS-1$ //$NON-NLS-2$
 
-        context.getCommentGenerator().addComment(answer);
+		context.getCommentGenerator().addComment(answer);
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("select count(*) from "); //$NON-NLS-1$
-        sb.append(introspectedTable
-                .getAliasedFullyQualifiedTableNameAtRuntime());
-        answer.addElement(new TextElement(sb.toString()));
-        answer.addElement(getExampleIncludeElement());
+		StringBuilder sb = new StringBuilder();
+		sb.append("select count(*) from "); //$NON-NLS-1$
+		sb.append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
+		answer.addElement(new TextElement(sb.toString()));
+		answer.addElement(getExampleIncludeElement());
 
-        if (context.getPlugins().sqlMapCountByExampleElementGenerated(
-                answer, introspectedTable)) {
-            parentElement.addElement(answer);
-        }
-    }
+//		if (context.getPlugins().sqlMapCountByExampleElementGenerated(answer, introspectedTable)) {
+			parentElement.addElement(answer);
+//		}
+	}
 
-    protected XmlElement getExampleIncludeElement() {
-        XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
-        ifElement.addAttribute(new Attribute("test", "_parameter != null")); //$NON-NLS-1$ //$NON-NLS-2$
+	protected XmlElement getExampleIncludeElement() {
+		XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
+		ifElement.addAttribute(new Attribute("test", "_parameter != null")); //$NON-NLS-1$ //$NON-NLS-2$
 
-        XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
-        includeElement.addAttribute(new Attribute("refid", //$NON-NLS-1$
-                "Example_Where_Clause"));
-        ifElement.addElement(includeElement);
+		XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
+		includeElement.addAttribute(new Attribute("refid", //$NON-NLS-1$
+				"Example_Where_Clause"));
+		ifElement.addElement(includeElement);
 
-        return ifElement;
-    }
-    protected XmlElement getUpdateIncludeElement() {
-    	XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
-        includeElement.addAttribute(new Attribute("refid", "Base_Update_Column_List"));
-      
-        return includeElement;
-    }
+		return ifElement;
+	}
+
+	protected XmlElement getUpdateIncludeElement() {
+		XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
+		includeElement.addAttribute(new Attribute("refid", "Base_Update_Column_List"));
+
+		return includeElement;
+	}
 }

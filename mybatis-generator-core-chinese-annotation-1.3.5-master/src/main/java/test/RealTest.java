@@ -72,7 +72,7 @@ public class RealTest {
         jdbcConfig.setConnectionURL("jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8");
         jdbcConfig.setUserId("root");
         jdbcConfig.setPassword("root");
-        String projectPath="D:/gitserver/mybatis-generator/mybatis-generator-core-chinese-annotation-1.3.5-master";
+        String projectPath="D:\\GitHub\\mybatis-generator\\springboot-mybatis-demo";
         // java model
         JavaModelGeneratorConfiguration modelConfig = new JavaModelGeneratorConfiguration();
         modelConfig.setTargetPackage("com.huilian.model");

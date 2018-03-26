@@ -69,14 +69,17 @@ public class RealXMLMapperGenerator extends XMLMapperGenerator {
 				namespace));
 
 		context.getCommentGenerator().addRootComment(answer);
-
+		
 		addResultMapWithoutBLOBsElement(answer);
 		addExampleWhereClauseElement(answer);
 		addExampleOrderByClauseElement(answer);
-		addExamplePaginClauseElement(answer);
+		addExamplePaginClauseElement(answer); 
 		addBaseColumnListElement(answer);
 		addBaseInsertColumnListElement(answer);
-		addBaseUpdateColumnListElement(answer);
+		addBaseUpdateColumnListElement(answer); 
+
+		
+		
 		addInsertElement(answer);
 		addInsertBatchElement(answer);
 		addDeleteByPrimaryKeyListElement(answer);
@@ -121,6 +124,12 @@ public class RealXMLMapperGenerator extends XMLMapperGenerator {
 	}
 
 	private void addUpdateByIndexColumnMethod(XmlElement parentElement) {
+		
+
+		if(!"true".equals(introspectedTable.getTableConfiguration().getProperty("createIndexMethod"))) {
+			return;
+		}
+//		"createIndexMethod"
 		if (!(introspectedTable instanceof RealInsoIntrospectedTable)) {
 			return;
 		}
@@ -133,6 +142,9 @@ public class RealXMLMapperGenerator extends XMLMapperGenerator {
 	}
 
 	private void addDeleteByIndexColumnMethod(XmlElement parentElement) {
+		if(!"true".equals(introspectedTable.getTableConfiguration().getProperty("createIndexMethod"))) {
+			return;
+		}
 		if (!(introspectedTable instanceof RealInsoIntrospectedTable)) {
 			return;
 		}
@@ -147,6 +159,9 @@ public class RealXMLMapperGenerator extends XMLMapperGenerator {
 	}
 
 	private void addSelectByIndexColumnMethod(XmlElement parentElement) {
+		if(!"true".equals(introspectedTable.getTableConfiguration().getProperty("createIndexMethod"))) {
+			return;
+		}
 		if (!(introspectedTable instanceof RealInsoIntrospectedTable)) {
 			return;
 		}
@@ -162,6 +177,12 @@ public class RealXMLMapperGenerator extends XMLMapperGenerator {
 
 	private void addVirtualDeleteIndexColumnMethod(XmlElement parentElement) {
 		if (!(introspectedTable instanceof RealInsoIntrospectedTable)) {
+			return;
+		}
+		if(!"true".equals(introspectedTable.getTableConfiguration().getProperty("createIndexMethod"))) {
+			return;
+		} 
+		if (!"true".equals(introspectedTable.getTableConfiguration().getProperty("createVirtualDelete"))) {
 			return;
 		}
 		RealInsoIntrospectedTable realInsoIntrospectedTable = (RealInsoIntrospectedTable) introspectedTable;
@@ -280,18 +301,27 @@ public class RealXMLMapperGenerator extends XMLMapperGenerator {
 	}
 
 	protected void addExamplePaginClauseElement(XmlElement parentElement) {
-		AbstractXmlElementGenerator elementGenerator = new ExamplePaginClauseElementGenerator(true);
-		initializeAndExecuteGenerator(elementGenerator, parentElement);
+		if("true".equals(introspectedTable.getTableConfiguration().getProperty("offsetLimit"))) {
+			AbstractXmlElementGenerator elementGenerator = new ExamplePaginClauseElementGenerator(true);
+			initializeAndExecuteGenerator(elementGenerator, parentElement);
+		}
 	}
 
 	protected void addVirtualDeleteByExampleElement(XmlElement parentElement) {
+		if (!"true".equals(introspectedTable.getTableConfiguration().getProperty("createVirtualDelete"))) {
+			return;
+		}
 		AbstractXmlElementGenerator elementGenerator = new VirtualDeleteByExampleElementGenerator(true);
 		initializeAndExecuteGenerator(elementGenerator, parentElement);
 	}
 
 	protected void addVirtualDeleteByPrimaryKeyElement(XmlElement parentElement) {
+		if (!"true".equals(introspectedTable.getTableConfiguration().getProperty("createVirtualDelete"))) {
+			return;
+		}
 		AbstractXmlElementGenerator elementGenerator = new VirtualDeleteByPrimaryKeyElementGenerator(true);
 		initializeAndExecuteGenerator(elementGenerator, parentElement);
+		
 	}
 
 }

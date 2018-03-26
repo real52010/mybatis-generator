@@ -340,7 +340,6 @@ public class MyBatisGenerator {
             } else {
                 source = gxf.getFormattedContent();
             }
-
             callback.checkCancel();
             callback.startTask(getString(
                     "Progress.15", targetFile.getName())); //$NON-NLS-1$

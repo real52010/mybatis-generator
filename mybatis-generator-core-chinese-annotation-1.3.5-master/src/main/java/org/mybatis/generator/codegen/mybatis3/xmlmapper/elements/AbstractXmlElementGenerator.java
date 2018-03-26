@@ -76,17 +76,7 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
         return answer;
     }
 
-    protected XmlElement getExampleIncludeElement() {
-        XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
-        ifElement.addAttribute(new Attribute("test", "_parameter != null")); //$NON-NLS-1$ //$NON-NLS-2$
-
-        XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
-        includeElement.addAttribute(new Attribute("refid", //$NON-NLS-1$
-                introspectedTable.getExampleWhereClauseId()));
-        ifElement.addElement(includeElement);
-
-        return ifElement;
-    }
+ 
 
     protected XmlElement getUpdateByExampleIncludeElement() {
         XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
@@ -99,4 +89,37 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
 
         return ifElement;
     }
+    
+    protected XmlElement getExampleIncludeElement() {
+		XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
+		ifElement.addAttribute(new Attribute("test", "_parameter != null")); //$NON-NLS-1$ //$NON-NLS-2$
+
+		XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
+		includeElement.addAttribute(new Attribute("refid", //$NON-NLS-1$
+				"Example_Where_Clause"));
+		ifElement.addElement(includeElement);
+
+		return ifElement;
+	}
+
+	protected XmlElement getUpdateIncludeElement() {
+		XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
+		includeElement.addAttribute(new Attribute("refid", "Base_Update_Column_List"));
+
+		return includeElement;
+	}
+
+	protected XmlElement getOrderByIncludeElement() {
+		XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
+		includeElement.addAttribute(new Attribute("refid", "Example_OrderBy_Clause"));
+
+		return includeElement;
+	}
+
+	protected XmlElement getPaginIncludeElement() {
+		XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
+		includeElement.addAttribute(new Attribute("refid", "Example_Pagin_Clause"));
+
+		return includeElement;
+	}
 }

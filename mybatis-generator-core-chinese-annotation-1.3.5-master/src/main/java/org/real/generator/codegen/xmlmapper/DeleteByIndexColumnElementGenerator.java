@@ -27,67 +27,61 @@ import org.real.generator.codegen.TableIndex;
  * @author Jeff Butler
  *
  */
-public class DeleteByIndexColumnElementGenerator extends
-IndexColumnElementGenerator {
+public class DeleteByIndexColumnElementGenerator extends IndexColumnElementGenerator {
 
-    private boolean isSimple;
-    private TableIndex tableIndex;
-    public DeleteByIndexColumnElementGenerator(TableIndex tableIndex) {
-    	super();
-    	this.tableIndex=tableIndex;
-    }
+	private boolean isSimple;
+	private TableIndex tableIndex;
 
-    @Override
-    public void addElements(XmlElement parentElement) {
-        XmlElement answer = new XmlElement("delete"); //$NON-NLS-1$
+	public DeleteByIndexColumnElementGenerator(TableIndex tableIndex) {
+		super();
+		this.tableIndex = tableIndex;
+	}
 
-        answer.addAttribute(new Attribute(
-                "id",getTabIndexJavaMethodName("deleteBy", tableIndex)));  //$NON-NLS-1$
-        String parameterClass;
-//        if (!isSimple && introspectedTable.getRules().generatePrimaryKeyClass()) {
-//            parameterClass = introspectedTable.getPrimaryKeyType();
-//        } else {
-            // PK fields are in the base class. If more than on PK
-            // field, then they are coming in a map.
-            if (tableIndex.getIntrospectedColumns().size() > 1) {
-                parameterClass = "map"; //$NON-NLS-1$
-            } else {
-                parameterClass = introspectedTable.getPrimaryKeyColumns()
-                        .get(0).getFullyQualifiedJavaType().toString();
-            }
-//        }
-        answer.addAttribute(new Attribute("parameterType", //$NON-NLS-1$
-                parameterClass));
+	@Override
+	public void addElements(XmlElement parentElement) {
+		XmlElement answer = new XmlElement("delete"); //$NON-NLS-1$
 
-        context.getCommentGenerator().addComment(answer);
+		answer.addAttribute(new Attribute("id", getTabIndexJavaMethodName("deleteBy", tableIndex))); //$NON-NLS-1$
+		String parameterClass;
+		// if (!isSimple && introspectedTable.getRules().generatePrimaryKeyClass()) {
+		// parameterClass = introspectedTable.getPrimaryKeyType();
+		// } else {
+		// PK fields are in the base class. If more than on PK
+		// field, then they are coming in a map.
+		if (tableIndex.getIntrospectedColumns().size() > 1) {
+			parameterClass = "map"; //$NON-NLS-1$
+		} else {
+			parameterClass = introspectedTable.getPrimaryKeyColumns().get(0).getFullyQualifiedJavaType().toString();
+		}
+		// }
+		answer.addAttribute(new Attribute("parameterType", //$NON-NLS-1$
+				parameterClass));
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("delete from "); //$NON-NLS-1$
-        sb.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());
-        answer.addElement(new TextElement(sb.toString()));
+		context.getCommentGenerator().addComment(answer);
 
-        boolean and = false;
-        for (IntrospectedColumn introspectedColumn :tableIndex.getIntrospectedColumns()) {
-            sb.setLength(0);
-            if (and) {
-                sb.append("  and "); //$NON-NLS-1$
-            } else {
-                sb.append("where "); //$NON-NLS-1$
-                and = true;
-            }
+		StringBuilder sb = new StringBuilder();
+		sb.append("delete from "); //$NON-NLS-1$
+		sb.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());
+		answer.addElement(new TextElement(sb.toString()));
 
-            sb.append(MyBatis3FormattingUtilities
-                    .getEscapedColumnName(introspectedColumn));
-            sb.append(" = "); //$NON-NLS-1$
-            sb.append(MyBatis3FormattingUtilities
-                    .getParameterClause(introspectedColumn));
-            answer.addElement(new TextElement(sb.toString()));
-        }
+		boolean and = false;
+		for (IntrospectedColumn introspectedColumn : tableIndex.getIntrospectedColumns()) {
+			sb.setLength(0);
+			if (and) {
+				sb.append("  and "); //$NON-NLS-1$
+			} else {
+				sb.append("where "); //$NON-NLS-1$
+				and = true;
+			}
 
-        if (context.getPlugins()
-                .sqlMapDeleteByPrimaryKeyElementGenerated(answer,
-                        introspectedTable)) {
-            parentElement.addElement(answer);
-        }
-    }
+			sb.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
+			sb.append(" = "); //$NON-NLS-1$
+			sb.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn));
+			answer.addElement(new TextElement(sb.toString()));
+		}
+
+//		if (context.getPlugins().sqlMapDeleteByPrimaryKeyElementGenerated(answer, introspectedTable)) {
+			parentElement.addElement(answer);
+//		}
+	}
 }

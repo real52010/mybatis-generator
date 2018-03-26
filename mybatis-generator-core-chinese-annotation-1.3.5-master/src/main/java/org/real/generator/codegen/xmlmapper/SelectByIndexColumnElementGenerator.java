@@ -32,7 +32,7 @@ public class SelectByIndexColumnElementGenerator extends IndexColumnElementGener
 
 	public SelectByIndexColumnElementGenerator(TableIndex tableIndex) {
 		super();
-		this.tableIndex=tableIndex;
+		this.tableIndex = tableIndex;
 	}
 
 	@Override
@@ -49,17 +49,17 @@ public class SelectByIndexColumnElementGenerator extends IndexColumnElementGener
 		}
 
 		String parameterType;
-//		if (introspectedTable.getRules().generatePrimaryKeyClass()) {
-//			parameterType = introspectedTable.getPrimaryKeyType();
-//		} else {
-//			// PK fields are in the base class. If more than on PK
-			// field, then they are coming in a map.
-			if (tableIndex.getIntrospectedColumns().size()>1) {
-				parameterType = "map"; //$NON-NLS-1$
-			} else {
-				parameterType =tableIndex.getIntrospectedColumns().get(0).getFullyQualifiedJavaType().toString();
-			}
-//		}
+		// if (introspectedTable.getRules().generatePrimaryKeyClass()) {
+		// parameterType = introspectedTable.getPrimaryKeyType();
+		// } else {
+		// // PK fields are in the base class. If more than on PK
+		// field, then they are coming in a map.
+		if (tableIndex.getIntrospectedColumns().size() > 1) {
+			parameterType = "map"; //$NON-NLS-1$
+		} else {
+			parameterType = tableIndex.getIntrospectedColumns().get(0).getFullyQualifiedJavaType().toString();
+		}
+		// }
 
 		answer.addAttribute(new Attribute("parameterType", //$NON-NLS-1$
 				parameterType));
@@ -69,11 +69,11 @@ public class SelectByIndexColumnElementGenerator extends IndexColumnElementGener
 		StringBuilder sb = new StringBuilder();
 		sb.append("select "); //$NON-NLS-1$
 
-//		if (stringHasValue(introspectedTable.getSelectByPrimaryKeyQueryId())) {
-//			sb.append('\'');
-//			sb.append(introspectedTable.getSelectByPrimaryKeyQueryId());
-//			sb.append("' as QUERYID,"); //$NON-NLS-1$
-//		}
+		// if (stringHasValue(introspectedTable.getSelectByPrimaryKeyQueryId())) {
+		// sb.append('\'');
+		// sb.append(introspectedTable.getSelectByPrimaryKeyQueryId());
+		// sb.append("' as QUERYID,"); //$NON-NLS-1$
+		// }
 		answer.addElement(new TextElement(sb.toString()));
 		answer.addElement(getBaseColumnListElement());
 		// if (introspectedTable.hasBLOBColumns()) {
@@ -102,41 +102,44 @@ public class SelectByIndexColumnElementGenerator extends IndexColumnElementGener
 			answer.addElement(new TextElement(sb.toString()));
 		}
 
-		if (context.getPlugins().sqlMapSelectByPrimaryKeyElementGenerated(answer, introspectedTable)) {
+//		if (context.getPlugins().sqlMapSelectByPrimaryKeyElementGenerated(answer, introspectedTable)) {
 			parentElement.addElement(answer);
-		}
+//		}
 	}
 
-//	protected XmlElement getExampleIncludeElement() {
-//		XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
-//		ifElement.addAttribute(new Attribute("test", "_parameter != null")); //$NON-NLS-1$ //$NON-NLS-2$
-//
-//		XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
-//		includeElement.addAttribute(new Attribute("refid", //$NON-NLS-1$
-//				"Example_Where_Clause"));
-//		ifElement.addElement(includeElement);
-//
-//		return ifElement;
-//	}
+	// protected XmlElement getExampleIncludeElement() {
+	// XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
+	// ifElement.addAttribute(new Attribute("test", "_parameter != null"));
+	// //$NON-NLS-1$ //$NON-NLS-2$
+	//
+	// XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
+	// includeElement.addAttribute(new Attribute("refid", //$NON-NLS-1$
+	// "Example_Where_Clause"));
+	// ifElement.addElement(includeElement);
+	//
+	// return ifElement;
+	// }
 
-//	protected XmlElement getUpdateIncludeElement() {
-//		XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
-//		includeElement.addAttribute(new Attribute("refid", "Base_Update_Column_List"));
-//
-//		return includeElement;
-//	}
+	// protected XmlElement getUpdateIncludeElement() {
+	// XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
+	// includeElement.addAttribute(new Attribute("refid",
+	// "Base_Update_Column_List"));
+	//
+	// return includeElement;
+	// }
 
-//	protected XmlElement getOrderByIncludeElement() {
-//		XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
-//		includeElement.addAttribute(new Attribute("refid", "Example_OrderBy_Clause"));
-//
-//		return includeElement;
-//	}
-//
-//	protected XmlElement getPaginIncludeElement() {
-//		XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
-//		includeElement.addAttribute(new Attribute("refid", "Example_Pagin_Clause"));
-//
-//		return includeElement;
-//	}
+	// protected XmlElement getOrderByIncludeElement() {
+	// XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
+	// includeElement.addAttribute(new Attribute("refid",
+	// "Example_OrderBy_Clause"));
+	//
+	// return includeElement;
+	// }
+	//
+	// protected XmlElement getPaginIncludeElement() {
+	// XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
+	// includeElement.addAttribute(new Attribute("refid", "Example_Pagin_Clause"));
+	//
+	// return includeElement;
+	// }
 }

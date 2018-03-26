@@ -28,89 +28,83 @@ import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.AbstractXmlElem
  * @author Jeff Butler
  *
  */
-public class UpdateBatchBySelectiveElementGenerator extends
-        AbstractXmlElementGenerator {
+public class UpdateBatchBySelectiveElementGenerator extends AbstractXmlElementGenerator {
 
-    private boolean isSimple;
+	private boolean isSimple;
 
-    public UpdateBatchBySelectiveElementGenerator(boolean isSimple) {
-        super();
-        this.isSimple = isSimple;
-    }
+	public UpdateBatchBySelectiveElementGenerator(boolean isSimple) {
+		super();
+		this.isSimple = isSimple;
+	}
 
-    @Override
-    public void addElements(XmlElement parentElement) {
-        XmlElement answer = new XmlElement("update"); //$NON-NLS-1$
+	@Override
+	public void addElements(XmlElement parentElement) {
+		XmlElement answer = new XmlElement("update"); //$NON-NLS-1$
 
-        String fqjt = introspectedTable.getExampleType();
-        FullyQualifiedJavaType parameterType=new FullyQualifiedJavaType("java.util.List");
-        answer.addAttribute(new Attribute(
-                "id", "updateBatchBySelective")); //$NON-NLS-1$
-        answer.addAttribute(new Attribute("parameterType",parameterType.getFullyQualifiedName())); //$NON-NLS-1$
+		String fqjt = introspectedTable.getExampleType();
+		FullyQualifiedJavaType parameterType = new FullyQualifiedJavaType("java.util.List");
+		answer.addAttribute(new Attribute("id", "updateBatchBySelective")); //$NON-NLS-1$
+		answer.addAttribute(new Attribute("parameterType", parameterType.getFullyQualifiedName())); //$NON-NLS-1$
 
-        context.getCommentGenerator().addComment(answer);
-        XmlElement listElement = new XmlElement("foreach"); 
-        listElement.addAttribute(new Attribute("collection", "list"));
-        listElement.addAttribute(new Attribute("item", "record"));
-        listElement.addAttribute(new Attribute("index", "index"));
-        listElement.addAttribute(new Attribute("open", ""));
-        listElement.addAttribute(new Attribute("separator", "separator"));
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("delete from "); //$NON-NLS-1$
-//        sb.append(introspectedTable
-//                .getAliasedFullyQualifiedTableNameAtRuntime());
-//        answer.addElement(new TextElement(sb.toString()));
-//        XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
-//        includeElement.addAttribute(new Attribute("refid", "Base_Update_Column_List"));
-//        answer.addElement(includeElement) answer.addElement(getExampleIncludeElement());;
-        
-        listElement.addElement(getUpdateIncludeElement());
-        
-        
-        
-        StringBuilder sb = new StringBuilder();
-        boolean and = false;
-        for (IntrospectedColumn introspectedColumn : introspectedTable
-                .getPrimaryKeyColumns()) {
-            sb.setLength(0);
-            if (and) {
-                sb.append("  and "); //$NON-NLS-1$
-            } else {
-                sb.append("where "); //$NON-NLS-1$
-                and = true;
-            }
+		context.getCommentGenerator().addComment(answer);
+		XmlElement listElement = new XmlElement("foreach");
+		listElement.addAttribute(new Attribute("collection", "list"));
+		listElement.addAttribute(new Attribute("item", "record"));
+		listElement.addAttribute(new Attribute("index", "index"));
+		listElement.addAttribute(new Attribute("open", ""));
+		listElement.addAttribute(new Attribute("separator", "separator"));
+		// StringBuilder sb = new StringBuilder();
+		// sb.append("delete from "); //$NON-NLS-1$
+		// sb.append(introspectedTable
+		// .getAliasedFullyQualifiedTableNameAtRuntime());
+		// answer.addElement(new TextElement(sb.toString()));
+		// XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
+		// includeElement.addAttribute(new Attribute("refid",
+		// "Base_Update_Column_List"));
+		// answer.addElement(includeElement)
+		// answer.addElement(getExampleIncludeElement());;
 
-            sb.append(MyBatis3FormattingUtilities
-                    .getEscapedColumnName(introspectedColumn));
-            sb.append(" = "); //$NON-NLS-1$
-            sb.append(MyBatis3FormattingUtilities
-                    .getParameterClause(introspectedColumn,"record"));
-            listElement.addElement(new TextElement(sb.toString()));
-        }
+		listElement.addElement(getUpdateIncludeElement());
 
-       
-        answer.addElement(listElement);
-        if (context.getPlugins().sqlMapDeleteByExampleElementGenerated(
-                answer, introspectedTable)) {
-            parentElement.addElement(answer);
-        }
-    }
-    
-    protected XmlElement getExampleIncludeElement() {
-        XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
-        ifElement.addAttribute(new Attribute("test", "_parameter != null")); //$NON-NLS-1$ //$NON-NLS-2$
+		StringBuilder sb = new StringBuilder();
+		boolean and = false;
+		for (IntrospectedColumn introspectedColumn : introspectedTable.getPrimaryKeyColumns()) {
+			sb.setLength(0);
+			if (and) {
+				sb.append("  and "); //$NON-NLS-1$
+			} else {
+				sb.append("where "); //$NON-NLS-1$
+				and = true;
+			}
 
-        XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
-        includeElement.addAttribute(new Attribute("refid", //$NON-NLS-1$
-                "Example_Where_Clause"));
-        ifElement.addElement(includeElement);
+			sb.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
+			sb.append(" = "); //$NON-NLS-1$
+			sb.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn, "record"));
+			listElement.addElement(new TextElement(sb.toString()));
+		}
 
-        return ifElement;
-    }
-    protected XmlElement getUpdateIncludeElement() {
-    	XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
-        includeElement.addAttribute(new Attribute("refid", "Base_Update_Column_List"));
-      
-        return includeElement;
-    }
+		answer.addElement(listElement);
+//		if (context.getPlugins().sqlMapDeleteByExampleElementGenerated(answer, introspectedTable)) {
+			parentElement.addElement(answer);
+//		}
+	}
+
+	protected XmlElement getExampleIncludeElement() {
+		XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
+		ifElement.addAttribute(new Attribute("test", "_parameter != null")); //$NON-NLS-1$ //$NON-NLS-2$
+
+		XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
+		includeElement.addAttribute(new Attribute("refid", //$NON-NLS-1$
+				"Example_Where_Clause"));
+		ifElement.addElement(includeElement);
+
+		return ifElement;
+	}
+
+	protected XmlElement getUpdateIncludeElement() {
+		XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
+		includeElement.addAttribute(new Attribute("refid", "Base_Update_Column_List"));
+
+		return includeElement;
+	}
 }

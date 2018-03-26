@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.collections.*?>
 <?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import java.lang.*?>
+
 <AnchorPane prefHeight="389.0" prefWidth="569.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zzg.mybatis.generator.controller.DbConnectionController">
    <children>
       <GridPane alignment="CENTER_RIGHT" layoutX="10.0" layoutY="30.0" vgap="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
@@ -23,7 +26,10 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="保存名称" />
+            <Label text="保存名称">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin></Label>
             <TextField fx:id="nameField" GridPane.columnIndex="2" />
             <Label text="数据库类型" GridPane.rowIndex="1" />
             <ChoiceBox fx:id="dbTypeChoice" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1">

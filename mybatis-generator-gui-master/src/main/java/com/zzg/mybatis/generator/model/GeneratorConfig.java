@@ -1,5 +1,9 @@
 package com.zzg.mybatis.generator.model;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextField;
+
 /**
  *
  * GeneratorConfig is the Config of mybatis generator config exclude database
@@ -47,7 +51,24 @@ public class GeneratorConfig {
 	private boolean useActualColumnNames;
 
 	private String generateKeys;
+	
+	private boolean createBaseExp;
+	
+	private boolean createIndexMethod;
+	
+	private boolean overwriteExtFiles;
+	
+	private boolean createVirtualDelete;
+	
+	private String virtualDeleteSql;
+	
+	private String exampleName;
 
+
+	private String exampleTargetPackage;
+
+	private String exampleTargetProject;
+	
 	public String getName() {
 		return name;
 	}
@@ -110,6 +131,14 @@ public class GeneratorConfig {
 
 	public void setDaoPackage(String daoPackage) {
 		this.daoPackage = daoPackage;
+	}
+	
+	public String getExampleName() {
+		return exampleName;
+	}
+
+	public void setExampleName(String exampleName) {
+		this.exampleName = exampleName;
 	}
 
 	public String getDaoTargetFolder() {
@@ -191,4 +220,61 @@ public class GeneratorConfig {
 	public void setGenerateKeys(String generateKeys) {
 		this.generateKeys = generateKeys;
 	}
+
+	public boolean isCreateBaseExp() {
+		return createBaseExp;
+	}
+
+	public void setCreateBaseExp(boolean createBaseExp) {
+		this.createBaseExp = createBaseExp;
+	}
+
+	public boolean isCreateIndexMethod() {
+		return createIndexMethod;
+	}
+
+	public void setCreateIndexMethod(boolean createIndexMethod) {
+		this.createIndexMethod = createIndexMethod;
+	}
+
+	public boolean isOverwriteExtFiles() {
+		return overwriteExtFiles;
+	}
+
+	public void setOverwriteExtFiles(boolean overwriteExtFiles) {
+		this.overwriteExtFiles = overwriteExtFiles;
+	}
+
+	public boolean isCreateVirtualDelete() {
+		return createVirtualDelete;
+	}
+
+	public void setCreateVirtualDelete(boolean createVirtualDelete) {
+		this.createVirtualDelete = createVirtualDelete;
+	}
+
+	public String getVirtualDeleteSql() {
+		return virtualDeleteSql;
+	}
+
+	public void setVirtualDeleteSql(String virtualDeleteSql) {
+		this.virtualDeleteSql = virtualDeleteSql;
+	}
+
+	public String getExampleTargetPackage() {
+		return exampleTargetPackage;
+	}
+
+	public void setExampleTargetPackage(String exampleTargetPackage) {
+		this.exampleTargetPackage = exampleTargetPackage;
+	}
+
+	public String getExampleTargetProject() {
+		return exampleTargetProject;
+	}
+
+	public void setExampleTargetProject(String exampleTargetProject) {
+		this.exampleTargetProject = exampleTargetProject;
+	}
+	
 }

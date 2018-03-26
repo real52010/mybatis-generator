@@ -62,7 +62,7 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
         commentGenerator.addJavaFileComment(interfaze);
 
         // 添加类注释
-        commentGenerator.addExampleClassComment(interfaze);
+        commentGenerator.addExampleClassComment(interfaze,introspectedTable);
 
         String rootInterface = introspectedTable
                 .getTableConfigurationProperty(PropertyRegistry.ANY_ROOT_INTERFACE);

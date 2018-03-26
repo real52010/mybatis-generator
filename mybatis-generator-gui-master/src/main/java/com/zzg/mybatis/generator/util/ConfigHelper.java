@@ -52,8 +52,10 @@ public class ConfigHelper {
 				fos.write(buffer, 0, byteread);
 			}
 		} finally {
-			if (fis != null) fis.close();
-			if (fos != null) fos.close();
+			if (fis != null)
+				fis.close();
+			if (fos != null)
+				fos.close();
 		}
 
 	}
@@ -77,13 +79,17 @@ public class ConfigHelper {
 
 			return configs;
 		} finally {
-			if (rs != null) rs.close();
-			if (stat != null) stat.close();
-			if (conn != null) conn.close();
+			if (rs != null)
+				rs.close();
+			if (stat != null)
+				stat.close();
+			if (conn != null)
+				conn.close();
 		}
 	}
 
-	public static void saveDatabaseConfig(boolean isUpdate, Integer primaryKey, DatabaseConfig dbConfig) throws Exception {
+	public static void saveDatabaseConfig(Integer primaryKey, DatabaseConfig dbConfig, boolean isUpdate)
+			throws Exception {
 		String configName = dbConfig.getName();
 		Connection conn = null;
 		Statement stat = null;
@@ -100,15 +106,19 @@ public class ConfigHelper {
 			String jsonStr = JSON.toJSONString(dbConfig);
 			String sql;
 			if (isUpdate) {
-				sql = String.format("UPDATE dbs SET name = '%s', value = '%s' where id = %d", configName, jsonStr, primaryKey);
+				sql = String.format("UPDATE dbs SET name = '%s', value = '%s' where id = %d", configName, jsonStr,
+						primaryKey);
 			} else {
 				sql = String.format("INSERT INTO dbs (name, value) values('%s', '%s')", configName, jsonStr);
 			}
 			stat.executeUpdate(sql);
 		} finally {
-			if (rs != null) rs.close();
-			if (stat != null) stat.close();
-			if (conn != null) conn.close();
+			if (rs != null)
+				rs.close();
+			if (stat != null)
+				stat.close();
+			if (conn != null)
+				conn.close();
 		}
 	}
 
@@ -122,38 +132,58 @@ public class ConfigHelper {
 			String sql = String.format("delete from dbs where id=%d", databaseConfig.getId());
 			stat.executeUpdate(sql);
 		} finally {
-			if (rs != null) rs.close();
-			if (stat != null) stat.close();
-			if (conn != null) conn.close();
+			if (rs != null)
+				rs.close();
+			if (stat != null)
+				stat.close();
+			if (conn != null)
+				conn.close();
 		}
 	}
 
-	public static void saveGeneratorConfig(GeneratorConfig generatorConfig) throws Exception {
+	public static GeneratorConfig loadUserConfig(String name) throws Exception {
+		return loadGeneratorConfig(name, "user");
+	}
+
+	public static GeneratorConfig loadSysConfig(String name) throws Exception {
+		return loadGeneratorConfig(name, "sys");
+	}
+
+	public static List<GeneratorConfig> loadUserConfigs() throws Exception {
+		return loadGeneratorConfigs("user");
+	}
+
+	public static List<GeneratorConfig> loadSysConfigs() throws Exception {
+		return loadGeneratorConfigs("sys");
+	}
+
+	public static int deleteUserConfig(String name) throws Exception {
+		return deleteGeneratorConfig(name, "user");
+	}
+
+	public static int deleteSysConfig(String name) throws Exception {
+		return deleteGeneratorConfig(name, "sys");
+	}
+
+	public static void saveUserConfig(GeneratorConfig generatorConfig, boolean isUpdate) throws Exception {
+		saveGeneratorConfig(generatorConfig.getName(), generatorConfig, "user", isUpdate);
+	}
+
+	public static void saveSysConfig(String configName, GeneratorConfig generatorConfig, boolean isUpdate)
+			throws Exception {
+		saveGeneratorConfig(configName, generatorConfig, "sys", isUpdate);
+
+	}
+
+	private static GeneratorConfig loadGeneratorConfig(String name, String type) throws Exception {
 		Connection conn = null;
 		Statement stat = null;
 		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			stat = conn.createStatement();
-			String jsonStr = JSON.toJSONString(generatorConfig);
-			String sql = String.format("INSERT INTO generator_config values('%s', '%s')", generatorConfig.getName(),
-					jsonStr);
-			stat.executeUpdate(sql);
-		} finally {
-			if (rs != null) rs.close();
-			if (stat != null) stat.close();
-			if (conn != null) conn.close();
-		}
-	}
-
-	public static GeneratorConfig loadGeneratorConfig(String name) throws Exception {
-		Connection conn = null;
-		Statement stat = null;
-		ResultSet rs = null;
-		try {
-			conn = ConnectionManager.getConnection();
-			stat = conn.createStatement();
-			String sql = String.format("SELECT * FROM generator_config where name='%s'", name);
+			String sql = String.format("SELECT name, value FROM generator_config where type='%s' and name='%s'", type,
+					name);
 			_LOG.info("sql: {}", sql);
 			rs = stat.executeQuery(sql);
 			GeneratorConfig generatorConfig = null;
@@ -163,20 +193,23 @@ public class ConfigHelper {
 			}
 			return generatorConfig;
 		} finally {
-			if (rs != null) rs.close();
-			if (stat != null) stat.close();
-			if (conn != null) conn.close();
+			if (rs != null)
+				rs.close();
+			if (stat != null)
+				stat.close();
+			if (conn != null)
+				conn.close();
 		}
 	}
 
-	public static List<GeneratorConfig> loadGeneratorConfigs() throws Exception {
+	private static List<GeneratorConfig> loadGeneratorConfigs(String type) throws Exception {
 		Connection conn = null;
 		Statement stat = null;
 		ResultSet rs = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			stat = conn.createStatement();
-			String sql = String.format("SELECT * FROM generator_config");
+			String sql = String.format("SELECT name, value FROM generator_config where type='%s'", type);
 			_LOG.info("sql: {}", sql);
 			rs = stat.executeQuery(sql);
 			List<GeneratorConfig> configs = new ArrayList<>();
@@ -186,24 +219,71 @@ public class ConfigHelper {
 			}
 			return configs;
 		} finally {
-			if (rs != null) rs.close();
-			if (stat != null) stat.close();
-			if (conn != null) conn.close();
+			if (rs != null)
+				rs.close();
+			if (stat != null)
+				stat.close();
+			if (conn != null)
+				conn.close();
 		}
 	}
 
-	public static int deleteGeneratorConfig(String name) throws Exception {
+	private static int deleteGeneratorConfig(String name, String type) throws Exception {
 		Connection conn = null;
 		Statement stat = null;
 		try {
 			conn = ConnectionManager.getConnection();
 			stat = conn.createStatement();
-			String sql = String.format("DELETE FROM generator_config where name='%s'", name);
+			String sql = String.format("DELETE FROM generator_config where type='%s' and name='%s'", type, name);
 			_LOG.info("sql: {}", sql);
 			return stat.executeUpdate(sql);
 		} finally {
-			if (stat != null) stat.close();
-			if (conn != null) conn.close();
+			if (stat != null)
+				stat.close();
+			if (conn != null)
+				conn.close();
+		}
+	}
+
+	private static void saveGeneratorConfig(String configName, GeneratorConfig generatorConfig, String type,
+			boolean isUpdate) throws Exception {
+		Connection conn = null;
+		Statement stat = null;
+		ResultSet rs = null;
+		boolean exist;
+		try {
+			conn = ConnectionManager.getConnection();
+			stat = conn.createStatement();
+
+			String sql = String.format("SELECT name, value FROM generator_config where  type='%s' and name='%s'", type,
+					configName);
+
+			ResultSet rs1 = stat.executeQuery(sql);
+			exist = rs1.next();
+
+			if (exist && !isUpdate) {
+				throw new RuntimeException("配置已经存在, 请使用其它名字");
+			}
+			String jsonStr = JSON.toJSONString(generatorConfig);
+			if (exist) {
+				sql = String.format("update  generator_config set value='%s'  where  type='%s' and name='%s'", jsonStr,
+						type, configName);
+
+			} else {
+				sql = String.format("INSERT INTO generator_config(name, value,type) values('%s', '%s', '%s')",
+						configName, jsonStr, type);
+			}
+
+			_LOG.info("sql: {}", sql);
+			stat.executeUpdate(sql);
+		} finally {
+
+			if (rs != null)
+				rs.close();
+			if (stat != null)
+				stat.close();
+			if (conn != null)
+				conn.close();
 		}
 	}
 
@@ -248,6 +328,5 @@ public class ConfigHelper {
 		}
 		return jarFilePathList;
 	}
-
 
 }

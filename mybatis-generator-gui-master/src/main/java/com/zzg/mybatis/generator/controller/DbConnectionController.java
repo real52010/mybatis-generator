@@ -50,7 +50,7 @@ public class DbConnectionController extends BaseFXController {
 			return;
 		}
 		try {
-			ConfigHelper.saveDatabaseConfig(this.isUpdate, primayKey, config);
+			ConfigHelper.saveDatabaseConfig( primayKey, config,this.isUpdate);
 			getDialogStage().close();
 			mainUIController.loadLeftDBTree();
 		} catch (Exception e) {

@@ -27,60 +27,56 @@ import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.AbstractXmlElem
  * @author Jeff Butler
  *
  */
-public class DeleteByExampleElementGenerator extends
-        AbstractXmlElementGenerator {
+public class DeleteByExampleElementGenerator extends AbstractXmlElementGenerator {
 
-    private boolean isSimple;
+	private boolean isSimple;
 
-    public DeleteByExampleElementGenerator(boolean isSimple) {
-        super();
-        this.isSimple = isSimple;
-    }
+	public DeleteByExampleElementGenerator(boolean isSimple) {
+		super();
+		this.isSimple = isSimple;
+	}
 
-    @Override
-    public void addElements(XmlElement parentElement) {
-        XmlElement answer = new XmlElement("delete"); //$NON-NLS-1$
+	@Override
+	public void addElements(XmlElement parentElement) {
+		XmlElement answer = new XmlElement("delete"); //$NON-NLS-1$
 
-        String fqjt = introspectedTable.getExampleType();
+		String fqjt = introspectedTable.getExampleType();
 
-        answer.addAttribute(new Attribute(
-                "id", "deleteByExample")); //$NON-NLS-1$
-        answer.addAttribute(new Attribute("parameterType", fqjt)); //$NON-NLS-1$
+		answer.addAttribute(new Attribute("id", "deleteByExample")); //$NON-NLS-1$
+		answer.addAttribute(new Attribute("parameterType", fqjt)); //$NON-NLS-1$
 
-        context.getCommentGenerator().addComment(answer);
+		context.getCommentGenerator().addComment(answer);
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("delete from "); //$NON-NLS-1$
-        sb.append(introspectedTable
-                .getAliasedFullyQualifiedTableNameAtRuntime());
-        answer.addElement(new TextElement(sb.toString()));
-        answer.addElement(getExampleIncludeElement());
-        answer.addElement(getUnExampleIncludeElement());
+		StringBuilder sb = new StringBuilder();
+		sb.append("delete from "); //$NON-NLS-1$
+		sb.append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
+		answer.addElement(new TextElement(sb.toString()));
+		answer.addElement(getExampleIncludeElement());
+		answer.addElement(getUnExampleIncludeElement());
 
-        if (context.getPlugins().sqlMapDeleteByExampleElementGenerated(
-                answer, introspectedTable)) {
-            parentElement.addElement(answer);
-        }
-    }
-    
-    protected XmlElement getExampleIncludeElement() {
-        XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
-        ifElement.addAttribute(new Attribute("test", "_parameter != null")); //$NON-NLS-1$ //$NON-NLS-2$
+//		if (context.getPlugins().sqlMapDeleteByExampleElementGenerated(answer, introspectedTable)) {
+			parentElement.addElement(answer);
+//		}
+	}
 
-        XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
-        includeElement.addAttribute(new Attribute("refid", //$NON-NLS-1$
-                "Example_Where_Clause"));
-        ifElement.addElement(includeElement);
+	protected XmlElement getExampleIncludeElement() {
+		XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
+		ifElement.addAttribute(new Attribute("test", "_parameter != null")); //$NON-NLS-1$ //$NON-NLS-2$
 
-        return ifElement;
-    }
-    protected XmlElement getUnExampleIncludeElement() {
-        XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
-        ifElement.addAttribute(new Attribute("test", "_parameter == null")); //$NON-NLS-1$ //$NON-NLS-2$
+		XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
+		includeElement.addAttribute(new Attribute("refid", //$NON-NLS-1$
+				"Example_Where_Clause"));
+		ifElement.addElement(includeElement);
 
-    
-        ifElement.addElement(new TextElement("  where 1=2 "));
+		return ifElement;
+	}
 
-        return ifElement;
-    }
+	protected XmlElement getUnExampleIncludeElement() {
+		XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
+		ifElement.addAttribute(new Attribute("test", "_parameter == null")); //$NON-NLS-1$ //$NON-NLS-2$
+
+		ifElement.addElement(new TextElement("  where 1=2 "));
+
+		return ifElement;
+	}
 }

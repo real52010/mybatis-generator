@@ -12,7 +12,6 @@ public class GeneratIDPlugin extends PluginAdapter {
 
 	@Override
 	public boolean validate(List<String> warnings) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
@@ -24,9 +23,7 @@ public class GeneratIDPlugin extends PluginAdapter {
 			
 			if (introspectedColumn.isAutoIncrement()) {
 				introspectedColumn.setIdentity(true);
-				GeneratedKey gkey=new GeneratedKey(introspectedColumn.getActualColumnName(), "Mysql", true, null);
-//				GeneratedKey gkey=new GeneratedKey(introspectedColumn.getActualColumnName(), "JDBC", true, null);
-
+				GeneratedKey gkey=new GeneratedKey(introspectedColumn.getActualColumnName(), "Mysql", true, null);  
 				tableConfig.setGeneratedKey(gkey);
 
 			}

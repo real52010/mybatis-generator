@@ -95,9 +95,9 @@ public class BaseInsertColumnListElementGenerator extends AbstractXmlElementGene
 
 		for (IntrospectedColumn introspectedColumn : ListUtilities
 				.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns())) {
-//			if (introspectedColumn.isAutoIncrement()) { //TODO cuiyi
-//				continue;
-//			}
+			// if (introspectedColumn.isAutoIncrement()) { //TODO cuiyi
+			// continue;
+			// }
 			if (introspectedColumn.isSequenceColumn() || introspectedColumn.getFullyQualifiedJavaType().isPrimitive()) {
 				// if it is a sequence column, it is not optional
 				// This is required for MyBatis3 because MyBatis3 parses
@@ -123,7 +123,7 @@ public class BaseInsertColumnListElementGenerator extends AbstractXmlElementGene
 			sb.append(" != null"); //$NON-NLS-1$
 			sb.append(" and "); //$NON-NLS-1$
 			sb.append(introspectedColumn.getJavaProperty("record."));
-			sb.append(" != ''"); //$NON-NLS
+			sb.append(" != ''"); // $NON-NLS
 			insertNotNullElement.addAttribute(new Attribute("test", sb.toString())); //$NON-NLS-1$
 
 			sb.setLength(0);
@@ -149,8 +149,9 @@ public class BaseInsertColumnListElementGenerator extends AbstractXmlElementGene
 			valuesTrimElement.addElement(valuesNotNullElement);
 		}
 
-		if (context.getPlugins().sqlMapInsertSelectiveElementGenerated(answer, introspectedTable)) {
-			parentElement.addElement(answer);
-		}
+		// if (context.getPlugins().sqlMapInsertSelectiveElementGenerated(answer,
+		// introspectedTable)) {
+		parentElement.addElement(answer);
+		// }
 	}
 }

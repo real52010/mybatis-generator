@@ -29,119 +29,114 @@ import org.mybatis.generator.config.GeneratedKey;
  */
 public class InsertBatchElementGenerator extends AbstractXmlElementGenerator {
 
-    private boolean isSimple;
+	private boolean isSimple;
 
-    public InsertBatchElementGenerator(boolean isSimple) {
-        super();
-        this.isSimple = isSimple;
-    }
+	public InsertBatchElementGenerator(boolean isSimple) {
+		super();
+		this.isSimple = isSimple;
+	}
 
-    @Override
-    public void addElements(XmlElement parentElement) {
-        XmlElement answer = new XmlElement("insert"); //$NON-NLS-1$
+	@Override
+	public void addElements(XmlElement parentElement) {
+		XmlElement answer = new XmlElement("insert"); //$NON-NLS-1$
 
-        answer.addAttribute(new Attribute(
-                "id", "insertBatch")); //$NON-NLS-1$
+		answer.addAttribute(new Attribute("id", "insertBatch")); //$NON-NLS-1$
 
-        FullyQualifiedJavaType parameterType=new FullyQualifiedJavaType("java.util.List");
-//        if (isSimple) {
-//            parameterType = new FullyQualifiedJavaType(
-//                    introspectedTable.getBaseRecordType());
-//        } else {
-//            parameterType = introspectedTable.getRules()
-//                    .calculateAllFieldsClass();
-//        }
+		FullyQualifiedJavaType parameterType = new FullyQualifiedJavaType("java.util.List");
+		// if (isSimple) {
+		// parameterType = new FullyQualifiedJavaType(
+		// introspectedTable.getBaseRecordType());
+		// } else {
+		// parameterType = introspectedTable.getRules()
+		// .calculateAllFieldsClass();
+		// }
 
-        answer.addAttribute(new Attribute("parameterType", //$NON-NLS-1$
-                parameterType.getFullyQualifiedName()));
+		answer.addAttribute(new Attribute("parameterType", //$NON-NLS-1$
+				parameterType.getFullyQualifiedName()));
 
-        context.getCommentGenerator().addComment(answer);
+		context.getCommentGenerator().addComment(answer);
 
-        GeneratedKey gk = introspectedTable.getGeneratedKey();
-        if (gk != null) {
-            IntrospectedColumn introspectedColumn = introspectedTable
-                    .getColumn(gk.getColumn());
-            // if the column is null, then it's a configuration error. The
-            // warning has already been reported
-            if (introspectedColumn != null) {
-                if (gk.isJdbcStandard()) {
-                    answer.addAttribute(new Attribute(
-                            "useGeneratedKeys", "true")); //$NON-NLS-1$ //$NON-NLS-2$
-                    answer.addAttribute(new Attribute(
-                            "keyProperty", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
-                    answer.addAttribute(new Attribute(
-                            "keyColumn", introspectedColumn.getActualColumnName())); //$NON-NLS-1$
-                } else {
-                    answer.addElement(getSelectKey(introspectedColumn, gk));
-                }
-            }
-        }
-        
-        XmlElement listElement = new XmlElement("foreach"); 
-        listElement.addAttribute(new Attribute("collection", "list"));
-        listElement.addAttribute(new Attribute("item", "record"));
-        listElement.addAttribute(new Attribute("index", "index"));
-        listElement.addAttribute(new Attribute("open", ""));
-        listElement.addAttribute(new Attribute("separator", "separator"));
-//        <foreach collection="list" item="record" index="index" open=""
-//    			close="" separator=";">
-//    			<include refid="Base_Insert_List" />
-//        
-//        </foreach>
-        
-//        <include refid="Base_Insert_List" />
-        XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
-        includeElement.addAttribute(new Attribute("refid", "Base_Insert_Column_List"));
-       
-        listElement.addElement(includeElement);
-        answer.addElement(listElement);
-//        StringBuilder insertClause = new StringBuilder();
-//        StringBuilder valuesClause = new StringBuilder();
-//
-//        insertClause.append("insert into "); //$NON-NLS-1$
-//        insertClause.append(introspectedTable
-//                .getFullyQualifiedTableNameAtRuntime());
-//        insertClause.append(" ("); //$NON-NLS-1$
-//
-//        valuesClause.append("values ("); //$NON-NLS-1$
-//
-//        List<String> valuesClauses = new ArrayList<String>();
-//        List<IntrospectedColumn> columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns());
-//        for (int i = 0; i < columns.size(); i++) {
-//            IntrospectedColumn introspectedColumn = columns.get(i); 
-//            insertClause.append(MyBatis3FormattingUtilities
-//                    .getEscapedColumnName(introspectedColumn));
-//            valuesClause.append(MyBatis3FormattingUtilities
-//                    .getParameterClause(introspectedColumn));
-//            if (i + 1 < columns.size()) {
-//                insertClause.append(", "); //$NON-NLS-1$
-//                valuesClause.append(", "); //$NON-NLS-1$
-//            }
-//
-//            if (valuesClause.length() > 80) {
-//                answer.addElement(new TextElement(insertClause.toString()));
-//                insertClause.setLength(0);
-//                OutputUtilities.xmlIndent(insertClause, 1);
-//
-//                valuesClauses.add(valuesClause.toString());
-//                valuesClause.setLength(0);
-//                OutputUtilities.xmlIndent(valuesClause, 1);
-//            }
-//        }
-//
-//        insertClause.append(')');
-//        answer.addElement(new TextElement(insertClause.toString()));
-//
-//        valuesClause.append(')');
-//        valuesClauses.add(valuesClause.toString());
-//
-//        for (String clause : valuesClauses) {
-//            answer.addElement(new TextElement(clause));
-//        }
+		GeneratedKey gk = introspectedTable.getGeneratedKey();
+		if (gk != null) {
+			IntrospectedColumn introspectedColumn = introspectedTable.getColumn(gk.getColumn());
+			// if the column is null, then it's a configuration error. The
+			// warning has already been reported
+			if (introspectedColumn != null) {
+				if (gk.isJdbcStandard()) {
+					answer.addAttribute(new Attribute("useGeneratedKeys", "true")); //$NON-NLS-1$ //$NON-NLS-2$
+					answer.addAttribute(new Attribute("keyProperty", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
+					answer.addAttribute(new Attribute("keyColumn", introspectedColumn.getActualColumnName())); //$NON-NLS-1$
+				} else {
+					answer.addElement(getSelectKey(introspectedColumn, gk));
+				}
+			}
+		}
 
-        if (context.getPlugins().sqlMapInsertElementGenerated(answer,
-                introspectedTable)) {
-            parentElement.addElement(answer);
-        }
-    }
+		XmlElement listElement = new XmlElement("foreach");
+		listElement.addAttribute(new Attribute("collection", "list"));
+		listElement.addAttribute(new Attribute("item", "record"));
+		listElement.addAttribute(new Attribute("index", "index"));
+		listElement.addAttribute(new Attribute("open", ""));
+		listElement.addAttribute(new Attribute("separator", "separator"));
+		// <foreach collection="list" item="record" index="index" open=""
+		// close="" separator=";">
+		// <include refid="Base_Insert_List" />
+		//
+		// </foreach>
+
+		// <include refid="Base_Insert_List" />
+		XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
+		includeElement.addAttribute(new Attribute("refid", "Base_Insert_Column_List"));
+
+		listElement.addElement(includeElement);
+		answer.addElement(listElement);
+		// StringBuilder insertClause = new StringBuilder();
+		// StringBuilder valuesClause = new StringBuilder();
+		//
+		// insertClause.append("insert into "); //$NON-NLS-1$
+		// insertClause.append(introspectedTable
+		// .getFullyQualifiedTableNameAtRuntime());
+		// insertClause.append(" ("); //$NON-NLS-1$
+		//
+		// valuesClause.append("values ("); //$NON-NLS-1$
+		//
+		// List<String> valuesClauses = new ArrayList<String>();
+		// List<IntrospectedColumn> columns =
+		// ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns());
+		// for (int i = 0; i < columns.size(); i++) {
+		// IntrospectedColumn introspectedColumn = columns.get(i);
+		// insertClause.append(MyBatis3FormattingUtilities
+		// .getEscapedColumnName(introspectedColumn));
+		// valuesClause.append(MyBatis3FormattingUtilities
+		// .getParameterClause(introspectedColumn));
+		// if (i + 1 < columns.size()) {
+		// insertClause.append(", "); //$NON-NLS-1$
+		// valuesClause.append(", "); //$NON-NLS-1$
+		// }
+		//
+		// if (valuesClause.length() > 80) {
+		// answer.addElement(new TextElement(insertClause.toString()));
+		// insertClause.setLength(0);
+		// OutputUtilities.xmlIndent(insertClause, 1);
+		//
+		// valuesClauses.add(valuesClause.toString());
+		// valuesClause.setLength(0);
+		// OutputUtilities.xmlIndent(valuesClause, 1);
+		// }
+		// }
+		//
+		// insertClause.append(')');
+		// answer.addElement(new TextElement(insertClause.toString()));
+		//
+		// valuesClause.append(')');
+		// valuesClauses.add(valuesClause.toString());
+		//
+		// for (String clause : valuesClauses) {
+		// answer.addElement(new TextElement(clause));
+		// }
+
+//		if (context.getPlugins().sqlMapInsertElementGenerated(answer, introspectedTable)) {
+			parentElement.addElement(answer);
+//		}
+	}
 }
