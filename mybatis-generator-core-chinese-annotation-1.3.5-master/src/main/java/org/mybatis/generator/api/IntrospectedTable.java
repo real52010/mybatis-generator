@@ -20,6 +20,7 @@ import org.mybatis.generator.internal.rules.ConditionalModelRules;
 import org.mybatis.generator.internal.rules.FlatModelRules;
 import org.mybatis.generator.internal.rules.HierarchicalModelRules;
 import org.mybatis.generator.internal.rules.Rules;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 
@@ -1442,7 +1443,14 @@ public abstract class IntrospectedTable {
             sb.append(".xml"); //$NON-NLS-1$
         } else {
             sb.append(fullyQualifiedTable.getDomainObjectName());
-            sb.append("Mapper.xml"); //$NON-NLS-1$
+            
+            if(StringUtils.isEmpty(tableConfiguration.getProperty("mappingFilePostfix"))) {
+            	sb.append("DAO.xml"); 
+            }else {
+            	sb.append(tableConfiguration.getProperty("mappingFilePostfix")).append(".xml"); 
+            }
+            
+//            sb.append("Mapper.xml"); //$NON-NLS-1$
         }
         return sb.toString();
     }
@@ -1469,7 +1477,12 @@ public abstract class IntrospectedTable {
             sb.append(tableConfiguration.getMapperName());
         } else {
             sb.append(fullyQualifiedTable.getDomainObjectName());
-            sb.append("Mapper"); //$NON-NLS-1$
+            if(StringUtils.isEmpty(tableConfiguration.getProperty("mapperNamePostfix"))) {
+            	sb.append("DAO"); 
+            }else {
+            	sb.append(tableConfiguration.getProperty("mapperNamePostfix")); 
+            }
+            //$NON-NLS-1$
         }
         return sb.toString();
     }

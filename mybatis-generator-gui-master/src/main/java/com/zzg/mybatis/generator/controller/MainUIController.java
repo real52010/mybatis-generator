@@ -103,6 +103,16 @@ public class MainUIController extends BaseFXController {
 	private TextField exampleTargetPackage;
 	@FXML
 	private TextField exampleTargetProject;
+	
+
+	@FXML
+	private TextField modelNamePostfix;
+	@FXML
+	private TextField mapperNamePostfix;
+	@FXML
+	private TextField mappingFilePostfix;
+	
+	
 	// Current selected databaseConfig
 	private DatabaseConfig selectedDatabaseConfig;
 	// Current selected tableName
@@ -404,7 +414,10 @@ public class MainUIController extends BaseFXController {
 		generatorConfig.setModelPackageTargetFolder(modelTargetProject.getText());
 		generatorConfig.setDaoPackage(daoTargetPackage.getText());
 		generatorConfig.setDaoTargetFolder(daoTargetProject.getText());
-		generatorConfig.setMapperName(mapperName.getText());
+//		generatorConfig.setMapperName(mapperName.getText());
+		generatorConfig.setModelNamePostfix(modelNamePostfix.getText());
+		generatorConfig.setMapperNamePostfix(mapperNamePostfix.getText());
+		generatorConfig.setMappingFilePostfix(mappingFilePostfix.getText());
 		generatorConfig.setMappingXMLPackage(mapperTargetPackage.getText());
 		generatorConfig.setMappingXMLTargetFolder(mappingTargetProject.getText());
 		generatorConfig.setTableName(tableNameField.getText());
@@ -447,6 +460,9 @@ public class MainUIController extends BaseFXController {
 		exampleNameField.setText(generatorConfig.getExampleName());
 		exampleTargetPackage.setText(generatorConfig.getExampleTargetPackage());
 		exampleTargetProject.setText(generatorConfig.getExampleTargetProject());
+		modelNamePostfix.setText(generatorConfig.getModelNamePostfix());
+		mapperNamePostfix.setText(generatorConfig.getMapperNamePostfix());
+		mappingFilePostfix.setText(generatorConfig.getMappingFilePostfix());
 		setConfigName(generatorConfig.getName()); 
 	}
 

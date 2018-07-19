@@ -110,6 +110,9 @@ public class TableConfiguration extends PropertyHolder {
 
     private String mapperName;
     private String sqlProviderName;
+    
+	
+	
 
     private List<IgnoredColumnPattern> ignoredColumnPatterns = new ArrayList<IgnoredColumnPattern>();
 
@@ -903,4 +906,6 @@ public class TableConfiguration extends PropertyHolder {
     public void setSqlProviderName(String sqlProviderName) {
         this.sqlProviderName = sqlProviderName;
     }
+ 
+    
 }

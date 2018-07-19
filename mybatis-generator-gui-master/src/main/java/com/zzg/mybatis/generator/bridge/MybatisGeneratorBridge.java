@@ -77,10 +77,11 @@ public class MybatisGeneratorBridge {
 			tableConfig.setGeneratedKey(new GeneratedKey(generatorConfig.getGenerateKeys(),
 					selectedDatabaseConfig.getDbType(), true, null));
 		}
-
-		if (generatorConfig.getMapperName() != null) {
-			tableConfig.setMapperName(generatorConfig.getMapperName());
-		}
+//
+//		if (generatorConfig.getMapperName() != null) {
+//			tableConfig.setMapperName(generatorConfig.getMapperName());
+//		}
+		
 		// add ignore columns
 		if (ignoredColumns != null) {
 			ignoredColumns.stream().forEach(ignoredColumn -> {
@@ -121,6 +122,23 @@ public class MybatisGeneratorBridge {
 			tableConfig.addProperty("createVirtualDelete", "true");
 			tableConfig.addProperty("virtualDeleteSql", generatorConfig.getVirtualDeleteSql());
 		}
+		
+		if (!StringUtils.isEmpty(generatorConfig.getMapperNamePostfix())) {
+			tableConfig.addProperty("mapperNamePostfix", generatorConfig.getMapperNamePostfix());
+		}
+		if (!StringUtils.isEmpty(generatorConfig.getModelNamePostfix())) {
+			tableConfig.addProperty("modelNamePostfix", generatorConfig.getModelNamePostfix());
+		}
+		if (!StringUtils.isEmpty(generatorConfig.getMappingFilePostfix())) {
+			tableConfig.addProperty("mappingFilePostfix", generatorConfig.getMappingFilePostfix());
+		}
+		
+//		private String mapperNamePostfix;
+//		
+//		private String modelNamePostfix;
+//		
+//		private String mappingFilePostfix;
+		
 		JDBCConnectionConfiguration jdbcConfig = new JDBCConnectionConfiguration();
 		jdbcConfig.setDriverClass(DbType.valueOf(selectedDatabaseConfig.getDbType()).getDriverClass());
 		jdbcConfig.setConnectionURL(DbUtil.getConnectionUrlWithSchema(selectedDatabaseConfig));

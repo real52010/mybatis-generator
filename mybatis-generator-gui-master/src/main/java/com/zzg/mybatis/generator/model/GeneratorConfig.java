@@ -30,7 +30,13 @@ public class GeneratorConfig {
 
 	private String daoTargetFolder;
 
-	private String mapperName;
+//	private String mapperName;
+	
+	private String mapperNamePostfix;
+	
+	private String modelNamePostfix;
+	
+	private String mappingFilePostfix;
 
 	private String mappingXMLPackage;
 
@@ -205,12 +211,29 @@ public class GeneratorConfig {
 		this.useActualColumnNames = useActualColumnNames;
 	}
 
-	public String getMapperName() {
-		return mapperName;
+	
+	public String getMapperNamePostfix() {
+		return mapperNamePostfix;
 	}
 
-	public void setMapperName(String mapperName) {
-		this.mapperName = mapperName;
+	public void setMapperNamePostfix(String mapperNamePostfix) {
+		this.mapperNamePostfix = mapperNamePostfix;
+	}
+
+	public String getModelNamePostfix() {
+		return modelNamePostfix;
+	}
+
+	public void setModelNamePostfix(String modelNamePostfix) {
+		this.modelNamePostfix = modelNamePostfix;
+	}
+
+	public String getMappingFilePostfix() {
+		return mappingFilePostfix;
+	}
+
+	public void setMappingFilePostfix(String mappingFilePostfix) {
+		this.mappingFilePostfix = mappingFilePostfix;
 	}
 
 	public String getGenerateKeys() {
