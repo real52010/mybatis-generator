@@ -291,6 +291,7 @@ public class MyBatisGenerator {
                             MergeConstants.OLD_ELEMENT_TAGS,
                             gjf.getFileEncoding());
                 } else if (shellCallback.isOverwriteEnabled()) {
+                	targetFile.delete();
                     source = gjf.getFormattedContent();
                     warnings.add(getString("Warning.11", //$NON-NLS-1$
                             targetFile.getAbsolutePath()));

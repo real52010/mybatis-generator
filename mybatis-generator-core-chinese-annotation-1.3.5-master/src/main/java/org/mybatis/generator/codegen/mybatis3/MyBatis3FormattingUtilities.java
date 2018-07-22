@@ -17,8 +17,13 @@ package org.mybatis.generator.codegen.mybatis3;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 
+import com.mysql.fabric.xmlrpc.base.Array;
+
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * The Class MyBatis3FormattingUtilities.
@@ -220,6 +225,12 @@ public class MyBatis3FormattingUtilities {
      */
     public static String escapeStringForMyBatis3(String s) {
         // nothing to do for MyBatis3 so far
+    	if(keyWordList.contains(s)) {
+    		return '`'+s+'`';
+    	}
         return s;
     }
+    
+    
+    private static List<String> keyWordList=Arrays.asList(new String[]{"desc"});
 }

@@ -119,7 +119,7 @@ public class BaseInsertColumnListElementGenerator extends AbstractXmlElementGene
 
 			XmlElement insertNotNullElement = new XmlElement("if"); //$NON-NLS-1$
 			sb.setLength(0);
-			sb.append(introspectedColumn.getJavaProperty());
+			sb.append(introspectedColumn.getJavaProperty("record."));
 			sb.append(" != null"); //$NON-NLS-1$
 			sb.append(" and "); //$NON-NLS-1$
 			sb.append(introspectedColumn.getJavaProperty("record."));
@@ -134,7 +134,7 @@ public class BaseInsertColumnListElementGenerator extends AbstractXmlElementGene
 
 			XmlElement valuesNotNullElement = new XmlElement("if"); //$NON-NLS-1$
 			sb.setLength(0);
-			sb.append(introspectedColumn.getJavaProperty());
+			sb.append(introspectedColumn.getJavaProperty("record."));
 			sb.append(" != null"); //$NON-NLS-1$
 
 			sb.append(" and "); //$NON-NLS-1$
@@ -143,7 +143,7 @@ public class BaseInsertColumnListElementGenerator extends AbstractXmlElementGene
 			valuesNotNullElement.addAttribute(new Attribute("test", sb.toString())); //$NON-NLS-1$
 
 			sb.setLength(0);
-			sb.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn));
+			sb.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn,"record"));
 			sb.append(',');
 			valuesNotNullElement.addElement(new TextElement(sb.toString()));
 			valuesTrimElement.addElement(valuesNotNullElement);

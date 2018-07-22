@@ -40,7 +40,7 @@ public class VirtualDeleteByPrimaryKeyElementGenerator extends AbstractXmlElemen
 	public void addElements(XmlElement parentElement) {
 		XmlElement answer = new XmlElement("update"); //$NON-NLS-1$
 
-		answer.addAttribute(new Attribute("id", "virtualDeleteByPrimaryKey")); //$NON-NLS-1$
+		answer.addAttribute(new Attribute("id", introspectedTable.getVirtualDeleteByPrimaryKeyStatementId())); //$NON-NLS-1$
 		String parameterClass;
 		if (!isSimple && introspectedTable.getRules().generatePrimaryKeyClass()) {
 			parameterClass = introspectedTable.getPrimaryKeyType();

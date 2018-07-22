@@ -69,33 +69,31 @@ public class RealXMLMapperGenerator extends XMLMapperGenerator {
 				namespace));
 
 		context.getCommentGenerator().addRootComment(answer);
-		
+
 		addResultMapWithoutBLOBsElement(answer);
 		addExampleWhereClauseElement(answer);
 		addExampleOrderByClauseElement(answer);
-		addExamplePaginClauseElement(answer); 
+		addExamplePaginClauseElement(answer);
 		addBaseColumnListElement(answer);
 		addBaseInsertColumnListElement(answer);
-		addBaseUpdateColumnListElement(answer); 
+		addBaseUpdateColumnListElement(answer);
 
-		
-		
 		addInsertElement(answer);
 		addInsertBatchElement(answer);
 		addDeleteByPrimaryKeyListElement(answer);
 		addDeleteByExampleListElement(answer);
 		addDeleteByIndexColumnMethod(answer);
-		
+
 		addUpdateByPrimaryKeyWithoutBLOBsElement(answer);
 		addUpdateByExampleElement(answer);
 		addUpdateBySelectiveElement(answer);
 		addUpdateBatchBySelectiveElement(answer);
 		addUpdateByIndexColumnMethod(answer);
-		
+
 		addSelectByPrimaryKeyElementElement(answer);
 		addSelectByExampleElementElement(answer);
 		addSelectByIndexColumnMethod(answer);
-		
+
 		addCountByExampleElementElement(answer);
 		addVirtualDeleteByExampleElement(answer);
 		addVirtualDeleteByPrimaryKeyElement(answer);
@@ -124,12 +122,11 @@ public class RealXMLMapperGenerator extends XMLMapperGenerator {
 	}
 
 	private void addUpdateByIndexColumnMethod(XmlElement parentElement) {
-		
 
-		if(!"true".equals(introspectedTable.getTableConfiguration().getProperty("createIndexMethod"))) {
+		if (!"true".equals(introspectedTable.getTableConfiguration().getProperty("createIndexMethod"))) {
 			return;
 		}
-//		"createIndexMethod"
+		// "createIndexMethod"
 		if (!(introspectedTable instanceof RealInsoIntrospectedTable)) {
 			return;
 		}
@@ -137,12 +134,18 @@ public class RealXMLMapperGenerator extends XMLMapperGenerator {
 		Map<String, TableIndex> indexMap = realInsoIntrospectedTable.getIndexColumns();
 		Set<Entry<String, TableIndex>> set = indexMap.entrySet();
 		for (Entry<String, TableIndex> entry : set) {
-			 addUpdateByIndexCloumnElementElement(parentElement, entry.getValue());
+			// 主键在主键列已经增加
+			if (entry.getKey().equals("PRIMARY")) {
+				continue;
+			}
+			if (entry.getValue().getIntrospectedColumns().size() == 1) {
+				addUpdateByIndexCloumnElementElement(parentElement, entry.getValue());
+			}
 		}
 	}
 
 	private void addDeleteByIndexColumnMethod(XmlElement parentElement) {
-		if(!"true".equals(introspectedTable.getTableConfiguration().getProperty("createIndexMethod"))) {
+		if (!"true".equals(introspectedTable.getTableConfiguration().getProperty("createIndexMethod"))) {
 			return;
 		}
 		if (!(introspectedTable instanceof RealInsoIntrospectedTable)) {
@@ -152,14 +155,18 @@ public class RealXMLMapperGenerator extends XMLMapperGenerator {
 		Map<String, TableIndex> indexMap = realInsoIntrospectedTable.getIndexColumns();
 		Set<Entry<String, TableIndex>> set = indexMap.entrySet();
 		for (Entry<String, TableIndex> entry : set) {
+			// 主键在主键列已经增加
+			if (entry.getKey().equals("PRIMARY")) {
+				continue;
+			}
 			if (entry.getValue().getIntrospectedColumns().size() == 1) {
-				 addDeleteByIndexCloumnElementElement(parentElement, entry.getValue());
+				addDeleteByIndexCloumnElementElement(parentElement, entry.getValue());
 			}
 		}
 	}
 
 	private void addSelectByIndexColumnMethod(XmlElement parentElement) {
-		if(!"true".equals(introspectedTable.getTableConfiguration().getProperty("createIndexMethod"))) {
+		if (!"true".equals(introspectedTable.getTableConfiguration().getProperty("createIndexMethod"))) {
 			return;
 		}
 		if (!(introspectedTable instanceof RealInsoIntrospectedTable)) {
@@ -169,6 +176,10 @@ public class RealXMLMapperGenerator extends XMLMapperGenerator {
 		Map<String, TableIndex> indexMap = realInsoIntrospectedTable.getIndexColumns();
 		Set<Entry<String, TableIndex>> set = indexMap.entrySet();
 		for (Entry<String, TableIndex> entry : set) {
+			// 主键在主键列已经增加
+			if (entry.getKey().equals("PRIMARY")) {
+				continue;
+			}
 			if (entry.getValue().getIntrospectedColumns().size() == 1) {
 				addSelectByIndexCloumnElementElement(parentElement, entry.getValue());
 			}
@@ -179,9 +190,9 @@ public class RealXMLMapperGenerator extends XMLMapperGenerator {
 		if (!(introspectedTable instanceof RealInsoIntrospectedTable)) {
 			return;
 		}
-		if(!"true".equals(introspectedTable.getTableConfiguration().getProperty("createIndexMethod"))) {
+		if (!"true".equals(introspectedTable.getTableConfiguration().getProperty("createIndexMethod"))) {
 			return;
-		} 
+		}
 		if (!"true".equals(introspectedTable.getTableConfiguration().getProperty("createVirtualDelete"))) {
 			return;
 		}
@@ -190,23 +201,33 @@ public class RealXMLMapperGenerator extends XMLMapperGenerator {
 		Set<Entry<String, TableIndex>> set = indexMap.entrySet();
 		for (Entry<String, TableIndex> entry : set) {
 			if (entry.getValue().getIntrospectedColumns().size() == 1) {
-				addViatualDeleteByIndexCloumnElementElement(parentElement, entry.getValue());
+				// 主键在主键列已经增加
+				if (entry.getKey().equals("PRIMARY")) {
+					continue;
+				}
+				if (entry.getValue().getIntrospectedColumns().size() == 1) {
+					addViatualDeleteByIndexCloumnElementElement(parentElement, entry.getValue());
+				}
 			}
 		}
 	}
-	protected void addSelectByIndexCloumnElementElement(XmlElement parentElement,TableIndex tableIndex) {
+
+	protected void addSelectByIndexCloumnElementElement(XmlElement parentElement, TableIndex tableIndex) {
 		AbstractXmlElementGenerator elementGenerator = new SelectByIndexColumnElementGenerator(tableIndex);
 		initializeAndExecuteGenerator(elementGenerator, parentElement);
 	}
-	protected void addDeleteByIndexCloumnElementElement(XmlElement parentElement,TableIndex tableIndex) {
+
+	protected void addDeleteByIndexCloumnElementElement(XmlElement parentElement, TableIndex tableIndex) {
 		AbstractXmlElementGenerator elementGenerator = new DeleteByIndexColumnElementGenerator(tableIndex);
 		initializeAndExecuteGenerator(elementGenerator, parentElement);
 	}
-	protected void addUpdateByIndexCloumnElementElement(XmlElement parentElement,TableIndex tableIndex) {
+
+	protected void addUpdateByIndexCloumnElementElement(XmlElement parentElement, TableIndex tableIndex) {
 		AbstractXmlElementGenerator elementGenerator = new UpdateByIndexColumnElementGenerator(tableIndex);
 		initializeAndExecuteGenerator(elementGenerator, parentElement);
 	}
-	protected void addViatualDeleteByIndexCloumnElementElement(XmlElement parentElement,TableIndex tableIndex) {
+
+	protected void addViatualDeleteByIndexCloumnElementElement(XmlElement parentElement, TableIndex tableIndex) {
 		AbstractXmlElementGenerator elementGenerator = new VirtualDeleteByIndexColumnElementGenerator(tableIndex);
 		initializeAndExecuteGenerator(elementGenerator, parentElement);
 	}
@@ -301,7 +322,7 @@ public class RealXMLMapperGenerator extends XMLMapperGenerator {
 	}
 
 	protected void addExamplePaginClauseElement(XmlElement parentElement) {
-		if("true".equals(introspectedTable.getTableConfiguration().getProperty("offsetLimit"))) {
+		if ("true".equals(introspectedTable.getTableConfiguration().getProperty("offsetLimit"))) {
 			AbstractXmlElementGenerator elementGenerator = new ExamplePaginClauseElementGenerator(true);
 			initializeAndExecuteGenerator(elementGenerator, parentElement);
 		}
@@ -321,7 +342,7 @@ public class RealXMLMapperGenerator extends XMLMapperGenerator {
 		}
 		AbstractXmlElementGenerator elementGenerator = new VirtualDeleteByPrimaryKeyElementGenerator(true);
 		initializeAndExecuteGenerator(elementGenerator, parentElement);
-		
+
 	}
 
 }

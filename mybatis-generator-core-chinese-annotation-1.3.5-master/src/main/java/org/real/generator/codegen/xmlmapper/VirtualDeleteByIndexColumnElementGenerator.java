@@ -43,7 +43,7 @@ public class VirtualDeleteByIndexColumnElementGenerator extends IndexColumnEleme
 	public void addElements(XmlElement parentElement) {
 		XmlElement answer = new XmlElement("update"); //$NON-NLS-1$
 
-		answer.addAttribute(new Attribute("id", getTabIndexJavaMethodName("virtualDeleteBy", tableIndex))); // $NON-ON-NLS-1$
+		answer.addAttribute(new Attribute("id", getTabIndexJavaMethodName("vDeleteBy", tableIndex))); // $NON-ON-NLS-1$
 		String parameterClass;
 		if (!isSimple && introspectedTable.getRules().generatePrimaryKeyClass()) {
 			parameterClass = introspectedTable.getPrimaryKeyType();

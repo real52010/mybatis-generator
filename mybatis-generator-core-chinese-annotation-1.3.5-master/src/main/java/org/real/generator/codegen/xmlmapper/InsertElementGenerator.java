@@ -79,7 +79,7 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
 
 		// <include refid="Base_Insert_List" />
 		XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
-		includeElement.addAttribute(new Attribute("refid", "Base_Update_Column_List"));
+		includeElement.addAttribute(new Attribute("refid", "Base_Insert_Column_List"));
 		answer.addElement(includeElement);
 		// StringBuilder insertClause = new StringBuilder();
 		// StringBuilder valuesClause = new StringBuilder();

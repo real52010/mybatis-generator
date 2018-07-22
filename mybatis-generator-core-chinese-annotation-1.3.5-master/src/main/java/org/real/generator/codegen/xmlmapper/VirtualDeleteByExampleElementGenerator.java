@@ -42,7 +42,7 @@ public class VirtualDeleteByExampleElementGenerator extends AbstractXmlElementGe
 
 		String fqjt = introspectedTable.getExampleType();
 
-		answer.addAttribute(new Attribute("id", "virtualDeleteByExample")); //$NON-NLS-1$
+		answer.addAttribute(new Attribute("id", "vDeleteByExample")); //$NON-NLS-1$
 		answer.addAttribute(new Attribute("parameterType", fqjt)); //$NON-NLS-1$
 
 		context.getCommentGenerator().addComment(answer);

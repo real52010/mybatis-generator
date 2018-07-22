@@ -15,17 +15,23 @@
  */
 package org.mybatis.generator.internal.util;
 
-import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.IntrospectedTable;
-import org.mybatis.generator.api.dom.java.*;
-import org.mybatis.generator.config.Context;
-import org.mybatis.generator.config.PropertyRegistry;
-import org.mybatis.generator.config.TableConfiguration;
+import static org.mybatis.generator.internal.util.StringUtility.isTrue;
 
 import java.util.Locale;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import static org.mybatis.generator.internal.util.StringUtility.isTrue;
+import org.mybatis.generator.api.IntrospectedColumn;
+import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.dom.java.Field;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.JavaVisibility;
+import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.config.Context;
+import org.mybatis.generator.config.PropertyRegistry;
+import org.mybatis.generator.config.TableConfiguration;
 
 /**
  * The Class JavaBeansUtil.
@@ -112,8 +118,15 @@ public class JavaBeansUtil {
      */
     public static String getCamelCaseString(String inputString,
                                             boolean firstCharacterUppercase) {
+    	
+    	
+    	Pattern pattern = Pattern.compile("[A-Z0-9]*");
+    	Matcher matcher = pattern.matcher(inputString);
+    	//如果一个单词中全是大写字母 要换成小写，则有可能该单词缩写，则全部改成小写，不然会导致首字每小写
+        if (!firstCharacterUppercase&&matcher.matches()) {
+        	return inputString.toLowerCase();
+        }
         StringBuilder sb = new StringBuilder();
-
         boolean nextUpperCase = false;
         for (int i = 0; i < inputString.length(); i++) {
             char c = inputString.charAt(i);
@@ -137,7 +150,8 @@ public class JavaBeansUtil {
                         sb.append(Character.toUpperCase(c));
                         nextUpperCase = false;
                     } else {
-                        sb.append(Character.toLowerCase(c));
+//                        sb.append(Character.toLowerCase(c));
+                    	sb.append(c);
                     }
                     break;
             }
@@ -145,6 +159,13 @@ public class JavaBeansUtil {
 
         if (firstCharacterUppercase) {
             sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
+        }else {
+//        	//如果全部是大写有可能是缩小，如果需要转换其中一个单字为小写，测做全转换处理
+//        	if(sb.toString().toUpperCase().equals(sb.toString())) {
+//        		return sb.toString().toLowerCase();
+//        	}
+            sb.setCharAt(0, Character.toLowerCase(sb.charAt(0)));
+
         }
 
         return sb.toString();

@@ -15,11 +15,13 @@
  */
 package org.mybatis.generator.api;
 
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.config.*;
 import org.mybatis.generator.internal.rules.ConditionalModelRules;
 import org.mybatis.generator.internal.rules.FlatModelRules;
 import org.mybatis.generator.internal.rules.HierarchicalModelRules;
 import org.mybatis.generator.internal.rules.Rules;
+import org.real.generator.codegen.TableIndex;
 import org.springframework.util.StringUtils;
 
 import java.util.*;
@@ -740,7 +742,7 @@ public abstract class IntrospectedTable {
 
         setCountByExampleStatementId("countByExample"); //$NON-NLS-1$
         setDeleteByExampleStatementId("deleteByExample"); //$NON-NLS-1$
-        setDeleteByPrimaryKeyStatementId("deleteByPrimaryKey"); //$NON-NLS-1$
+        setDeleteByPrimaryKeyStatementId(getPrimaryKeyStateMentId("deleteBy")); //$NON-NLS-1$
         setInsertStatementId("insert"); //$NON-NLS-1$
         setInsertSelectiveStatementId("insertSelective");
         setInsertBatchStatementId("insertBatch");
@@ -748,11 +750,11 @@ public abstract class IntrospectedTable {
         setSelectAllStatementId("selectAll"); //$NON-NLS-1$
         setSelectByExampleStatementId("selectByExample"); //$NON-NLS-1$
         setSelectByExampleWithBLOBsStatementId("selectByExampleWithBLOBs"); //$NON-NLS-1$
-        setSelectByPrimaryKeyStatementId("selectByPrimaryKey"); //$NON-NLS-1$
+        setSelectByPrimaryKeyStatementId(getPrimaryKeyStateMentId("selectBy")); //$NON-NLS-1$
         setUpdateByExampleStatementId("updateByExample"); //$NON-NLS-1$
         setUpdateByExampleSelectiveStatementId("updateByExampleSelective"); //$NON-NLS-1$
         setUpdateByExampleWithBLOBsStatementId("updateByExampleWithBLOBs"); //$NON-NLS-1$
-        setUpdateByPrimaryKeyStatementId("updateByPrimaryKey"); //$NON-NLS-1$
+        setUpdateByPrimaryKeyStatementId(getPrimaryKeyStateMentId("updateBy") ); //$NON-NLS-1$
         setUpdateByPrimaryKeySelectiveStatementId("updateByPrimaryKeySelective"); //$NON-NLS-1$
         setUpdateByPrimaryKeyWithBLOBsStatementId("updateByPrimaryKeyWithBLOBs"); //$NON-NLS-1$
         setBaseResultMapId("BaseResultMap"); //$NON-NLS-1$
@@ -761,8 +763,39 @@ public abstract class IntrospectedTable {
         setBaseColumnListId("Base_Column_List"); //$NON-NLS-1$
         setBlobColumnListId("Blob_Column_List"); //$NON-NLS-1$
         setMyBatis3UpdateByExampleWhereClauseId("Update_By_Example_Where_Clause"); //$NON-NLS-1$
+        setVirtualDeleteByPrimaryKeyStatementId(getPrimaryKeyStateMentId("vDeleteBy"));; //$NON-NLS-1$
     }
 
+    private String getPrimaryKeyStateMentId(String preix) {
+    	
+    	
+//    	List<IntrospectedColumn> introspectedColumns = introspectedTable.getPrimaryKeyColumns();
+//		boolean annotate = introspectedColumns.size() > 1;
+//		if (annotate) {
+//			interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param")); //$NON-NLS-1$
+//		}
+    		List<IntrospectedColumn> listColumns = this.getPrimaryKeyColumns();
+    		StringBuffer sb = new StringBuffer();
+    		sb.setLength(0);
+    		if(listColumns==null||listColumns.size()==0) {
+    			return preix;
+    		}
+    		
+    		if (listColumns.size() == 1 && (preix == null || preix.equals(""))) {
+    			return listColumns.get(0).getJavaProperty();
+    		}
+    		String colmunName = null;
+    		for (IntrospectedColumn introspectedColumn : listColumns) {
+    			if (colmunName != null) {
+    				sb.append("And");
+    			}
+    			colmunName = introspectedColumn.getJavaProperty();
+    			sb.append(colmunName.replaceFirst(colmunName.substring(0, 1), colmunName.substring(0, 1).toUpperCase()));
+    		}
+    		return preix + sb.toString();
+    }
+    
+    
     /**
      * Gets the blob column list id.
      *
@@ -1237,6 +1270,16 @@ public abstract class IntrospectedTable {
                 InternalAttribute.ATTR_COUNT_BY_EXAMPLE_STATEMENT_ID, s);
     }
 
+    public void setVirtualDeleteByPrimaryKeyStatementId(String s) {
+        internalAttributes.put(
+                InternalAttribute.ATTR_VIRTUAL_DELETE_BY_PRIMARY_KEY_STATEMENT_ID, s);
+    }
+    
+    public String getVirtualDeleteByPrimaryKeyStatementId() {
+       return internalAttributes.get(
+                InternalAttribute.ATTR_VIRTUAL_DELETE_BY_PRIMARY_KEY_STATEMENT_ID);
+    }
+    
     /**
      * Calculate java client implementation package.
      *
@@ -1299,30 +1342,32 @@ public abstract class IntrospectedTable {
         if (context.getJavaClientGeneratorConfiguration() == null) {
             return;
         }
-
+        String mapperName=getMapperName();
         StringBuilder sb = new StringBuilder();
         sb.append(calculateJavaClientImplementationPackage());
         sb.append('.');
-        sb.append(fullyQualifiedTable.getDomainObjectName());
-        sb.append("DAOImpl"); //$NON-NLS-1$
+        sb.append(mapperName);
+        sb.append("Impl"); //$NON-NLS-1$
         setDAOImplementationType(sb.toString());
 
         sb.setLength(0);
         sb.append(calculateJavaClientInterfacePackage());
         sb.append('.');
-        sb.append(fullyQualifiedTable.getDomainObjectName());
-        sb.append("DAO"); //$NON-NLS-1$
+//        sb.append(fullyQualifiedTable.getDomainObjectName());
+//        sb.append("DAO"); //$NON-NLS-1$
+        sb.append(mapperName);
         setDAOInterfaceType(sb.toString());
 
         sb.setLength(0);
         sb.append(calculateJavaClientInterfacePackage());
         sb.append('.');
-        if (stringHasValue(tableConfiguration.getMapperName())) {
-            sb.append(tableConfiguration.getMapperName());
-        } else {
-            sb.append(fullyQualifiedTable.getDomainObjectName());
-            sb.append("DAO"); //$NON-NLS-1$
-        }
+//        if (stringHasValue(tableConfiguration.getMapperName())) {
+//            sb.append(tableConfiguration.getMapperName());
+//        } else {
+//            sb.append(fullyQualifiedTable.getDomainObjectName());
+//            sb.append("DAO"); //$NON-NLS-1$
+//        }
+        sb.append(mapperName);
         setMyBatis3JavaMapperType(sb.toString());
 
         sb.setLength(0);
@@ -1431,6 +1476,31 @@ public abstract class IntrospectedTable {
      * @return the string
      */
     protected String calculateMyBatis3XmlMapperFileName() {
+//        StringBuilder sb = new StringBuilder();
+//        if (stringHasValue(tableConfiguration.getMapperName())) {
+//            String mapperName = tableConfiguration.getMapperName();
+//            int ind = mapperName.lastIndexOf('.');
+//            if (ind == -1) {
+//                sb.append(mapperName);
+//            } else {
+//                sb.append(mapperName.substring(ind + 1));
+//            }
+//            sb.append(".xml"); //$NON-NLS-1$
+//        } else {
+//            sb.append(fullyQualifiedTable.getDomainObjectName());
+//            
+//            if(StringUtils.isEmpty(tableConfiguration.getProperty("mappingFilePostfix"))) {
+//            	sb.append("DAO.xml"); 
+//            }else {
+//            	sb.append(tableConfiguration.getProperty("mappingFilePostfix")).append(".xml"); 
+//            }
+//            
+////            sb.append("Mapper.xml"); //$NON-NLS-1$
+//        }
+        return getMapperName()+".xml";
+    }
+    private String getMapperName() {
+
         StringBuilder sb = new StringBuilder();
         if (stringHasValue(tableConfiguration.getMapperName())) {
             String mapperName = tableConfiguration.getMapperName();
@@ -1440,21 +1510,21 @@ public abstract class IntrospectedTable {
             } else {
                 sb.append(mapperName.substring(ind + 1));
             }
-            sb.append(".xml"); //$NON-NLS-1$
+//            sb.append(".xml"); //$NON-NLS-1$
         } else {
             sb.append(fullyQualifiedTable.getDomainObjectName());
             
             if(StringUtils.isEmpty(tableConfiguration.getProperty("mappingFilePostfix"))) {
-            	sb.append("DAO.xml"); 
+            	sb.append("DAO"); 
             }else {
-            	sb.append(tableConfiguration.getProperty("mappingFilePostfix")).append(".xml"); 
+            	sb.append(tableConfiguration.getProperty("mappingFilePostfix")); 
             }
             
 //            sb.append("Mapper.xml"); //$NON-NLS-1$
         }
         return sb.toString();
+    
     }
-
     /**
      * Calculate ibatis2 sql map namespace.
      *
@@ -2007,6 +2077,9 @@ public abstract class IntrospectedTable {
         /**
          * The ATT r_ mybati s3_ sq l_ provide r_ type.
          */
-        ATTR_MYBATIS3_SQL_PROVIDER_TYPE
+        ATTR_MYBATIS3_SQL_PROVIDER_TYPE,
+        
+
+        ATTR_VIRTUAL_DELETE_BY_PRIMARY_KEY_STATEMENT_ID
     }
 }

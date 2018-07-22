@@ -103,7 +103,7 @@ public class JavaTypeResolverDefaultImpl implements JavaTypeResolver {
         typeMap.put(Types.REF, new JdbcTypeInformation("REF", //$NON-NLS-1$
                 new FullyQualifiedJavaType(Object.class.getName())));
         typeMap.put(Types.SMALLINT, new JdbcTypeInformation("SMALLINT", //$NON-NLS-1$
-                new FullyQualifiedJavaType(Short.class.getName())));
+                new FullyQualifiedJavaType(Integer.class.getName())));
         typeMap.put(Types.STRUCT, new JdbcTypeInformation("STRUCT", //$NON-NLS-1$
                 new FullyQualifiedJavaType(Object.class.getName())));
         typeMap.put(Types.TIME, new JdbcTypeInformation("TIME", //$NON-NLS-1$

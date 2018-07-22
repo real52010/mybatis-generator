@@ -146,6 +146,9 @@ public class RealJavaMapperGenerator extends JavaMapperGenerator {
 		List<IntrospectedColumn> listColumns = tableIndex.getIntrospectedColumns();
 		StringBuffer sb = new StringBuffer();
 		sb.setLength(0);
+		if(tableIndex==null||listColumns.size()==0) {
+			return preix;
+		}
 		if (listColumns.size() == 1 && (preix == null || preix.equals(""))) {
 			return listColumns.get(0).getJavaProperty();
 		}
@@ -172,7 +175,13 @@ public class RealJavaMapperGenerator extends JavaMapperGenerator {
 		Map<String, TableIndex> indexMap = realInsoIntrospectedTable.getIndexColumns();
 		Set<Entry<String, TableIndex>> set = indexMap.entrySet();
 		for (Entry<String, TableIndex> entry : set) {
-			addUpdateMethod(interfaze, entry.getValue());
+			// 主键在主键列已经增加
+			if (entry.getKey().equals("PRIMARY")) {
+				continue;
+			}
+			if (entry.getValue().getIntrospectedColumns().size() == 1) {
+				addUpdateMethod(interfaze, entry.getValue());
+			}
 		}
 	}
 
@@ -187,6 +196,10 @@ public class RealJavaMapperGenerator extends JavaMapperGenerator {
 		Map<String, TableIndex> indexMap = realInsoIntrospectedTable.getIndexColumns();
 		Set<Entry<String, TableIndex>> set = indexMap.entrySet();
 		for (Entry<String, TableIndex> entry : set) {
+			// 主键在主键列已经增加
+			if (entry.getKey().equals("PRIMARY")) {
+				continue;
+			}
 			if (entry.getValue().getIntrospectedColumns().size() == 1) {
 				addDeleteMethod(interfaze, entry.getValue());
 			}
@@ -204,6 +217,10 @@ public class RealJavaMapperGenerator extends JavaMapperGenerator {
 		Map<String, TableIndex> indexMap = realInsoIntrospectedTable.getIndexColumns();
 		Set<Entry<String, TableIndex>> set = indexMap.entrySet();
 		for (Entry<String, TableIndex> entry : set) {
+			// 主键在主键列已经增加
+			if (entry.getKey().equals("PRIMARY")) {
+				continue;
+			}
 			if (entry.getValue().getIntrospectedColumns().size() == 1) {
 				addSelectMethod(interfaze, entry.getValue());
 			}
@@ -225,6 +242,10 @@ public class RealJavaMapperGenerator extends JavaMapperGenerator {
 		Map<String, TableIndex> indexMap = realInsoIntrospectedTable.getIndexColumns();
 		Set<Entry<String, TableIndex>> set = indexMap.entrySet();
 		for (Entry<String, TableIndex> entry : set) {
+			// 主键在主键列已经增加
+			if (entry.getKey().equals("PRIMARY")) {
+				continue;
+			}
 			if (entry.getValue().getIntrospectedColumns().size() == 1) {
 				addVirtualDeleteMethod(interfaze, entry.getValue());
 			}
@@ -326,12 +347,12 @@ public class RealJavaMapperGenerator extends JavaMapperGenerator {
 		Method method = new Method();
 		method.setName(getTabIndexJavaMethodName("deleteBy", tableIndex));
 		method.setReturnType(FullyQualifiedJavaType.getIntInstance());
-		sb.setLength(0);
-		sb.append("@Param(\""); //$NON-NLS-1$
-		sb.append("record");
-		sb.append("\")"); //$NON-NLS-1$
-		parameter.addAnnotation(sb.toString());
-		method.addParameter(parameter);
+		// sb.setLength(0);
+		// sb.append("@Param(\""); //$NON-NLS-1$
+		// sb.append("record");
+		// sb.append("\")"); //$NON-NLS-1$
+		// parameter.addAnnotation(sb.toString());
+		// method.addParameter(parameter);
 
 		List<IntrospectedColumn> introspectedColumns = tableIndex.getIntrospectedColumns();
 		boolean annotate = introspectedColumns.size() > 1;
@@ -371,7 +392,7 @@ public class RealJavaMapperGenerator extends JavaMapperGenerator {
 		interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param")); //$NON-NLS-1$
 
 		Method method = new Method();
-		method.setName(getTabIndexJavaMethodName("virtualDeleteBy", tableIndex));
+		method.setName(getTabIndexJavaMethodName("vDeleteBy", tableIndex));
 		method.setReturnType(FullyQualifiedJavaType.getIntInstance());
 		sb.setLength(0);
 		sb.append("@Param(\""); //$NON-NLS-1$
@@ -463,7 +484,7 @@ public class RealJavaMapperGenerator extends JavaMapperGenerator {
 			return;
 		}
 		Method method = new Method();
-		method.setName("virtualDelete");
+		method.setName(introspectedTable.getVirtualDeleteByPrimaryKeyStatementId());
 		method.setReturnType(FullyQualifiedJavaType.getIntInstance());
 
 		List<IntrospectedColumn> introspectedColumns = introspectedTable.getPrimaryKeyColumns();
@@ -515,7 +536,7 @@ public class RealJavaMapperGenerator extends JavaMapperGenerator {
 		interfaze.addImportedType(parameterType);
 		interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param")); //$NON-NLS-1$
 		Method method = new Method();
-		method.setName("virtualDeleteByExample");
+		method.setName("vDeleteByExample");
 		method.setReturnType(FullyQualifiedJavaType.getIntInstance());
 		sb.setLength(0);
 		sb.append("@Param(\""); //$NON-NLS-1$
@@ -543,7 +564,7 @@ public class RealJavaMapperGenerator extends JavaMapperGenerator {
 	protected void addDeleteMethod(Interface interfaze) {
 
 		Method method = new Method();
-		method.setName("delete");
+		method.setName(introspectedTable.getDeleteByPrimaryKeyStatementId());
 		method.setReturnType(FullyQualifiedJavaType.getIntInstance());
 
 		List<IntrospectedColumn> introspectedColumns = introspectedTable.getPrimaryKeyColumns();
@@ -674,7 +695,7 @@ public class RealJavaMapperGenerator extends JavaMapperGenerator {
 		interfaze.addImportedType(new FullyQualifiedJavaType("org.apache.ibatis.annotations.Param")); //$NON-NLS-1$
 
 		Method method = new Method();
-		method.setName("update");
+		method.setName(introspectedTable.getUpdateByPrimaryKeyStatementId());
 		method.setReturnType(FullyQualifiedJavaType.getIntInstance());
 		sb.setLength(0);
 		sb.append("@Param(\""); //$NON-NLS-1$
@@ -756,7 +777,7 @@ public class RealJavaMapperGenerator extends JavaMapperGenerator {
 	 */
 	protected void addSelectMethod(Interface interfaze) {
 		Method method = new Method();
-		method.setName("select");
+		method.setName(introspectedTable.getSelectByPrimaryKeyStatementId());
 		method.setReturnType(baseRecordType);
 		List<IntrospectedColumn> introspectedColumns = introspectedTable.getPrimaryKeyColumns();
 		boolean annotate = introspectedColumns.size() > 1;

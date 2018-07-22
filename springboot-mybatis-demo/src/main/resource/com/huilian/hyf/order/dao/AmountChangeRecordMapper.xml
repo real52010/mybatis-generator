@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.huilian.mapper.AmountchangerecordDAO">
-  <resultMap id="BaseResultMap" type="com.huilian.model.Amountchangerecord">
+<mapper namespace="com.huilian.hyf.order.dao.AmountChangeRecordMapper">
+  <resultMap id="BaseResultMap" type="com.huilian.hyf.order.model.AmountChangeRecordEntity">
     <id column="ID" jdbcType="BIGINT" property="id" />
-    <result column="TransactionID" jdbcType="VARCHAR" property="transactionid" />
+    <result column="TransactionID" jdbcType="VARCHAR" property="transactionID" />
     <result column="Type" jdbcType="VARCHAR" property="type" />
     <result column="Status" jdbcType="VARCHAR" property="status" />
-    <result column="ChangeAmount" jdbcType="DECIMAL" property="changeamount" />
+    <result column="ChangeAmount" jdbcType="DECIMAL" property="changeAmount" />
     <result column="Amount" jdbcType="DECIMAL" property="amount" />
-    <result column="CreateTime" jdbcType="TIMESTAMP" property="createtime" />
-    <result column="UserID" jdbcType="VARCHAR" property="userid" />
+    <result column="CreateTime" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UserID" jdbcType="VARCHAR" property="userID" />
     <result column="Remark" jdbcType="VARCHAR" property="remark" />
-    <result column="BankCard" jdbcType="VARCHAR" property="bankcard" />
-    <result column="BankCode" jdbcType="VARCHAR" property="bankcode" />
-    <result column="ProductId" jdbcType="VARCHAR" property="productid" />
-    <result column="PurchaseRecordId" jdbcType="VARCHAR" property="purchaserecordid" />
+    <result column="BankCard" jdbcType="VARCHAR" property="bankCard" />
+    <result column="BankCode" jdbcType="VARCHAR" property="bankCode" />
+    <result column="ProductId" jdbcType="VARCHAR" property="productId" />
+    <result column="PurchaseRecordId" jdbcType="VARCHAR" property="purchaseRecordId" />
     <result column="data_source" jdbcType="SMALLINT" property="dataSource" />
     <result column="data_status" jdbcType="BIT" property="dataStatus" />
   </resultMap>
@@ -69,99 +69,99 @@
   <sql id="Base_Insert_Column_List">
     insert into amountchangerecord
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="transactionid != null and record.transactionid != ''">
+      <if test="record.transactionID != null and record.transactionID != ''">
         TransactionID,
       </if>
-      <if test="type != null and record.type != ''">
+      <if test="record.type != null and record.type != ''">
         Type,
       </if>
-      <if test="status != null and record.status != ''">
+      <if test="record.status != null and record.status != ''">
         Status,
       </if>
-      <if test="changeamount != null and record.changeamount != ''">
+      <if test="record.changeAmount != null and record.changeAmount != ''">
         ChangeAmount,
       </if>
-      <if test="amount != null and record.amount != ''">
+      <if test="record.amount != null and record.amount != ''">
         Amount,
       </if>
-      <if test="createtime != null and record.createtime != ''">
+      <if test="record.createTime != null and record.createTime != ''">
         CreateTime,
       </if>
-      <if test="userid != null and record.userid != ''">
+      <if test="record.userID != null and record.userID != ''">
         UserID,
       </if>
-      <if test="remark != null and record.remark != ''">
+      <if test="record.remark != null and record.remark != ''">
         Remark,
       </if>
-      <if test="bankcard != null and record.bankcard != ''">
+      <if test="record.bankCard != null and record.bankCard != ''">
         BankCard,
       </if>
-      <if test="bankcode != null and record.bankcode != ''">
+      <if test="record.bankCode != null and record.bankCode != ''">
         BankCode,
       </if>
-      <if test="productid != null and record.productid != ''">
+      <if test="record.productId != null and record.productId != ''">
         ProductId,
       </if>
-      <if test="purchaserecordid != null and record.purchaserecordid != ''">
+      <if test="record.purchaseRecordId != null and record.purchaseRecordId != ''">
         PurchaseRecordId,
       </if>
-      <if test="dataSource != null and record.dataSource != ''">
+      <if test="record.dataSource != null and record.dataSource != ''">
         data_source,
       </if>
-      <if test="dataStatus != null and record.dataStatus != ''">
+      <if test="record.dataStatus != null and record.dataStatus != ''">
         data_status,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="transactionid != null and record.transactionid != ''">
-        #{transactionid,jdbcType=VARCHAR},
+      <if test="record.transactionID != null and record.transactionID != ''">
+        #{record.transactionID,jdbcType=VARCHAR},
       </if>
-      <if test="type != null and record.type != ''">
-        #{type,jdbcType=VARCHAR},
+      <if test="record.type != null and record.type != ''">
+        #{record.type,jdbcType=VARCHAR},
       </if>
-      <if test="status != null and record.status != ''">
-        #{status,jdbcType=VARCHAR},
+      <if test="record.status != null and record.status != ''">
+        #{record.status,jdbcType=VARCHAR},
       </if>
-      <if test="changeamount != null and record.changeamount != ''">
-        #{changeamount,jdbcType=DECIMAL},
+      <if test="record.changeAmount != null and record.changeAmount != ''">
+        #{record.changeAmount,jdbcType=DECIMAL},
       </if>
-      <if test="amount != null and record.amount != ''">
-        #{amount,jdbcType=DECIMAL},
+      <if test="record.amount != null and record.amount != ''">
+        #{record.amount,jdbcType=DECIMAL},
       </if>
-      <if test="createtime != null and record.createtime != ''">
-        #{createtime,jdbcType=TIMESTAMP},
+      <if test="record.createTime != null and record.createTime != ''">
+        #{record.createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="userid != null and record.userid != ''">
-        #{userid,jdbcType=VARCHAR},
+      <if test="record.userID != null and record.userID != ''">
+        #{record.userID,jdbcType=VARCHAR},
       </if>
-      <if test="remark != null and record.remark != ''">
-        #{remark,jdbcType=VARCHAR},
+      <if test="record.remark != null and record.remark != ''">
+        #{record.remark,jdbcType=VARCHAR},
       </if>
-      <if test="bankcard != null and record.bankcard != ''">
-        #{bankcard,jdbcType=VARCHAR},
+      <if test="record.bankCard != null and record.bankCard != ''">
+        #{record.bankCard,jdbcType=VARCHAR},
       </if>
-      <if test="bankcode != null and record.bankcode != ''">
-        #{bankcode,jdbcType=VARCHAR},
+      <if test="record.bankCode != null and record.bankCode != ''">
+        #{record.bankCode,jdbcType=VARCHAR},
       </if>
-      <if test="productid != null and record.productid != ''">
-        #{productid,jdbcType=VARCHAR},
+      <if test="record.productId != null and record.productId != ''">
+        #{record.productId,jdbcType=VARCHAR},
       </if>
-      <if test="purchaserecordid != null and record.purchaserecordid != ''">
-        #{purchaserecordid,jdbcType=VARCHAR},
+      <if test="record.purchaseRecordId != null and record.purchaseRecordId != ''">
+        #{record.purchaseRecordId,jdbcType=VARCHAR},
       </if>
-      <if test="dataSource != null and record.dataSource != ''">
-        #{dataSource,jdbcType=SMALLINT},
+      <if test="record.dataSource != null and record.dataSource != ''">
+        #{record.dataSource,jdbcType=SMALLINT},
       </if>
-      <if test="dataStatus != null and record.dataStatus != ''">
-        #{dataStatus,jdbcType=BIT},
+      <if test="record.dataStatus != null and record.dataStatus != ''">
+        #{record.dataStatus,jdbcType=BIT},
       </if>
     </trim>
   </sql>
   <sql id="Base_Update_Column_List">
     update amountchangerecord
     <set>
-      <if test="record.transactionid != null and record.transactionid != ''">
-        TransactionID = #{record.transactionid,jdbcType=VARCHAR},
+      <if test="record.transactionID != null and record.transactionID != ''">
+        TransactionID = #{record.transactionID,jdbcType=VARCHAR},
       </if>
       <if test="record.type != null and record.type != ''">
         Type = #{record.type,jdbcType=VARCHAR},
@@ -169,32 +169,32 @@
       <if test="record.status != null and record.status != ''">
         Status = #{record.status,jdbcType=VARCHAR},
       </if>
-      <if test="record.changeamount != null and record.changeamount != ''">
-        ChangeAmount = #{record.changeamount,jdbcType=DECIMAL},
+      <if test="record.changeAmount != null and record.changeAmount != ''">
+        ChangeAmount = #{record.changeAmount,jdbcType=DECIMAL},
       </if>
       <if test="record.amount != null and record.amount != ''">
         Amount = #{record.amount,jdbcType=DECIMAL},
       </if>
-      <if test="record.createtime != null and record.createtime != ''">
-        CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
+      <if test="record.createTime != null and record.createTime != ''">
+        CreateTime = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.userid != null and record.userid != ''">
-        UserID = #{record.userid,jdbcType=VARCHAR},
+      <if test="record.userID != null and record.userID != ''">
+        UserID = #{record.userID,jdbcType=VARCHAR},
       </if>
       <if test="record.remark != null and record.remark != ''">
         Remark = #{record.remark,jdbcType=VARCHAR},
       </if>
-      <if test="record.bankcard != null and record.bankcard != ''">
-        BankCard = #{record.bankcard,jdbcType=VARCHAR},
+      <if test="record.bankCard != null and record.bankCard != ''">
+        BankCard = #{record.bankCard,jdbcType=VARCHAR},
       </if>
-      <if test="record.bankcode != null and record.bankcode != ''">
-        BankCode = #{record.bankcode,jdbcType=VARCHAR},
+      <if test="record.bankCode != null and record.bankCode != ''">
+        BankCode = #{record.bankCode,jdbcType=VARCHAR},
       </if>
-      <if test="record.productid != null and record.productid != ''">
-        ProductId = #{record.productid,jdbcType=VARCHAR},
+      <if test="record.productId != null and record.productId != ''">
+        ProductId = #{record.productId,jdbcType=VARCHAR},
       </if>
-      <if test="record.purchaserecordid != null and record.purchaserecordid != ''">
-        PurchaseRecordId = #{record.purchaserecordid,jdbcType=VARCHAR},
+      <if test="record.purchaseRecordId != null and record.purchaseRecordId != ''">
+        PurchaseRecordId = #{record.purchaseRecordId,jdbcType=VARCHAR},
       </if>
       <if test="record.dataSource != null and record.dataSource != ''">
         data_source = #{record.dataSource,jdbcType=SMALLINT},
@@ -204,11 +204,11 @@
       </if>
     </set>
   </sql>
-  <insert id="insert" parameterType="com.huilian.model.Amountchangerecord">
+  <insert id="insert" parameterType="com.huilian.hyf.order.model.AmountChangeRecordEntity">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    <include refid="Base_Update_Column_List" />
+    <include refid="Base_Insert_Column_List" />
   </insert>
   <insert id="insertBatch" parameterType="java.util.List">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -218,11 +218,11 @@
       <include refid="Base_Insert_Column_List" />
     </foreach>
   </insert>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+  <delete id="deleteById" parameterType="java.lang.Long">
     delete from amountchangerecord
     where ID = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.huilian.model.Example">
+  <delete id="deleteByExample" parameterType="com.huilian.hyf.order.model.Example">
     delete from amountchangerecord
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -231,13 +231,9 @@
         where 1=2 
     </if>
   </delete>
-  <delete id="deleteByTransactionid" parameterType="java.lang.Long">
+  <delete id="deleteByTransactionID" parameterType="java.lang.Long">
     delete from amountchangerecord
-    where TransactionID = #{transactionid,jdbcType=VARCHAR}
-  </delete>
-  <delete id="deleteById" parameterType="java.lang.Long">
-    delete from amountchangerecord
-    where ID = #{id,jdbcType=BIGINT}
+    where TransactionID = #{transactionID,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByType" parameterType="java.lang.Long">
     delete from amountchangerecord
@@ -247,15 +243,15 @@
     delete from amountchangerecord
     where Status = #{status,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByUserid" parameterType="java.lang.Long">
+  <delete id="deleteByUserID" parameterType="java.lang.Long">
     delete from amountchangerecord
-    where UserID = #{userid,jdbcType=VARCHAR}
+    where UserID = #{userID,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByProductid" parameterType="java.lang.Long">
+  <delete id="deleteByProductId" parameterType="java.lang.Long">
     delete from amountchangerecord
-    where ProductId = #{productid,jdbcType=VARCHAR}
+    where ProductId = #{productId,jdbcType=VARCHAR}
   </delete>
-  <update id="updateByPrimaryKey" parameterType="map">
+  <update id="updateById" parameterType="map">
     <include refid="Base_Update_Column_List" />
     where ID = #{id,jdbcType=BIGINT}
   </update>
@@ -278,13 +274,9 @@
       where ID = #{record.id,jdbcType=BIGINT}
     </foreach>
   </update>
-  <update id="updateByTransactionid" parameterType="map">
+  <update id="updateByTransactionID" parameterType="map">
     <include refid="Base_Update_Column_List" />
-    where TransactionID = #{transactionid,jdbcType=VARCHAR}
-  </update>
-  <update id="updateById" parameterType="map">
-    <include refid="Base_Update_Column_List" />
-    where ID = #{id,jdbcType=BIGINT}
+    where TransactionID = #{transactionID,jdbcType=VARCHAR}
   </update>
   <update id="updateByType" parameterType="map">
     <include refid="Base_Update_Column_List" />
@@ -294,13 +286,13 @@
     <include refid="Base_Update_Column_List" />
     where Status = #{status,jdbcType=VARCHAR}
   </update>
-  <update id="updateByUserid" parameterType="map">
+  <update id="updateByUserID" parameterType="map">
     <include refid="Base_Update_Column_List" />
-    where UserID = #{userid,jdbcType=VARCHAR}
+    where UserID = #{userID,jdbcType=VARCHAR}
   </update>
-  <update id="updateByProductid" parameterType="map">
+  <update id="updateByProductId" parameterType="map">
     <include refid="Base_Update_Column_List" />
-    where ProductId = #{productid,jdbcType=VARCHAR}
+    where ProductId = #{productId,jdbcType=VARCHAR}
   </update>
   <select id="select" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -308,7 +300,7 @@
     from amountchangerecord
     where ID = #{id,jdbcType=BIGINT}
   </select>
-  <select id="selectByExample" parameterType="com.huilian.model.Example" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.huilian.hyf.order.model.Example" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from amountchangerecord
@@ -318,17 +310,11 @@
     <include refid="Example_OrderBy_Clause" />
     <include refid="Example_Pagin_Clause" />
   </select>
-  <select id="selectByTransactionid" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByTransactionID" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from amountchangerecord
-    where TransactionID = #{transactionid,jdbcType=VARCHAR}
-  </select>
-  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from amountchangerecord
-    where ID = #{id,jdbcType=BIGINT}
+    where TransactionID = #{transactionID,jdbcType=VARCHAR}
   </select>
   <select id="selectByType" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -342,25 +328,25 @@
     from amountchangerecord
     where Status = #{status,jdbcType=VARCHAR}
   </select>
-  <select id="selectByUserid" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByUserID" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from amountchangerecord
-    where UserID = #{userid,jdbcType=VARCHAR}
+    where UserID = #{userID,jdbcType=VARCHAR}
   </select>
-  <select id="selectByProductid" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByProductId" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from amountchangerecord
-    where ProductId = #{productid,jdbcType=VARCHAR}
+    where ProductId = #{productId,jdbcType=VARCHAR}
   </select>
-  <select id="countByExample" parameterType="com.huilian.model.Example" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.huilian.hyf.order.model.Example" resultType="java.lang.Long">
     select count(*) from amountchangerecord
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="virtualDeleteByExample" parameterType="com.huilian.model.Example">
+  <update id="vDeleteByExample" parameterType="com.huilian.hyf.order.model.Example">
     update amountchangerecord set data_status=1 
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -369,32 +355,28 @@
         where 1=2 
     </if>
   </update>
-  <update id="virtualDeleteByPrimaryKey" parameterType="java.lang.Long">
+  <update id="vDeleteById" parameterType="java.lang.Long">
     update amountchangerecord set data_status=1 
     where ID = #{id,jdbcType=BIGINT}
   </update>
-  <update id="virtualDeleteByTransactionid" parameterType="java.lang.Long">
+  <update id="vDeleteByTransactionID" parameterType="java.lang.Long">
     update amountchangerecord set data_status=1 
-    where TransactionID = #{transactionid,jdbcType=VARCHAR}
+    where TransactionID = #{transactionID,jdbcType=VARCHAR}
   </update>
-  <update id="virtualDeleteById" parameterType="java.lang.Long">
-    update amountchangerecord set data_status=1 
-    where ID = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="virtualDeleteByType" parameterType="java.lang.Long">
+  <update id="vDeleteByType" parameterType="java.lang.Long">
     update amountchangerecord set data_status=1 
     where Type = #{type,jdbcType=VARCHAR}
   </update>
-  <update id="virtualDeleteByStatus" parameterType="java.lang.Long">
+  <update id="vDeleteByStatus" parameterType="java.lang.Long">
     update amountchangerecord set data_status=1 
     where Status = #{status,jdbcType=VARCHAR}
   </update>
-  <update id="virtualDeleteByUserid" parameterType="java.lang.Long">
+  <update id="vDeleteByUserID" parameterType="java.lang.Long">
     update amountchangerecord set data_status=1 
-    where UserID = #{userid,jdbcType=VARCHAR}
+    where UserID = #{userID,jdbcType=VARCHAR}
   </update>
-  <update id="virtualDeleteByProductid" parameterType="java.lang.Long">
+  <update id="vDeleteByProductId" parameterType="java.lang.Long">
     update amountchangerecord set data_status=1 
-    where ProductId = #{productid,jdbcType=VARCHAR}
+    where ProductId = #{productId,jdbcType=VARCHAR}
   </update>
 </mapper>

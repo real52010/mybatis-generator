@@ -1,5 +1,5 @@
  /** 本文件由 工具自动生成自动生成 https://github.com/real52010/mybatis-generator.git*/
-package com.huilian.model;
+package com.huilian.hyf.order.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -8,11 +8,11 @@ import java.util.Date;
 /** 
  * 账户资金变动流水 0正常1删除
  * @author real code generator
- * date:2018-07-18 18:10:52
+ * date:2018-07-23 00:21:47
  */
-public class Amountchangerecord implements Serializable {
+public class AmountChangeRecordEntity implements Serializable {
     /**串行版本ID**/
-    private static final long serialVersionUID = 2451589693866876446L;
+    private static final long serialVersionUID = 3266534883002651656L;
 
     /** 
      * 主键自增
@@ -22,7 +22,7 @@ public class Amountchangerecord implements Serializable {
     /** 
      * 交易流水
      */ 
-    private String transactionid;
+    private String transactionID;
 
     /** 
      *      0:线上充值 1:线上订购（冻结） 2:提现 3:本金返还 4:利息返还
@@ -41,7 +41,7 @@ public class Amountchangerecord implements Serializable {
     /** 
      * 操作金额
      */ 
-    private BigDecimal changeamount;
+    private BigDecimal changeAmount;
 
     /** 
      * 帐户余额
@@ -51,12 +51,12 @@ public class Amountchangerecord implements Serializable {
     /** 
      * 操作时间
      */ 
-    private Date createtime;
+    private Date createTime;
 
     /** 
      * UserID
      */ 
-    private String userid;
+    private String userID;
 
     /** 
      * 备注（扩展字段）
@@ -66,24 +66,24 @@ public class Amountchangerecord implements Serializable {
     /** 
      * 银行卡号
      */ 
-    private String bankcard;
+    private String bankCard;
 
     /** 
      * 银行编码
      */ 
-    private String bankcode;
+    private String bankCode;
 
     /** 
      * 关联产品ID
      */ 
-    private String productid;
+    private String productId;
 
     /** 
      * 关联订购关系ID
      */ 
-    private String purchaserecordid;
+    private String purchaseRecordId;
 
-    private Short dataSource;
+    private Integer dataSource;
 
     /** 
      * 0正常1删除
@@ -111,16 +111,16 @@ public class Amountchangerecord implements Serializable {
      * 获取 交易流水 
      * @return 交易流水
      */
-    public String getTransactionid() {
-        return transactionid;
+    public String getTransactionID() {
+        return transactionID;
     }
 
     /** 
      * 设置 交易流水 
-     * @param transactionid 交易流水
+     * @param transactionID 交易流水
      */
-    public void setTransactionid(String transactionid) {
-        this.transactionid = transactionid;
+    public void setTransactionID(String transactionID) {
+        this.transactionID = transactionID;
     }
 
     /** 
@@ -175,16 +175,16 @@ public class Amountchangerecord implements Serializable {
      * 获取 操作金额 
      * @return 操作金额
      */
-    public BigDecimal getChangeamount() {
-        return changeamount;
+    public BigDecimal getChangeAmount() {
+        return changeAmount;
     }
 
     /** 
      * 设置 操作金额 
-     * @param changeamount 操作金额
+     * @param changeAmount 操作金额
      */
-    public void setChangeamount(BigDecimal changeamount) {
-        this.changeamount = changeamount;
+    public void setChangeAmount(BigDecimal changeAmount) {
+        this.changeAmount = changeAmount;
     }
 
     /** 
@@ -207,32 +207,32 @@ public class Amountchangerecord implements Serializable {
      * 获取 操作时间 
      * @return 操作时间
      */
-    public Date getCreatetime() {
-        return createtime;
+    public Date getCreateTime() {
+        return createTime;
     }
 
     /** 
      * 设置 操作时间 
-     * @param createtime 操作时间
+     * @param createTime 操作时间
      */
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     /** 
      * 获取 UserID 
      * @return UserID
      */
-    public String getUserid() {
-        return userid;
+    public String getUserID() {
+        return userID;
     }
 
     /** 
      * 设置 UserID 
-     * @param userid UserID
+     * @param userID UserID
      */
-    public void setUserid(String userid) {
-        this.userid = userid;
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
     /** 
@@ -255,71 +255,71 @@ public class Amountchangerecord implements Serializable {
      * 获取 银行卡号 
      * @return 银行卡号
      */
-    public String getBankcard() {
-        return bankcard;
+    public String getBankCard() {
+        return bankCard;
     }
 
     /** 
      * 设置 银行卡号 
-     * @param bankcard 银行卡号
+     * @param bankCard 银行卡号
      */
-    public void setBankcard(String bankcard) {
-        this.bankcard = bankcard;
+    public void setBankCard(String bankCard) {
+        this.bankCard = bankCard;
     }
 
     /** 
      * 获取 银行编码 
      * @return 银行编码
      */
-    public String getBankcode() {
-        return bankcode;
+    public String getBankCode() {
+        return bankCode;
     }
 
     /** 
      * 设置 银行编码 
-     * @param bankcode 银行编码
+     * @param bankCode 银行编码
      */
-    public void setBankcode(String bankcode) {
-        this.bankcode = bankcode;
+    public void setBankCode(String bankCode) {
+        this.bankCode = bankCode;
     }
 
     /** 
      * 获取 关联产品ID 
      * @return 关联产品ID
      */
-    public String getProductid() {
-        return productid;
+    public String getProductId() {
+        return productId;
     }
 
     /** 
      * 设置 关联产品ID 
-     * @param productid 关联产品ID
+     * @param productId 关联产品ID
      */
-    public void setProductid(String productid) {
-        this.productid = productid;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     /** 
      * 获取 关联订购关系ID 
      * @return 关联订购关系ID
      */
-    public String getPurchaserecordid() {
-        return purchaserecordid;
+    public String getPurchaseRecordId() {
+        return purchaseRecordId;
     }
 
     /** 
      * 设置 关联订购关系ID 
-     * @param purchaserecordid 关联订购关系ID
+     * @param purchaseRecordId 关联订购关系ID
      */
-    public void setPurchaserecordid(String purchaserecordid) {
-        this.purchaserecordid = purchaserecordid;
+    public void setPurchaseRecordId(String purchaseRecordId) {
+        this.purchaseRecordId = purchaseRecordId;
     }
 
     /** 
      * 获取 amountchangerecord.data_source
      * @return amountchangerecord.data_source
      */
-    public Short getDataSource() {
+    public Integer getDataSource() {
         return dataSource;
     }
 
@@ -327,7 +327,7 @@ public class Amountchangerecord implements Serializable {
      * 设置 amountchangerecord.data_source
      * @param dataSource amountchangerecord.data_source
      */
-    public void setDataSource(Short dataSource) {
+    public void setDataSource(Integer dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -358,20 +358,20 @@ public class Amountchangerecord implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        Amountchangerecord other = (Amountchangerecord) that;
+        AmountChangeRecordEntity other = (AmountChangeRecordEntity) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getTransactionid() == null ? other.getTransactionid() == null : this.getTransactionid().equals(other.getTransactionid()))
+            && (this.getTransactionID() == null ? other.getTransactionID() == null : this.getTransactionID().equals(other.getTransactionID()))
             && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
-            && (this.getChangeamount() == null ? other.getChangeamount() == null : this.getChangeamount().equals(other.getChangeamount()))
+            && (this.getChangeAmount() == null ? other.getChangeAmount() == null : this.getChangeAmount().equals(other.getChangeAmount()))
             && (this.getAmount() == null ? other.getAmount() == null : this.getAmount().equals(other.getAmount()))
-            && (this.getCreatetime() == null ? other.getCreatetime() == null : this.getCreatetime().equals(other.getCreatetime()))
-            && (this.getUserid() == null ? other.getUserid() == null : this.getUserid().equals(other.getUserid()))
+            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+            && (this.getUserID() == null ? other.getUserID() == null : this.getUserID().equals(other.getUserID()))
             && (this.getRemark() == null ? other.getRemark() == null : this.getRemark().equals(other.getRemark()))
-            && (this.getBankcard() == null ? other.getBankcard() == null : this.getBankcard().equals(other.getBankcard()))
-            && (this.getBankcode() == null ? other.getBankcode() == null : this.getBankcode().equals(other.getBankcode()))
-            && (this.getProductid() == null ? other.getProductid() == null : this.getProductid().equals(other.getProductid()))
-            && (this.getPurchaserecordid() == null ? other.getPurchaserecordid() == null : this.getPurchaserecordid().equals(other.getPurchaserecordid()))
+            && (this.getBankCard() == null ? other.getBankCard() == null : this.getBankCard().equals(other.getBankCard()))
+            && (this.getBankCode() == null ? other.getBankCode() == null : this.getBankCode().equals(other.getBankCode()))
+            && (this.getProductId() == null ? other.getProductId() == null : this.getProductId().equals(other.getProductId()))
+            && (this.getPurchaseRecordId() == null ? other.getPurchaseRecordId() == null : this.getPurchaseRecordId().equals(other.getPurchaseRecordId()))
             && (this.getDataSource() == null ? other.getDataSource() == null : this.getDataSource().equals(other.getDataSource()))
             && (this.getDataStatus() == null ? other.getDataStatus() == null : this.getDataStatus().equals(other.getDataStatus()));
     }
@@ -381,18 +381,18 @@ public class Amountchangerecord implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getTransactionid() == null) ? 0 : getTransactionid().hashCode());
+        result = prime * result + ((getTransactionID() == null) ? 0 : getTransactionID().hashCode());
         result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
-        result = prime * result + ((getChangeamount() == null) ? 0 : getChangeamount().hashCode());
+        result = prime * result + ((getChangeAmount() == null) ? 0 : getChangeAmount().hashCode());
         result = prime * result + ((getAmount() == null) ? 0 : getAmount().hashCode());
-        result = prime * result + ((getCreatetime() == null) ? 0 : getCreatetime().hashCode());
-        result = prime * result + ((getUserid() == null) ? 0 : getUserid().hashCode());
+        result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
+        result = prime * result + ((getUserID() == null) ? 0 : getUserID().hashCode());
         result = prime * result + ((getRemark() == null) ? 0 : getRemark().hashCode());
-        result = prime * result + ((getBankcard() == null) ? 0 : getBankcard().hashCode());
-        result = prime * result + ((getBankcode() == null) ? 0 : getBankcode().hashCode());
-        result = prime * result + ((getProductid() == null) ? 0 : getProductid().hashCode());
-        result = prime * result + ((getPurchaserecordid() == null) ? 0 : getPurchaserecordid().hashCode());
+        result = prime * result + ((getBankCard() == null) ? 0 : getBankCard().hashCode());
+        result = prime * result + ((getBankCode() == null) ? 0 : getBankCode().hashCode());
+        result = prime * result + ((getProductId() == null) ? 0 : getProductId().hashCode());
+        result = prime * result + ((getPurchaseRecordId() == null) ? 0 : getPurchaseRecordId().hashCode());
         result = prime * result + ((getDataSource() == null) ? 0 : getDataSource().hashCode());
         result = prime * result + ((getDataStatus() == null) ? 0 : getDataStatus().hashCode());
         return result;
@@ -406,18 +406,18 @@ public class Amountchangerecord implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append(", id=").append(id);
-        sb.append(", transactionid=").append(transactionid);
+        sb.append(", transactionID=").append(transactionID);
         sb.append(", type=").append(type);
         sb.append(", status=").append(status);
-        sb.append(", changeamount=").append(changeamount);
+        sb.append(", changeAmount=").append(changeAmount);
         sb.append(", amount=").append(amount);
-        sb.append(", createtime=").append(createtime);
-        sb.append(", userid=").append(userid);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", userID=").append(userID);
         sb.append(", remark=").append(remark);
-        sb.append(", bankcard=").append(bankcard);
-        sb.append(", bankcode=").append(bankcode);
-        sb.append(", productid=").append(productid);
-        sb.append(", purchaserecordid=").append(purchaserecordid);
+        sb.append(", bankCard=").append(bankCard);
+        sb.append(", bankCode=").append(bankCode);
+        sb.append(", productId=").append(productId);
+        sb.append(", purchaseRecordId=").append(purchaseRecordId);
         sb.append(", dataSource=").append(dataSource);
         sb.append(", dataStatus=").append(dataStatus);
         sb.append("]");

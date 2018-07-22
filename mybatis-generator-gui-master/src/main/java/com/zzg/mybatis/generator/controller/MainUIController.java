@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -103,7 +104,6 @@ public class MainUIController extends BaseFXController {
 	private TextField exampleTargetPackage;
 	@FXML
 	private TextField exampleTargetProject;
-	
 
 	@FXML
 	private TextField modelNamePostfix;
@@ -111,8 +111,7 @@ public class MainUIController extends BaseFXController {
 	private TextField mapperNamePostfix;
 	@FXML
 	private TextField mappingFilePostfix;
-	
-	
+
 	// Current selected databaseConfig
 	private DatabaseConfig selectedDatabaseConfig;
 	// Current selected tableName
@@ -121,8 +120,6 @@ public class MainUIController extends BaseFXController {
 	private List<IgnoredColumn> ignoredColumns;
 
 	private List<ColumnOverride> columnOverrides;
-	
-
 
 	private String configName;
 
@@ -256,6 +253,7 @@ public class MainUIController extends BaseFXController {
 			AlertUtil.showErrorAlert(e.getMessage() + "\n" + ExceptionUtils.getStackTrace(e));
 		}
 	}
+
 	void loadDisPostConfig() {
 		GeneratorConfig generatorConfig;
 		try {
@@ -276,10 +274,12 @@ public class MainUIController extends BaseFXController {
 			projectFolderField.setText(selectedFolder.getAbsolutePath());
 		}
 	}
+
 	@FXML
 	public void setVirtualEnable() {
 		virtualDeleteSqlFeild.setDisable(!createVirtualDeleteCheckBox.isSelected());
 	}
+
 	@FXML
 	public void filterTableName() {
 		String filterTab = this.filterTableField.getText().trim();
@@ -292,10 +292,9 @@ public class MainUIController extends BaseFXController {
 			ObservableList<TreeItem<String>> childrens = rootTreeItem.getChildren();
 			DatabaseConfig selectedConfig = (DatabaseConfig) childrens.get(i).getGraphic().getUserData();
 			String dbkey = selectedConfig.getName();
-			System.out.println(dbkey);
 			List<String> tableList = tableNameMap.get(dbkey);
 			if (tableList == null) {
-				break;
+				continue;
 			}
 			ObservableList<TreeItem<String>> childrens2 = childrens.get(i).getChildren();
 			if (filterTab.equals("")) {
@@ -305,20 +304,37 @@ public class MainUIController extends BaseFXController {
 			// else {
 			List<String> tableList2 = new ArrayList<>(tableList);
 			//// Collections.copy(tableList2, tableList);
+			String regEX = "[+%#&=()]";
+			Pattern p = Pattern.compile(regEX);
+			Matcher m = p.matcher(filterTab);
+			String filterStr = m.replaceAll("").trim();
+
+			String pattern = filterStr.replaceAll("\\*", ".\\*");
+			pattern = pattern.startsWith(".*") ? pattern : (".*" + pattern);
+			pattern = pattern.endsWith(".*") ? pattern : (pattern + ".*");
+			final String pattern2 = pattern;
 			tableList2.removeIf(new Predicate<String>() {
 				@Override
 				public boolean test(String t) {
-					String regEX="[+%#&=()]";  
-					Pattern p=Pattern.compile(regEX);  
-					Matcher m=p.matcher(filterTab);  
-					String filterStr=m.replaceAll("").trim();  
-
-					 String pattern = filterStr.replaceAll("\\*", ".\\*");
-					 pattern=pattern.startsWith(".*")?pattern:(".*"+pattern);
-					 pattern=pattern.endsWith(".*")?pattern:(pattern+".*");
-					return !t.matches(pattern) ;
+					Pattern p2 = Pattern.compile(pattern2, Pattern.CASE_INSENSITIVE);
+					return !p2.matcher(t).matches();
 				}
 			});
+//			
+//			childrens2.forEach(new Consumer<TreeItem<String>>() {
+//
+//				@Override
+//				public void accept(TreeItem<String> t) {
+//					Pattern p2 = Pattern.compile(pattern2, Pattern.CASE_INSENSITIVE);
+//					if(!p2.matcher(t.getValue()).matches()) {
+////						t.getGraphic().setVisible(false);
+////						t.setValue(null);
+//					}
+//					
+//				}
+//				
+//			});
+//			System.out.println(tableList2.size());
 			initTableTree(childrens2, tableList2);
 			// }
 
@@ -378,31 +394,30 @@ public class MainUIController extends BaseFXController {
 
 	@FXML
 	public void saveGeneratorConfig() {
-//		TextInputDialog dialog = new TextInputDialog("");
-//		dialog.setTitle("保存当前配置");
-//		dialog.setContentText("请输入配置名称");
-//		Optional<String> result = dialog.showAndWait();
-//		if (result.isPresent()) {
-//			String name = result.get();
-//			if (StringUtils.isEmpty(name)) {
-//				AlertUtil.showErrorAlert("名称不能为空");
-//				return;
-//			}
-//			_LOG.info("user choose name: {}", name);
-//			try {
-//				GeneratorConfig generatorConfig = getGeneratorConfigFromUI();
-//				generatorConfig.setName(name);
-//				ConfigHelper.saveGeneratorConfig(generatorConfig);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//				AlertUtil.showErrorAlert("删除配置失败");
-//			}
-//		}
-		
-			SaveConfigController controller = (SaveConfigController) loadFXMLPage("保存配置",
-					FXMLPage.SAVE_CONFIG, false);
-			controller.setMainUIController(this);
-			controller.showDialogStage();
+		// TextInputDialog dialog = new TextInputDialog("");
+		// dialog.setTitle("保存当前配置");
+		// dialog.setContentText("请输入配置名称");
+		// Optional<String> result = dialog.showAndWait();
+		// if (result.isPresent()) {
+		// String name = result.get();
+		// if (StringUtils.isEmpty(name)) {
+		// AlertUtil.showErrorAlert("名称不能为空");
+		// return;
+		// }
+		// _LOG.info("user choose name: {}", name);
+		// try {
+		// GeneratorConfig generatorConfig = getGeneratorConfigFromUI();
+		// generatorConfig.setName(name);
+		// ConfigHelper.saveGeneratorConfig(generatorConfig);
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// AlertUtil.showErrorAlert("删除配置失败");
+		// }
+		// }
+
+		SaveConfigController controller = (SaveConfigController) loadFXMLPage("保存配置", FXMLPage.SAVE_CONFIG, false);
+		controller.setMainUIController(this);
+		controller.showDialogStage();
 	}
 
 	public GeneratorConfig getGeneratorConfigFromUI() {
@@ -414,7 +429,7 @@ public class MainUIController extends BaseFXController {
 		generatorConfig.setModelPackageTargetFolder(modelTargetProject.getText());
 		generatorConfig.setDaoPackage(daoTargetPackage.getText());
 		generatorConfig.setDaoTargetFolder(daoTargetProject.getText());
-//		generatorConfig.setMapperName(mapperName.getText());
+		// generatorConfig.setMapperName(mapperName.getText());
 		generatorConfig.setModelNamePostfix(modelNamePostfix.getText());
 		generatorConfig.setMapperNamePostfix(mapperNamePostfix.getText());
 		generatorConfig.setMappingFilePostfix(mappingFilePostfix.getText());
@@ -426,9 +441,9 @@ public class MainUIController extends BaseFXController {
 		generatorConfig.setComment(commentCheckBox.isSelected());
 		generatorConfig.setNeedToStringHashcodeEquals(needToStringHashcodeEquals.isSelected());
 		generatorConfig.setAnnotation(annotationCheckBox.isSelected());
-		generatorConfig.setUseActualColumnNames(useActualColumnNamesCheckbox.isSelected());  
+		generatorConfig.setUseActualColumnNames(useActualColumnNamesCheckbox.isSelected());
 		generatorConfig.setCreateBaseExp(createBaseExpCheckBox.isSelected());
-		generatorConfig.setCreateIndexMethod(createIndexMethodCheckBox.isSelected()); 
+		generatorConfig.setCreateIndexMethod(createIndexMethodCheckBox.isSelected());
 		generatorConfig.setOverwriteExtFiles(overwriteExtFilesCheckBox.isSelected());
 		generatorConfig.setCreateVirtualDelete(createVirtualDeleteCheckBox.isSelected());
 		generatorConfig.setVirtualDeleteSql(virtualDeleteSqlFeild.getText());
@@ -463,7 +478,7 @@ public class MainUIController extends BaseFXController {
 		modelNamePostfix.setText(generatorConfig.getModelNamePostfix());
 		mapperNamePostfix.setText(generatorConfig.getMapperNamePostfix());
 		mappingFilePostfix.setText(generatorConfig.getMappingFilePostfix());
-		setConfigName(generatorConfig.getName()); 
+		setConfigName(generatorConfig.getName());
 	}
 
 	@FXML
