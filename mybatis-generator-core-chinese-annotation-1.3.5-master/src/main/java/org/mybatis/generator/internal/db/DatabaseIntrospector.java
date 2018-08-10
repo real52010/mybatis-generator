@@ -724,7 +724,7 @@ public class DatabaseIntrospector {
 
 		List<IntrospectedColumn> listColumns = introspectedTable.getAllColumns();
 		for (IntrospectedColumn introspectedColumn : listColumns) {
-			mapColumns.put(introspectedColumn.getJavaProperty().toLowerCase(), introspectedColumn);
+			mapColumns.put(introspectedColumn.getActualColumnName().toLowerCase(), introspectedColumn);
 		}
 
 		if ("MYSQL".equals(databaseProductName)) {

@@ -31,7 +31,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import static org.mybatis.generator.internal.util.StringUtility.isTrue;
@@ -78,6 +80,47 @@ public class DbRemarksCommentGenerator implements CommentGenerator {
 
 	private static final String SOURCEURL = "https://github.com/real52010/mybatis-generator.git";
 
+	 private Map<String, String> methodCommentMap=new HashMap<String, String>();
+	    
+	    {
+	    	methodCommentMap.put("setOrderByClause"," 设置排序字段");
+	    	methodCommentMap.put("setDistinct"," 设置过滤重复数据");
+	    	methodCommentMap.put("getOredCriteria"," 获取当前的查询条件实例");
+	    	methodCommentMap.put("isDistinct"," 是否过滤重复数据");
+	    	methodCommentMap.put("getOrderByClause"," 获取排序字段");
+	    	methodCommentMap.put("createCriteria"," 创建一个查询条件");
+	    	methodCommentMap.put("createCriteriaInternal"," 内部构建查询条件对象");
+	    	methodCommentMap.put("clear"," 清除查询条件");
+	    	methodCommentMap.put("countByExample"," 查询数量");
+	    	methodCommentMap.put("delete"," 根据主键删除,该方法为物理删除");
+	    	methodCommentMap.put("deleteByExample","  <strong>根据条件删除,该方法要谨慎使用，如果example为空或其属性为空，会删除整表数据 </strong>");
+	    	methodCommentMap.put("virtualDelete"," 根据主键删除,该方法为物理删除");
+	    	methodCommentMap.put("virtualDeleteByExample","  <strong>根据条件删除,如果example为空或其属性为空，会删除整表数据 </strong>");
+	    	methodCommentMap.put("deleteByPrimaryKey"," 根据ID删除");
+	    	methodCommentMap.put("insert"," 添加对象所有字段");
+	    	methodCommentMap.put("insertSelective"," 添加对象对应字段");
+	    	methodCommentMap.put("insertBatch"," 添加List集合对象所有字段");
+	    	methodCommentMap.put("insertBatchSelective"," 添加List集合对象对应字段");
+	    	methodCommentMap.put("select"," 根据主键查询");
+	    	methodCommentMap.put("selectByExample"," 根据条件查询");
+	    	methodCommentMap.put("selectByPrimaryKey"," 根据ID查询");
+	    	methodCommentMap.put("update"," 根据主键修改");
+	    	methodCommentMap.put("addUpdateBySelective"," 根据对象里的字段修改");
+	    	methodCommentMap.put("updateByExampleSelective"," 根据条件修改对应字段");
+	    	methodCommentMap.put("updateByExample"," 根据条件修改所有字段");
+	    	methodCommentMap.put("updateBatchBySelective"," 根据列表里的字段批量修改");
+	    	methodCommentMap.put("updateByPrimaryKeySelective"," 根据ID修改对应字段");
+	    	methodCommentMap.put("updateByPrimaryKey"," 根据ID修改所有字段(必须含ID）");
+	    	methodCommentMap.put("updateByPrimaryKeyWithBLOBs"," 根据ID修改字段（包含二进制大对象）");
+	    	methodCommentMap.put("updateByExampleWithBLOBs"," 根据条件修改字段 （包含二进制大对象）");
+	    	methodCommentMap.put("selectByExampleWithBLOBs"," 根据条件查询（包含二进制大对象）");
+	        methodCommentMap.put("setPaginLimit"," 设置每页记录数");
+	        methodCommentMap.put("getPaginLimit"," 获取每页记录数");
+	        methodCommentMap.put("setPaginOffset"," 设置查询开始数");
+	        methodCommentMap.put("getPaginOffset"," 获取查询开始数");
+	        methodCommentMap.put("addCriterion"," 添加过滤条件");
+	        
+	    }
 	/**
 	 * Instantiates a new default comment generator.
 	 */
@@ -444,73 +487,12 @@ public class DbRemarksCommentGenerator implements CommentGenerator {
 		String method_name = method.getName();
 		if ("toString".equals(method_name) || "hashCode".equals(method_name) || "equals".equals(method_name)) {
 			return;
-		} else if ("setOrderByClause".equals(method_name)) {
-			sb.append(" 设置排序字段");
-		} else if ("setDistinct".equals(method_name)) {
-			sb.append(" 设置过滤重复数据");
-		} else if ("getOredCriteria".equals(method_name)) {
-			sb.append(" 获取当前的查询条件实例");
-		} else if ("isDistinct".equals(method_name)) {
-			sb.append(" 是否过滤重复数据");
-		} else if ("getOrderByClause".equals(method_name)) {
-			sb.append(" 获取排序字段");
-		} else if ("createCriteria".equals(method_name)) {
-			sb.append(" 创建一个查询条件");
-		} else if ("createCriteriaInternal".equals(method_name)) {
-			sb.append(" 内部构建查询条件对象");
-		} else if ("clear".equals(method_name)) {
-			sb.append(" 清除查询条件");
-		} else if ("countByExample".equals(method_name)) {
-			sb.append(" 查询数量");
-		} else if ("delete".equals(method_name)) {
-			sb.append(" 根据主键删除,该方法为物理删除");
-		} else if ("deleteByExample".equals(method_name)) {
-			sb.append("  <strong>根据条件删除,该方法为虚拟删除,该方法要谨慎使用，如果example为空或其属性为空，会删除整表数据 </strong>");
-
-		} else if ("virtualDelete".equals(method_name)) {
-			sb.append(" 根据主键删除,该方法为物理删除");
-		} else if ("virtualDeleteByExample".equals(method_name)) {
-			sb.append("  <strong>根据条件删除,该方法要谨慎使用，如果example为空或其属性为空，会删除整表数据 </strong>");
-
-		} else if ("deleteByPrimaryKey".equals(method_name)) {
-			sb.append(" 根据ID删除");
-		} else if ("insert".equals(method_name)) {
-			sb.append(" 添加对象所有字段");
-		} else if ("insertSelective".equals(method_name)) {
-			sb.append(" 添加对象对应字段");
-		} else if ("insertBatch".equals(method_name)) {
-			sb.append(" 添加List集合对象所有字段");
-		} else if ("insertBatchSelective".equals(method_name)) {
-			sb.append(" 添加List集合对象对应字段");
-		} else if ("select".equals(method_name)) {
-			sb.append(" 根据主键查询");
-		} else if ("selectByExample".equals(method_name)) {
-			sb.append(" 根据条件查询");
-		} else if ("selectByPrimaryKey".equals(method_name)) {
-			sb.append(" 根据ID查询");
-		} else if ("update".equals(method_name)) {
-			sb.append(" 根据主键修改");
-		} else if ("addUpdateBySelective".equals(method_name)) {
-			sb.append(" 根据对象里的字段修改");
-		} else if ("updateByExampleSelective".equals(method_name)) {
-			sb.append(" 根据条件修改对应字段");
-		} else if ("updateByExample".equals(method_name)) {
-			sb.append(" 根据条件修改所有字段");
-		} else if ("updateBatchBySelective".equals(method_name)) {
-			sb.append(" 根据列表里的字段批量修改");
-		} else if ("updateByPrimaryKeySelective".equals(method_name)) {
-			sb.append(" 根据ID修改对应字段");
-		} else if ("updateByPrimaryKey".equals(method_name)) {
-			sb.append(" 根据ID修改所有字段(必须含ID）");
-		} else if ("updateByPrimaryKeyWithBLOBs".equals(method_name)) {
-			sb.append(" 根据ID修改字段（包含二进制大对象）");
-		} else if ("updateByExampleWithBLOBs".equals(method_name)) {
-			sb.append(" 根据条件修改字段 （包含二进制大对象）");
-		} else if ("selectByExampleWithBLOBs".equals(method_name)) {
-			sb.append(" 根据条件查询（包含二进制大对象）");
-		}
-
-		final List<Parameter> parameterList = method.getParameters();
+		}  
+		 
+        if(methodCommentMap.containsKey(method_name)) {
+        	sb.append(methodCommentMap.get(method_name));
+        }
+        final List<Parameter> parameterList = method.getParameters();
 		if (!parameterList.isEmpty()) {
 			if ("or".equals(method_name)) {
 				sb.append(" 增加或者的查询条件,用于构建或者查询");

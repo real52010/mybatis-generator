@@ -4,11 +4,13 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
 import org.mybatis.generator.api.FullyQualifiedTable;
+import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.XmlElement;
@@ -138,6 +140,9 @@ public class RealXMLMapperGenerator extends XMLMapperGenerator {
 			if (entry.getKey().equals("PRIMARY")) {
 				continue;
 			}
+			if (checkEqPrimaryCols(entry.getValue())) {
+				continue;
+			}
 			if (entry.getValue().getIntrospectedColumns().size() == 1) {
 				addUpdateByIndexCloumnElementElement(parentElement, entry.getValue());
 			}
@@ -159,6 +164,9 @@ public class RealXMLMapperGenerator extends XMLMapperGenerator {
 			if (entry.getKey().equals("PRIMARY")) {
 				continue;
 			}
+			if (checkEqPrimaryCols(entry.getValue())) {
+				continue;
+			}
 			if (entry.getValue().getIntrospectedColumns().size() == 1) {
 				addDeleteByIndexCloumnElementElement(parentElement, entry.getValue());
 			}
@@ -178,6 +186,9 @@ public class RealXMLMapperGenerator extends XMLMapperGenerator {
 		for (Entry<String, TableIndex> entry : set) {
 			// 主键在主键列已经增加
 			if (entry.getKey().equals("PRIMARY")) {
+				continue;
+			}
+			if (checkEqPrimaryCols(entry.getValue())) {
 				continue;
 			}
 			if (entry.getValue().getIntrospectedColumns().size() == 1) {
@@ -205,11 +216,26 @@ public class RealXMLMapperGenerator extends XMLMapperGenerator {
 				if (entry.getKey().equals("PRIMARY")) {
 					continue;
 				}
+				if (checkEqPrimaryCols(entry.getValue())) {
+					continue;
+				}
 				if (entry.getValue().getIntrospectedColumns().size() == 1) {
 					addViatualDeleteByIndexCloumnElementElement(parentElement, entry.getValue());
 				}
 			}
 		}
+	}
+
+	private boolean checkEqPrimaryCols(TableIndex tableIndex) {
+		List<IntrospectedColumn> primaryKeyColumns = introspectedTable.getPrimaryKeyColumns();
+		List<IntrospectedColumn> indexColumns = tableIndex.getIntrospectedColumns();
+		if (primaryKeyColumns == null || indexColumns == null) {
+			return false;
+		}
+		if (primaryKeyColumns.size() != indexColumns.size()) {
+			return false;
+		}
+		return primaryKeyColumns.containsAll(indexColumns);
 	}
 
 	protected void addSelectByIndexCloumnElementElement(XmlElement parentElement, TableIndex tableIndex) {

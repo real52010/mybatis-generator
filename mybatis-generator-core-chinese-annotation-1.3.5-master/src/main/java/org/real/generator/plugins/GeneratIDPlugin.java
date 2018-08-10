@@ -23,7 +23,7 @@ public class GeneratIDPlugin extends PluginAdapter {
 			
 			if (introspectedColumn.isAutoIncrement()) {
 				introspectedColumn.setIdentity(true);
-				GeneratedKey gkey=new GeneratedKey(introspectedColumn.getActualColumnName(), "Mysql", true, null);  
+				GeneratedKey gkey=new GeneratedKey(introspectedColumn.getActualColumnName(), "JDBC", true, null);  
 				tableConfig.setGeneratedKey(gkey);
 
 			}

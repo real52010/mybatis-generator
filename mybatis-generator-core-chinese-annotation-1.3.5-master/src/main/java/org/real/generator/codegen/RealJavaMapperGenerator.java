@@ -179,6 +179,9 @@ public class RealJavaMapperGenerator extends JavaMapperGenerator {
 			if (entry.getKey().equals("PRIMARY")) {
 				continue;
 			}
+			if(checkEqPrimaryCols(entry.getValue())) {
+				continue;
+			}
 			if (entry.getValue().getIntrospectedColumns().size() == 1) {
 				addUpdateMethod(interfaze, entry.getValue());
 			}
@@ -194,10 +197,13 @@ public class RealJavaMapperGenerator extends JavaMapperGenerator {
 		}
 		RealInsoIntrospectedTable realInsoIntrospectedTable = (RealInsoIntrospectedTable) introspectedTable;
 		Map<String, TableIndex> indexMap = realInsoIntrospectedTable.getIndexColumns();
-		Set<Entry<String, TableIndex>> set = indexMap.entrySet();
+		Set<Entry<String, TableIndex>> set = indexMap.entrySet(); 
 		for (Entry<String, TableIndex> entry : set) {
 			// 主键在主键列已经增加
 			if (entry.getKey().equals("PRIMARY")) {
+				continue;
+			}
+			if(checkEqPrimaryCols(entry.getValue())) {
 				continue;
 			}
 			if (entry.getValue().getIntrospectedColumns().size() == 1) {
@@ -221,12 +227,25 @@ public class RealJavaMapperGenerator extends JavaMapperGenerator {
 			if (entry.getKey().equals("PRIMARY")) {
 				continue;
 			}
+			if(checkEqPrimaryCols(entry.getValue())) {
+				continue;
+			}
 			if (entry.getValue().getIntrospectedColumns().size() == 1) {
 				addSelectMethod(interfaze, entry.getValue());
 			}
 		}
 	}
-
+	private boolean checkEqPrimaryCols(TableIndex tableIndex) {
+		List<IntrospectedColumn> primaryKeyColumns= introspectedTable.getPrimaryKeyColumns();
+		List<IntrospectedColumn> indexColumns= tableIndex.getIntrospectedColumns();
+		if(primaryKeyColumns==null||indexColumns==null) {
+			return false;
+		}
+		if(primaryKeyColumns.size()!=indexColumns.size()) {
+			return false;
+		}
+		return primaryKeyColumns.containsAll(indexColumns);
+	}
 	private void addVirtualDeleteIndexColumnMethod(Interface interfaze) {
 
 		if (!(introspectedTable instanceof RealInsoIntrospectedTable)) {
@@ -244,6 +263,9 @@ public class RealJavaMapperGenerator extends JavaMapperGenerator {
 		for (Entry<String, TableIndex> entry : set) {
 			// 主键在主键列已经增加
 			if (entry.getKey().equals("PRIMARY")) {
+				continue;
+			}
+			if(checkEqPrimaryCols(entry.getValue())) {
 				continue;
 			}
 			if (entry.getValue().getIntrospectedColumns().size() == 1) {
@@ -394,12 +416,12 @@ public class RealJavaMapperGenerator extends JavaMapperGenerator {
 		Method method = new Method();
 		method.setName(getTabIndexJavaMethodName("vDeleteBy", tableIndex));
 		method.setReturnType(FullyQualifiedJavaType.getIntInstance());
-		sb.setLength(0);
-		sb.append("@Param(\""); //$NON-NLS-1$
-		sb.append("record");
-		sb.append("\")"); //$NON-NLS-1$
-		parameter.addAnnotation(sb.toString());
-		method.addParameter(parameter);
+//		sb.setLength(0);
+//		sb.append("@Param(\""); //$NON-NLS-1$
+//		sb.append("record");
+//		sb.append("\")"); //$NON-NLS-1$
+//		parameter.addAnnotation(sb.toString());
+//		method.addParameter(parameter);
 
 		List<IntrospectedColumn> introspectedColumns = tableIndex.getIntrospectedColumns();
 		boolean annotate = introspectedColumns.size() > 1;

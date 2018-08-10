@@ -46,11 +46,11 @@ public class ExamplePaginClauseElementGenerator extends AbstractXmlElementGenera
 		ifElement.addAttribute(new Attribute("test", "example.paginLimit != null"));
 
 		XmlElement offsetNotNullElement = new XmlElement("if"); //$NON-NLS-1$
-		offsetNotNullElement.addAttribute(new Attribute("test", "model.paginOffset != null"));
-		offsetNotNullElement.addElement(new TextElement("limit ${model.paginOffset}, ${model.paginLimit}"));
+		offsetNotNullElement.addAttribute(new Attribute("test", "example.paginOffset != null"));
+		offsetNotNullElement.addElement(new TextElement("limit ${example.paginOffset}, ${example.paginLimit}"));
 		XmlElement offsetNullElement = new XmlElement("if"); //$NON-NLS-1$
-		offsetNullElement.addAttribute(new Attribute("test", "model.paginOffset == null"));
-		offsetNullElement.addElement(new TextElement("limit ${model.paginLimit}"));
+		offsetNullElement.addAttribute(new Attribute("test", "example.paginOffset == null"));
+		offsetNullElement.addElement(new TextElement("limit ${example.paginLimit}"));
 		ifElement.addElement(offsetNotNullElement);
 		ifElement.addElement(offsetNullElement);
 		answer.addElement(ifElement);
