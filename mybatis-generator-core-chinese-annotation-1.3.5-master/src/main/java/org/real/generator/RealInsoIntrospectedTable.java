@@ -87,7 +87,7 @@ public class RealInsoIntrospectedTable extends IntrospectedTableMyBatis3Impl {
 		sb.append('.');
 		sb.append(fullyQualifiedTable.getDomainObjectName());
 		if(StringUtils.isEmpty(tableConfiguration.getProperty("modelNamePostfix"))) {
-        	sb.append("POJO"); 
+        	sb.append(""); 
         }else {
         	sb.append(tableConfiguration.getProperty("modelNamePostfix")); 
         }

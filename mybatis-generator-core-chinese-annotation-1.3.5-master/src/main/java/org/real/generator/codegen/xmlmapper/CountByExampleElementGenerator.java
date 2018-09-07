@@ -43,7 +43,7 @@ public class CountByExampleElementGenerator extends AbstractXmlElementGenerator 
 
 		answer.addAttribute(new Attribute("id", "countByExample")); //$NON-NLS-1$
 		answer.addAttribute(new Attribute("parameterType", fqjt)); //$NON-NLS-1$
-		answer.addAttribute(new Attribute("resultType", "java.lang.Long")); //$NON-NLS-1$ //$NON-NLS-2$
+		answer.addAttribute(new Attribute("resultType", "java.lang.Integer")); //$NON-NLS-1$ //$NON-NLS-2$
 
 		context.getCommentGenerator().addComment(answer);
 
