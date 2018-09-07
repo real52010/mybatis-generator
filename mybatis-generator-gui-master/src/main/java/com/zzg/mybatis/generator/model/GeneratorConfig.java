@@ -65,6 +65,9 @@ public class GeneratorConfig {
 	private boolean overwriteExtFiles;
 	
 	private boolean createVirtualDelete;
+	private boolean supportLombok;
+	
+	
 	
 	private String virtualDeleteSql;
 	
@@ -299,5 +302,15 @@ public class GeneratorConfig {
 	public void setExampleTargetProject(String exampleTargetProject) {
 		this.exampleTargetProject = exampleTargetProject;
 	}
+
+	public boolean isSupportLombok() {
+		return supportLombok;
+	}
+
+	public void setSupportLombok(boolean supportLombok) {
+		this.supportLombok = supportLombok;
+	}
+
+	
 	
 }

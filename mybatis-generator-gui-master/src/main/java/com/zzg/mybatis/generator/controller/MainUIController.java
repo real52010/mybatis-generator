@@ -112,6 +112,10 @@ public class MainUIController extends BaseFXController {
 	@FXML
 	private TextField mappingFilePostfix;
 
+	@FXML
+	private CheckBox supportLombokCheckBox;
+
+	
 	// Current selected databaseConfig
 	private DatabaseConfig selectedDatabaseConfig;
 	// Current selected tableName
@@ -279,7 +283,11 @@ public class MainUIController extends BaseFXController {
 	public void setVirtualEnable() {
 		virtualDeleteSqlFeild.setDisable(!createVirtualDeleteCheckBox.isSelected());
 	}
-
+	
+	@FXML
+	public void supporLombokEnable() {
+		needToStringHashcodeEquals.setDisable(!supportLombokCheckBox.isSelected());
+	}
 	@FXML
 	public void filterTableName() {
 		String filterTab = this.filterTableField.getText().trim();
@@ -450,6 +458,7 @@ public class MainUIController extends BaseFXController {
 		generatorConfig.setExampleName(exampleNameField.getText());
 		generatorConfig.setExampleTargetPackage(exampleTargetPackage.getText());
 		generatorConfig.setExampleTargetProject(exampleTargetProject.getText());
+		generatorConfig.setSupportLombok(supportLombokCheckBox.isSelected());
 		return generatorConfig;
 	}
 
@@ -478,6 +487,7 @@ public class MainUIController extends BaseFXController {
 		modelNamePostfix.setText(generatorConfig.getModelNamePostfix());
 		mapperNamePostfix.setText(generatorConfig.getMapperNamePostfix());
 		mappingFilePostfix.setText(generatorConfig.getMappingFilePostfix());
+		supportLombokCheckBox.setSelected(generatorConfig.isSupportLombok());
 		setConfigName(generatorConfig.getName());
 	}
 

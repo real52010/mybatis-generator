@@ -132,7 +132,11 @@ public class MybatisGeneratorBridge {
 		if (!StringUtils.isEmpty(generatorConfig.getMappingFilePostfix())) {
 			tableConfig.addProperty("mappingFilePostfix", generatorConfig.getMappingFilePostfix());
 		}
-		
+		if (generatorConfig.isSupportLombok()) {
+			tableConfig.addProperty("supportLombok", "true");
+		}
+//	    public static final String COMMENT_GENERATOR_ADD_JPAANNOTATIONS = "isAnnotations"; //$NON-NLS-1$
+	    
 //		private String mapperNamePostfix;
 //		
 //		private String modelNamePostfix;
@@ -176,6 +180,7 @@ public class MybatisGeneratorBridge {
 		if (generatorConfig.isAnnotation()) {
 			commentConfig.addProperty(PropertyRegistry.COMMENT_GENERATOR_ADD_JPAANNOTATIONS, "true");
 		}
+		
 		context.setCommentGeneratorConfiguration(commentConfig);
 
 		// 实体添加序列化
