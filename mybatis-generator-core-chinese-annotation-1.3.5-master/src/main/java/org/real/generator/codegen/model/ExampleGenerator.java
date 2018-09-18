@@ -105,7 +105,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 		if ("true".equals(introspectedTable.getTableConfiguration().getProperty("offsetLimit"))) {
 			field = new Field();
 			field.setVisibility(JavaVisibility.PROTECTED);
-			field.setType(FullyQualifiedJavaType.getIntInstance());
+			field.setType(PrimitiveTypeWrapper.getIntegerInstance());
 			field.setName("paginLimit"); //$NON-NLS-1$
 			commentGenerator.addFieldComment(field, introspectedTable);
 			topLevelClass.addField(field);
@@ -113,14 +113,14 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 			method = new Method();
 			method.setVisibility(JavaVisibility.PUBLIC);
 			method.setName("setPaginLimit"); //$NON-NLS-1$
-			method.addParameter(new Parameter(FullyQualifiedJavaType.getIntInstance(), "paginLimit")); //$NON-NLS-1$
+			method.addParameter(new Parameter(PrimitiveTypeWrapper.getIntegerInstance(), "paginLimit")); //$NON-NLS-1$
 			method.addBodyLine("this.paginLimit = paginLimit;"); //$NON-NLS-1$
 			commentGenerator.addGeneralMethodComment(method, introspectedTable);
 			topLevelClass.addMethod(method);
 
 			method = new Method();
 			method.setVisibility(JavaVisibility.PUBLIC);
-			method.setReturnType(FullyQualifiedJavaType.getIntInstance());
+			method.setReturnType(PrimitiveTypeWrapper.getIntegerInstance());
 			method.setName("getPaginLimit"); //$NON-NLS-1$
 			method.addBodyLine("return paginLimit;"); //$NON-NLS-1$
 			commentGenerator.addGeneralMethodComment(method, introspectedTable);
@@ -128,7 +128,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 
 			field = new Field();
 			field.setVisibility(JavaVisibility.PROTECTED);
-			field.setType(FullyQualifiedJavaType.getIntInstance());
+			field.setType(PrimitiveTypeWrapper.getIntegerInstance());
 			field.setName("paginOffset"); //$NON-NLS-1$
 			commentGenerator.addFieldComment(field, introspectedTable);
 			topLevelClass.addField(field);
@@ -136,14 +136,14 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 			method = new Method();
 			method.setVisibility(JavaVisibility.PUBLIC);
 			method.setName("setPaginOffset"); //$NON-NLS-1$
-			method.addParameter(new Parameter(FullyQualifiedJavaType.getIntInstance(), "paginOffset")); //$NON-NLS-1$
+			method.addParameter(new Parameter(PrimitiveTypeWrapper.getIntegerInstance(), "paginOffset")); //$NON-NLS-1$
 			method.addBodyLine("this.paginOffset = paginOffset;"); //$NON-NLS-1$
 			commentGenerator.addGeneralMethodComment(method, introspectedTable);
 			topLevelClass.addMethod(method);
 
 			method = new Method();
 			method.setVisibility(JavaVisibility.PUBLIC);
-			method.setReturnType(FullyQualifiedJavaType.getIntInstance());
+			method.setReturnType(PrimitiveTypeWrapper.getIntegerInstance());
 			method.setName("getPaginOffset"); //$NON-NLS-1$
 			method.addBodyLine("return paginOffset;"); //$NON-NLS-1$
 			commentGenerator.addGeneralMethodComment(method, introspectedTable);
