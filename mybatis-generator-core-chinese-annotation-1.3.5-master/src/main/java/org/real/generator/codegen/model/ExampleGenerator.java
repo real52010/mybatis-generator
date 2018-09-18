@@ -15,6 +15,7 @@
  */
 package org.real.generator.codegen.model;
 
+import org.codehaus.plexus.interpolation.InterpolationException;
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.IntrospectedColumn;
@@ -454,10 +455,9 @@ public class ExampleGenerator extends AbstractJavaGenerator {
         method.addJavaDocLine(" */ ");
 
 
-		method.addBodyLine("super.addCriterion(condition,value1,value2,null);"); //$NON-NLS-1$ 
+		method.addBodyLine("super.addCriterion(condition,value1,value2);"); //$NON-NLS-1$ 
 		method.addBodyLine("return this;"); //$NON-NLS-1$
 		answer.addMethod(method);
-
 		// ""
 		// context.getTableConfigurations().
 		String generateBaseExample = introspectedTable.getTableConfiguration().getProperty("createBaseExp");
