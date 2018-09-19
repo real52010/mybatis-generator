@@ -15,7 +15,6 @@
  */
 package org.real.generator.codegen.model;
 
-import org.codehaus.plexus.interpolation.InterpolationException;
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.IntrospectedColumn;
