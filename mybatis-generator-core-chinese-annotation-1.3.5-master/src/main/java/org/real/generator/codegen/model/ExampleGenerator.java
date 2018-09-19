@@ -426,7 +426,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 		method.setName("addCriterion"); //$NON-NLS-1$
 		method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "condition")); //$NON-NLS-1$
 		method.addParameter(new Parameter(FullyQualifiedJavaType.getObjectInstance(), "value")); //$NON-NLS-1$ 
-		method.addBodyLine("super.addCriterion(condition,value,null);"); //$NON-NLS-1$ 
+		method.addBodyLine("super.addCriterion(condition,value);"); //$NON-NLS-1$ 
 		method.addBodyLine("return this;"); //$NON-NLS-1$ 
 		 method.addJavaDocLine("/** ");
         method.addJavaDocLine(" * 增加过滤条件  字段和值 分开，主要用于复杂类型参数 ");
@@ -617,10 +617,10 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 		method.setName("addCriterion"); //$NON-NLS-1$
 		method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "condition")); //$NON-NLS-1$
 		method.addParameter(new Parameter(FullyQualifiedJavaType.getObjectInstance(), "value")); //$NON-NLS-1$
-		method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "property")); //$NON-NLS-1$
-		method.addBodyLine("if (value == null) {"); //$NON-NLS-1$
-		method.addBodyLine("throw new RuntimeException(\"Value for \" + property + \" cannot be null\");"); //$NON-NLS-1$
-		method.addBodyLine("}"); //$NON-NLS-1$
+//		method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "property")); //$NON-NLS-1$
+//		method.addBodyLine("if (value == null) {"); //$NON-NLS-1$
+//		method.addBodyLine("throw new RuntimeException(\"Value for \" + property + \" cannot be null\");"); //$NON-NLS-1$
+//		method.addBodyLine("}"); //$NON-NLS-1$
 		method.addBodyLine("criteria.add(new Criterion(condition, value));"); //$NON-NLS-1$
 		if (criteriaLists.size() > 1) {
 			method.addBodyLine("allCriteria = null;"); //$NON-NLS-1$
@@ -635,10 +635,10 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 		method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "condition")); //$NON-NLS-1$
 		method.addParameter(new Parameter(FullyQualifiedJavaType.getObjectInstance(), "value1")); //$NON-NLS-1$
 		method.addParameter(new Parameter(FullyQualifiedJavaType.getObjectInstance(), "value2")); //$NON-NLS-1$
-		method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "property")); //$NON-NLS-1$
-		method.addBodyLine("if (value1 == null || value2 == null) {"); //$NON-NLS-1$
-		method.addBodyLine("throw new RuntimeException(\"Between values for \" + property + \" cannot be null\");"); //$NON-NLS-1$
-		method.addBodyLine("}"); //$NON-NLS-1$
+//		method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "property")); //$NON-NLS-1$
+//		method.addBodyLine("if (value1 == null || value2 == null) {"); //$NON-NLS-1$
+//		method.addBodyLine("throw new RuntimeException(\"Between values for \" + property + \" cannot be null\");"); //$NON-NLS-1$
+//		method.addBodyLine("}"); //$NON-NLS-1$
 		method.addBodyLine("criteria.add(new Criterion(condition, value1, value2));"); //$NON-NLS-1$
 		if (criteriaLists.size() > 1) {
 			method.addBodyLine("allCriteria = null;"); //$NON-NLS-1$
