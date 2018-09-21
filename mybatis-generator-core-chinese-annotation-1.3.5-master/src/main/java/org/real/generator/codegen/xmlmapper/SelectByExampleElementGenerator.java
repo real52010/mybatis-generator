@@ -87,7 +87,9 @@ public class SelectByExampleElementGenerator extends AbstractXmlElementGenerator
 		sb.append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
 		answer.addElement(new TextElement(sb.toString()));
 		answer.addElement(getExampleIncludeElement());
-		answer.addElement(getOrderByIncludeElement());
+		if ("true".equals(introspectedTable.getTableConfiguration().getProperty("orderByClause"))) {
+			answer.addElement(getOrderByIncludeElement());
+		}
 		if ("true".equals(introspectedTable.getTableConfiguration().getProperty("offsetLimit"))) {
 			answer.addElement(getPaginIncludeElement());
 		}

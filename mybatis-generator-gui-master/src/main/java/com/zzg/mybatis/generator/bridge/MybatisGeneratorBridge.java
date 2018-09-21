@@ -98,6 +98,10 @@ public class MybatisGeneratorBridge {
 		if (generatorConfig.isOffsetLimit()) {
 			tableConfig.addProperty("offsetLimit", "true");
 		}
+		// 分页插件
+		if (generatorConfig.isOrderByCause()) {
+			tableConfig.addProperty("orderByCause", "true");
+		}
 
 		if (generatorConfig.isUseActualColumnNames()) {
 			tableConfig.addProperty("useActualColumnNames", "true");

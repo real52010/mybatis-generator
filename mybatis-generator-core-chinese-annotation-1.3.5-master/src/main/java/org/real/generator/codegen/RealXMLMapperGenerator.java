@@ -271,8 +271,10 @@ public class RealXMLMapperGenerator extends XMLMapperGenerator {
 	}
 
 	protected void addExampleOrderByClauseElement(XmlElement parentElement) {
-		AbstractXmlElementGenerator elementGenerator = new ExampleOrderByClauseElementGenerator(true);
-		initializeAndExecuteGenerator(elementGenerator, parentElement);
+		if ("true".equals(introspectedTable.getTableConfiguration().getProperty("orderByClause"))) {
+			AbstractXmlElementGenerator elementGenerator = new ExampleOrderByClauseElementGenerator(true);
+			initializeAndExecuteGenerator(elementGenerator, parentElement);
+		}
 	}
 
 	@Override

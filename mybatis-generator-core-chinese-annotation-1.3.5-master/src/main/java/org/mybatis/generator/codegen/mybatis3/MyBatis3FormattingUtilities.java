@@ -17,8 +17,6 @@ package org.mybatis.generator.codegen.mybatis3;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 
-import com.mysql.fabric.xmlrpc.base.Array;
-
 import static org.mybatis.generator.internal.util.StringUtility.escapeStringForJava;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 

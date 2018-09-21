@@ -213,25 +213,26 @@
 												</HBox>
 												<HBox prefHeight="100.0" prefWidth="200.0">
 													<children>
-														<CheckBox fx:id="supportLombokCheckBox" mnemonicParsing="false" onAction="#supporLombokEnable" prefHeight="16.0" prefWidth="215.0" text="支持Lombok语法" />
+														<CheckBox fx:id="createIndexMethodCheckBox" mnemonicParsing="false" prefHeight="16.0" prefWidth="218.0" text="生成索引列CURD方法" />
 														<CheckBox fx:id="needToStringHashcodeEquals" mnemonicParsing="false" prefHeight="16.0" prefWidth="251.0" selected="true" text="生成toString/hashCode/equals方法" />
 													</children>
 												</HBox>
 												<HBox prefHeight="100.0" prefWidth="200.0">
 													<children>
-														<CheckBox fx:id="createBaseExpCheckBox" mnemonicParsing="false" prefHeight="17.0" prefWidth="137.0" text="生成通用Example" />
+      														<CheckBox fx:id="createBaseExpCheckBox" mnemonicParsing="false" prefHeight="16.0" prefWidth="215.0" text="生成通用Example" />
+      														<CheckBox fx:id="useActualColumnNamesCheckbox" mnemonicParsing="false" prefHeight="16.0" prefWidth="148.0" selected="false" text="使用实际的列名" />
 													</children>
 												</HBox>
 												<HBox prefHeight="25.0" prefWidth="457.0">
 													<children>
-														<CheckBox fx:id="offsetLimitCheckBox" minWidth="100.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="215.0" selected="true" text="分页" />
-														<CheckBox fx:id="useActualColumnNamesCheckbox" mnemonicParsing="false" prefHeight="17.0" prefWidth="176.0" selected="false" text="使用实际的列名" />
+      														<CheckBox fx:id="offsetLimitCheckBox" minWidth="100.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="215.0" selected="true" text="支持分页" />
+      														<CheckBox fx:id="orderByCauseCheckBox" minWidth="100.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="215.0" selected="true" text="支持排序" />
 													</children>
 												</HBox>
 												<HBox prefHeight="45.0" prefWidth="463.0">
 													<children>
-														<CheckBox fx:id="overwriteExtFilesCheckBox" mnemonicParsing="false" prefHeight="29.0" prefWidth="215.0" text="是否覆盖已存在文件" />
-														<CheckBox fx:id="createIndexMethodCheckBox" mnemonicParsing="false" text="生成索引列CURD方法" />
+														<CheckBox fx:id="supportLombokCheckBox" mnemonicParsing="false" onAction="#supporLombokEnable" prefHeight="16.0" prefWidth="215.0" text="支持Lombok语法" />
+														<CheckBox fx:id="overwriteExtFilesCheckBox" mnemonicParsing="false" prefHeight="29.0" prefWidth="215.0" text="覆盖已存在文件" />
 													</children>
 												</HBox>
 												<HBox prefHeight="17.0" prefWidth="463.0">

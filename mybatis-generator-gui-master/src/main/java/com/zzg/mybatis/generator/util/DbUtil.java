@@ -16,7 +16,7 @@ import java.util.*;
 public class DbUtil {
 
     private static final Logger _LOG = LoggerFactory.getLogger(DbUtil.class);
-    private static final int DB_CONNECTION_TIMEOUTS_SECONDS = 1;
+    private static final int DB_CONNECTION_TIMEOUTS_SECONDS = 100;
 
     private static Map<DbType, Driver> drivers;
 
@@ -43,7 +43,7 @@ public class DbUtil {
 
 	    props.setProperty("user", config.getUsername()); //$NON-NLS-1$
 	    props.setProperty("password", config.getPassword()); //$NON-NLS-1$
-
+	   
 		DriverManager.setLoginTimeout(DB_CONNECTION_TIMEOUTS_SECONDS);
 	    Connection connection = drivers.get(DbType.valueOf(config.getDbType())).connect(url, props);
         _LOG.info("getConnection, connection url: {}", connection);

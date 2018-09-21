@@ -85,23 +85,23 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 		method.addBodyLine("return new " + type.getShortName() + "();"); //$NON-NLS-1$
 		commentGenerator.addGeneralMethodComment(method, introspectedTable);
 		topLevelClass.addMethod(method);
+		if ("true".equals(introspectedTable.getTableConfiguration().getProperty("orderByCause"))) {
+			method = new Method();
+			method.setVisibility(JavaVisibility.PUBLIC);
+			method.setName("setOrderByClause"); //$NON-NLS-1$
+			method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "orderByClause")); //$NON-NLS-1$
+			method.addBodyLine("this.orderByClause = orderByClause;"); //$NON-NLS-1$
+			commentGenerator.addGeneralMethodComment(method, introspectedTable);
+			topLevelClass.addMethod(method);
 
-		method = new Method();
-		method.setVisibility(JavaVisibility.PUBLIC);
-		method.setName("setOrderByClause"); //$NON-NLS-1$
-		method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "orderByClause")); //$NON-NLS-1$
-		method.addBodyLine("this.orderByClause = orderByClause;"); //$NON-NLS-1$
-		commentGenerator.addGeneralMethodComment(method, introspectedTable);
-		topLevelClass.addMethod(method);
-
-		method = new Method();
-		method.setVisibility(JavaVisibility.PUBLIC);
-		method.setReturnType(FullyQualifiedJavaType.getStringInstance());
-		method.setName("getOrderByClause"); //$NON-NLS-1$
-		method.addBodyLine("return orderByClause;"); //$NON-NLS-1$
-		commentGenerator.addGeneralMethodComment(method, introspectedTable);
-		topLevelClass.addMethod(method);
-
+			method = new Method();
+			method.setVisibility(JavaVisibility.PUBLIC);
+			method.setReturnType(FullyQualifiedJavaType.getStringInstance());
+			method.setName("getOrderByClause"); //$NON-NLS-1$
+			method.addBodyLine("return orderByClause;"); //$NON-NLS-1$
+			commentGenerator.addGeneralMethodComment(method, introspectedTable);
+			topLevelClass.addMethod(method);
+		}
 		if ("true".equals(introspectedTable.getTableConfiguration().getProperty("offsetLimit"))) {
 			field = new Field();
 			field.setVisibility(JavaVisibility.PROTECTED);
@@ -397,7 +397,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 		answer.setSuperClass(FullyQualifiedJavaType.getGeneratedCriteriaInstance());
 
 		context.getCommentGenerator().addClassComment(answer, introspectedTable);
-//		StringBuffer sb = new StringBuffer();
+		// StringBuffer sb = new StringBuffer();
 		method = new Method();
 		method.setVisibility(JavaVisibility.PROTECTED);
 		method.setName("Criteria"); //$NON-NLS-1$
@@ -410,32 +410,31 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 		method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());
 		method.setName("addCriterion"); //$NON-NLS-1$
 		method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "condition")); //$NON-NLS-1$
-		method.addBodyLine("super.addCriterion(condition);"); //$NON-NLS-1$ 
-		method.addBodyLine("return this;"); //$NON-NLS-1$ 
-		 method.addJavaDocLine("/** ");
-        method.addJavaDocLine(" * 增加过滤条件 支持 如\" id = 1\" ");
-        method.addJavaDocLine(" * @param condition 过虑条件：如 \"id is null\" ");
-        method.addJavaDocLine(" * @return Criteria");
-        method.addJavaDocLine(" */ ");
+		method.addBodyLine("super.addCriterion(condition);"); //$NON-NLS-1$
+		method.addBodyLine("return this;"); //$NON-NLS-1$
+		method.addJavaDocLine("/** ");
+		method.addJavaDocLine(" * 增加过滤条件 支持 如\" id = 1\" ");
+		method.addJavaDocLine(" * @param condition 过虑条件：如 \"id is null\" ");
+		method.addJavaDocLine(" * @return Criteria");
+		method.addJavaDocLine(" */ ");
 
 		answer.addMethod(method);
-        
+
 		method = new Method();
 		method.setVisibility(JavaVisibility.PUBLIC);
 		method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());
 		method.setName("addCriterion"); //$NON-NLS-1$
 		method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "condition")); //$NON-NLS-1$
-		method.addParameter(new Parameter(FullyQualifiedJavaType.getObjectInstance(), "value")); //$NON-NLS-1$ 
-		method.addBodyLine("super.addCriterion(condition,value,null);"); //$NON-NLS-1$ 
-		method.addBodyLine("return this;"); //$NON-NLS-1$ 
-		 method.addJavaDocLine("/** ");
-        method.addJavaDocLine(" * 增加过滤条件  字段和值 分开，主要用于复杂类型参数 ");
-        method.addJavaDocLine(" * @param condition 过虑条件：如 \"id= \",\"status in\",\"name like \" ");
-        method.addJavaDocLine(" * @param value 过滤的值：如 \"1\",\"(1,2,3)\",\"%joy%\" ");
-        method.addJavaDocLine(" * @return Criteria");
-        method.addJavaDocLine(" */ ");
+		method.addParameter(new Parameter(FullyQualifiedJavaType.getObjectInstance(), "value")); //$NON-NLS-1$
+		method.addBodyLine("super.addCriterion(condition,value,null);"); //$NON-NLS-1$
+		method.addBodyLine("return this;"); //$NON-NLS-1$
+		method.addJavaDocLine("/** ");
+		method.addJavaDocLine(" * 增加过滤条件  字段和值 分开，主要用于复杂类型参数 ");
+		method.addJavaDocLine(" * @param condition 过虑条件：如 \"id= \",\"status in\",\"name like \" ");
+		method.addJavaDocLine(" * @param value 过滤的值：如 \"1\",\"(1,2,3)\",\"%joy%\" ");
+		method.addJavaDocLine(" * @return Criteria");
+		method.addJavaDocLine(" */ ");
 
-		
 		answer.addMethod(method);
 
 		method = new Method();
@@ -445,16 +444,15 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 		method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "condition")); //$NON-NLS-1$
 		method.addParameter(new Parameter(FullyQualifiedJavaType.getObjectInstance(), "value1")); //$NON-NLS-1$
 		method.addParameter(new Parameter(FullyQualifiedJavaType.getObjectInstance(), "value2")); //$NON-NLS-1$
-		 method.addJavaDocLine("/** "); 
-        method.addJavaDocLine(" * 增加过滤条件 主要用于范围值查询 如  \"id between 0 and 20\" ");
-        method.addJavaDocLine(" * @param condition 过虑条件：如 \"id \",\"status \",\"name  \" ");
-        method.addJavaDocLine(" * @param value1 过滤的值：如 \"1\" ");
-        method.addJavaDocLine(" * @param value2 过滤的值");
-        method.addJavaDocLine(" * @return Criteria");
-        method.addJavaDocLine(" */ ");
+		method.addJavaDocLine("/** ");
+		method.addJavaDocLine(" * 增加过滤条件 主要用于范围值查询 如  \"id between 0 and 20\" ");
+		method.addJavaDocLine(" * @param condition 过虑条件：如 \"id \",\"status \",\"name  \" ");
+		method.addJavaDocLine(" * @param value1 过滤的值：如 \"1\" ");
+		method.addJavaDocLine(" * @param value2 过滤的值");
+		method.addJavaDocLine(" * @return Criteria");
+		method.addJavaDocLine(" */ ");
 
-
-		method.addBodyLine("super.addCriterion(condition,value1,value2,null);"); //$NON-NLS-1$ 
+		method.addBodyLine("super.addCriterion(condition,value1,value2,null);"); //$NON-NLS-1$
 		method.addBodyLine("return this;"); //$NON-NLS-1$
 		answer.addMethod(method);
 
@@ -463,7 +461,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 		String generateBaseExample = introspectedTable.getTableConfiguration().getProperty("createBaseExp");
 		if (generateBaseExample == null || !generateBaseExample.equals("true")) {
 			for (IntrospectedColumn introspectedColumn : introspectedTable.getNonBLOBColumns()) {
-//				topLevelClass.addImportedType(introspectedColumn.getFullyQualifiedJavaType()); 
+				// topLevelClass.addImportedType(introspectedColumn.getFullyQualifiedJavaType());
 				// here we need to add the individual methods for setting the
 				// conditions for a field
 				answer.addMethod(getSetNullMethod(introspectedColumn));
@@ -487,8 +485,6 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 			}
 		}
 
-		
-		
 		return answer;
 	}
 

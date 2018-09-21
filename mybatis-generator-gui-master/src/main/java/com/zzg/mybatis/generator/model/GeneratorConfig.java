@@ -47,6 +47,8 @@ public class GeneratorConfig {
 	private String domainObjectName;
 
 	private boolean offsetLimit;
+	
+	private boolean orderByCause;
 
 	private boolean comment;
 
@@ -112,6 +114,14 @@ public class GeneratorConfig {
 
 	public String getProjectFolder() {
 		return projectFolder;
+	}
+
+	public boolean isOrderByCause() {
+		return orderByCause;
+	}
+
+	public void setOrderByCause(boolean orderByCause) {
+		this.orderByCause = orderByCause;
 	}
 
 	public void setProjectFolder(String projectFolder) {
