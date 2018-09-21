@@ -65,15 +65,15 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 
 		commentGenerator.addGeneralMethodComment(method, introspectedTable);
 		topLevelClass.addMethod(method);
-
-		// add field, getter, setter for orderby clause
 		Field field = new Field();
-		field.setVisibility(JavaVisibility.PROTECTED);
-		field.setType(FullyQualifiedJavaType.getStringInstance());
-		field.setName("orderByClause"); //$NON-NLS-1$
-		commentGenerator.addFieldComment(field, introspectedTable);
-		topLevelClass.addField(field);
-
+		// add field, getter, setter for orderby clause
+		if ("true".equals(introspectedTable.getTableConfiguration().getProperty("orderByCause"))) {
+			field.setVisibility(JavaVisibility.PROTECTED);
+			field.setType(FullyQualifiedJavaType.getStringInstance());
+			field.setName("orderByClause"); //$NON-NLS-1$
+			commentGenerator.addFieldComment(field, introspectedTable);
+			topLevelClass.addField(field);
+		}
 		method = new Method();
 		method.setVisibility(JavaVisibility.PUBLIC);
 		method.setStatic(true);
@@ -425,15 +425,15 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 		method.setReturnType(FullyQualifiedJavaType.getCriteriaInstance());
 		method.setName("addCriterion"); //$NON-NLS-1$
 		method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "condition")); //$NON-NLS-1$
-		method.addParameter(new Parameter(FullyQualifiedJavaType.getObjectInstance(), "value")); //$NON-NLS-1$ 
-		method.addBodyLine("super.addCriterion(condition,value);"); //$NON-NLS-1$ 
-		method.addBodyLine("return this;"); //$NON-NLS-1$ 
-		 method.addJavaDocLine("/** ");
-        method.addJavaDocLine(" * 增加过滤条件  字段和值 分开，主要用于复杂类型参数 ");
-        method.addJavaDocLine(" * @param condition 过虑条件：如 \"id= \",\"status in\",\"name like \" ");
-        method.addJavaDocLine(" * @param value 过滤的值：如 \"1\",\"(1,2,3)\",\"%joy%\" ");
-        method.addJavaDocLine(" * @return Criteria");
-        method.addJavaDocLine(" */ ");
+		method.addParameter(new Parameter(FullyQualifiedJavaType.getObjectInstance(), "value")); //$NON-NLS-1$
+		method.addBodyLine("super.addCriterion(condition,value);"); //$NON-NLS-1$
+		method.addBodyLine("return this;"); //$NON-NLS-1$
+		method.addJavaDocLine("/** ");
+		method.addJavaDocLine(" * 增加过滤条件  字段和值 分开，主要用于复杂类型参数 ");
+		method.addJavaDocLine(" * @param condition 过虑条件：如 \"id= \",\"status in\",\"name like \" ");
+		method.addJavaDocLine(" * @param value 过滤的值：如 \"1\",\"(1,2,3)\",\"%joy%\" ");
+		method.addJavaDocLine(" * @return Criteria");
+		method.addJavaDocLine(" */ ");
 		answer.addMethod(method);
 		method = new Method();
 		method.setVisibility(JavaVisibility.PUBLIC);
@@ -443,16 +443,15 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 		method.addParameter(new Parameter(FullyQualifiedJavaType.getObjectInstance(), "value1")); //$NON-NLS-1$
 		method.addParameter(new Parameter(FullyQualifiedJavaType.getObjectInstance(), "value2")); //$NON-NLS-1$
 
-		 method.addJavaDocLine("/** "); 
-        method.addJavaDocLine(" * 增加过滤条件 主要用于范围值查询 如  \"id between 0 and 20\" ");
-        method.addJavaDocLine(" * @param condition 过虑条件：如 \"id \",\"status \",\"name  \" ");
-        method.addJavaDocLine(" * @param value1 过滤的值：如 \"1\" ");
-        method.addJavaDocLine(" * @param value2 过滤的值");
-        method.addJavaDocLine(" * @return Criteria");
-        method.addJavaDocLine(" */ ");
+		method.addJavaDocLine("/** ");
+		method.addJavaDocLine(" * 增加过滤条件 主要用于范围值查询 如  \"id between 0 and 20\" ");
+		method.addJavaDocLine(" * @param condition 过虑条件：如 \"id \",\"status \",\"name  \" ");
+		method.addJavaDocLine(" * @param value1 过滤的值：如 \"1\" ");
+		method.addJavaDocLine(" * @param value2 过滤的值");
+		method.addJavaDocLine(" * @return Criteria");
+		method.addJavaDocLine(" */ ");
 
-
-		method.addBodyLine("super.addCriterion(condition,value1,value2);"); //$NON-NLS-1$ 
+		method.addBodyLine("super.addCriterion(condition,value1,value2);"); //$NON-NLS-1$
 		method.addBodyLine("return this;"); //$NON-NLS-1$
 		answer.addMethod(method);
 		// ""
@@ -613,10 +612,12 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 		method.setName("addCriterion"); //$NON-NLS-1$
 		method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "condition")); //$NON-NLS-1$
 		method.addParameter(new Parameter(FullyQualifiedJavaType.getObjectInstance(), "value")); //$NON-NLS-1$
-//		method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "property")); //$NON-NLS-1$
-//		method.addBodyLine("if (value == null) {"); //$NON-NLS-1$
-//		method.addBodyLine("throw new RuntimeException(\"Value for \" + property + \" cannot be null\");"); //$NON-NLS-1$
-//		method.addBodyLine("}"); //$NON-NLS-1$
+		// method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(),
+		// "property")); //$NON-NLS-1$
+		// method.addBodyLine("if (value == null) {"); //$NON-NLS-1$
+		// method.addBodyLine("throw new RuntimeException(\"Value for \" + property + \"
+		// cannot be null\");"); //$NON-NLS-1$
+		// method.addBodyLine("}"); //$NON-NLS-1$
 		method.addBodyLine("criteria.add(new Criterion(condition, value));"); //$NON-NLS-1$
 		if (criteriaLists.size() > 1) {
 			method.addBodyLine("allCriteria = null;"); //$NON-NLS-1$
@@ -631,10 +632,12 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 		method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "condition")); //$NON-NLS-1$
 		method.addParameter(new Parameter(FullyQualifiedJavaType.getObjectInstance(), "value1")); //$NON-NLS-1$
 		method.addParameter(new Parameter(FullyQualifiedJavaType.getObjectInstance(), "value2")); //$NON-NLS-1$
-//		method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "property")); //$NON-NLS-1$
-//		method.addBodyLine("if (value1 == null || value2 == null) {"); //$NON-NLS-1$
-//		method.addBodyLine("throw new RuntimeException(\"Between values for \" + property + \" cannot be null\");"); //$NON-NLS-1$
-//		method.addBodyLine("}"); //$NON-NLS-1$
+		// method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(),
+		// "property")); //$NON-NLS-1$
+		// method.addBodyLine("if (value1 == null || value2 == null) {"); //$NON-NLS-1$
+		// method.addBodyLine("throw new RuntimeException(\"Between values for \" +
+		// property + \" cannot be null\");"); //$NON-NLS-1$
+		// method.addBodyLine("}"); //$NON-NLS-1$
 		method.addBodyLine("criteria.add(new Criterion(condition, value1, value2));"); //$NON-NLS-1$
 		if (criteriaLists.size() > 1) {
 			method.addBodyLine("allCriteria = null;"); //$NON-NLS-1$
