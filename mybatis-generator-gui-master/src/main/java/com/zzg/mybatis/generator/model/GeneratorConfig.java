@@ -48,7 +48,7 @@ public class GeneratorConfig {
 
 	private boolean offsetLimit;
 	
-	private boolean orderByCause;
+	private boolean orderByClause;
 
 	private boolean comment;
 
@@ -116,13 +116,7 @@ public class GeneratorConfig {
 		return projectFolder;
 	}
 
-	public boolean isOrderByCause() {
-		return orderByCause;
-	}
-
-	public void setOrderByCause(boolean orderByCause) {
-		this.orderByCause = orderByCause;
-	}
+	
 
 	public void setProjectFolder(String projectFolder) {
 		this.projectFolder = projectFolder;
@@ -319,6 +313,14 @@ public class GeneratorConfig {
 
 	public void setSupportLombok(boolean supportLombok) {
 		this.supportLombok = supportLombok;
+	}
+
+	public boolean isOrderByClause() {
+		return orderByClause;
+	}
+
+	public void setOrderByClause(boolean orderByClause) {
+		this.orderByClause = orderByClause;
 	}
 
 	

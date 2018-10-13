@@ -77,7 +77,7 @@ public class MainUIController extends BaseFXController {
 	@FXML
 	private CheckBox offsetLimitCheckBox;
 	@FXML
-	private CheckBox orderByCauseCheckBox;
+	private CheckBox orderByClauseCheckBox;
 	
 	@FXML
 	private CheckBox commentCheckBox;
@@ -449,7 +449,7 @@ public class MainUIController extends BaseFXController {
 		generatorConfig.setTableName(tableNameField.getText());
 		generatorConfig.setDomainObjectName(domainObjectNameField.getText());
 		generatorConfig.setOffsetLimit(offsetLimitCheckBox.isSelected());
-		generatorConfig.setOrderByCause(orderByCauseCheckBox.isSelected());
+		generatorConfig.setOrderByClause(orderByClauseCheckBox.isSelected());
 		generatorConfig.setComment(commentCheckBox.isSelected());
 		generatorConfig.setNeedToStringHashcodeEquals(needToStringHashcodeEquals.isSelected());
 		generatorConfig.setAnnotation(annotationCheckBox.isSelected());
@@ -476,7 +476,7 @@ public class MainUIController extends BaseFXController {
 		mapperTargetPackage.setText(generatorConfig.getMappingXMLPackage());
 		mappingTargetProject.setText(generatorConfig.getMappingXMLTargetFolder());
 		offsetLimitCheckBox.setSelected(generatorConfig.isOffsetLimit());
-		orderByCauseCheckBox.setSelected(generatorConfig.isOrderByCause());
+		orderByClauseCheckBox.setSelected(generatorConfig.isOrderByClause());
 		commentCheckBox.setSelected(generatorConfig.isComment());
 		needToStringHashcodeEquals.setSelected(generatorConfig.isNeedToStringHashcodeEquals());
 		annotationCheckBox.setSelected(generatorConfig.isAnnotation());

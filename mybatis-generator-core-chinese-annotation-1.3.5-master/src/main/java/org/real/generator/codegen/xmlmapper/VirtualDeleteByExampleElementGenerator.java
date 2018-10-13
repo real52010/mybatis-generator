@@ -62,15 +62,15 @@ public class VirtualDeleteByExampleElementGenerator extends AbstractXmlElementGe
 	}
 
 	protected XmlElement getExampleIncludeElement() {
-		XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
-		ifElement.addAttribute(new Attribute("test", "_parameter != null")); //$NON-NLS-1$ //$NON-NLS-2$
+//		XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
+//		ifElement.addAttribute(new Attribute("test", "_parameter != null")); //$NON-NLS-1$ //$NON-NLS-2$
 
 		XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
 		includeElement.addAttribute(new Attribute("refid", //$NON-NLS-1$
 				"Example_Where_Clause"));
-		ifElement.addElement(includeElement);
+//		ifElement.addElement(includeElement);
 
-		return ifElement;
+		return includeElement;
 	}
 
 	protected XmlElement getUnExampleIncludeElement() {

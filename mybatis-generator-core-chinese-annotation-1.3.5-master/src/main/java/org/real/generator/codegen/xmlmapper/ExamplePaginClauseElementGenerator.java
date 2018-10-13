@@ -43,7 +43,7 @@ public class ExamplePaginClauseElementGenerator extends AbstractXmlElementGenera
 
 		context.getCommentGenerator().addComment(answer);
 		XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
-		ifElement.addAttribute(new Attribute("test", "example.paginLimit != null"));
+		ifElement.addAttribute(new Attribute("test", "example!=null and example.paginLimit != null"));
 
 		XmlElement offsetNotNullElement = new XmlElement("if"); //$NON-NLS-1$
 		offsetNotNullElement.addAttribute(new Attribute("test", "example.paginOffset != null"));
