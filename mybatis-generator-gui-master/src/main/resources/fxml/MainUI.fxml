@@ -237,9 +237,15 @@
 												</HBox>
 												<HBox prefHeight="17.0" prefWidth="463.0">
 													<children>
-														<CheckBox fx:id="createVirtualDeleteCheckBox" mnemonicParsing="false" onAction="#setVirtualEnable" prefHeight="10.0" prefWidth="139.0" selected="true" text="生成虚拟删除方法" />
+														<CheckBox fx:id="createVirtualDeleteCheckBox" mnemonicParsing="false" onAction="#setVirtualEnable" prefHeight="16.0" prefWidth="211.0" selected="true" text="生成虚拟删除方法" />
 														<Label prefHeight="17.0" prefWidth="73.0" text="虚拟删除SQL" />
 														<TextField fx:id="virtualDeleteSqlFeild" prefHeight="3.0" prefWidth="121.0" text="set del_flag=1" />
+													</children>
+												</HBox>
+													<HBox prefHeight="17.0" prefWidth="463.0">
+													<children>
+														<Label prefHeight="17.0" prefWidth="73.0" text="查询对象别名" />
+														<TextField fx:id="objectAliasName" prefHeight="3.0" prefWidth="121.0" text="" />
 													</children>
 												</HBox>
 											</children>
