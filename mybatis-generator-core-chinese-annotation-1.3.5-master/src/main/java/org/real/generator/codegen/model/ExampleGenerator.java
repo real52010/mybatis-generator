@@ -67,7 +67,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 		topLevelClass.addMethod(method);
 		Field field = new Field();
 		// add field, getter, setter for orderby clause
-		if ("true".equals(introspectedTable.getTableConfiguration().getProperty("orderByCause"))) {
+		if ("true".equals(introspectedTable.getTableConfiguration().getProperty("orderByClause"))) {
 			field.setVisibility(JavaVisibility.PROTECTED);
 			field.setType(FullyQualifiedJavaType.getStringInstance());
 			field.setName("orderByClause"); //$NON-NLS-1$
@@ -85,7 +85,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 		method.addBodyLine("return new " + type.getShortName() + "();"); //$NON-NLS-1$
 		commentGenerator.addGeneralMethodComment(method, introspectedTable);
 		topLevelClass.addMethod(method);
-		if ("true".equals(introspectedTable.getTableConfiguration().getProperty("orderByCause"))) {
+		if ("true".equals(introspectedTable.getTableConfiguration().getProperty("orderByClause"))) {
 			method = new Method();
 			method.setVisibility(JavaVisibility.PUBLIC);
 			method.setName("setOrderByClause"); //$NON-NLS-1$
@@ -235,7 +235,9 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 		method.setVisibility(JavaVisibility.PUBLIC);
 		method.setName("clear"); //$NON-NLS-1$
 		method.addBodyLine("oredCriteria.clear();"); //$NON-NLS-1$
+		if ("true".equals(introspectedTable.getTableConfiguration().getProperty("orderByClause"))) {
 		method.addBodyLine("orderByClause = null;"); //$NON-NLS-1$
+		}
 		method.addBodyLine("distinct = false;"); //$NON-NLS-1$
 		commentGenerator.addGeneralMethodComment(method, introspectedTable);
 		topLevelClass.addMethod(method);

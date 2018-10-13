@@ -51,49 +51,10 @@ public class ExampleOrderByClauseElementGenerator extends AbstractXmlElementGene
 		context.getCommentGenerator().addComment(answer);
 		//
 		XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
-		ifElement.addAttribute(new Attribute("test", "example.orderByClause != null"));
+		ifElement.addAttribute(new Attribute("test", "example!=null and example.orderByClause != null"));
 		ifElement.addElement(new TextElement("order by ${example.orderByClause}"));
 		answer.addElement(ifElement);
-		//
-		// XmlElement outerForEachElement = new XmlElement("foreach"); //$NON-NLS-1$
-		// if (isForUpdateByExample) {
-		// outerForEachElement.addAttribute(new Attribute(
-		// "collection", "example.oredCriteria")); //$NON-NLS-1$ //$NON-NLS-2$
-		// } else {
-		// outerForEachElement.addAttribute(new Attribute(
-		// "collection", "oredCriteria")); //$NON-NLS-1$ //$NON-NLS-2$
-		// }
-		// outerForEachElement.addAttribute(new Attribute("item", "criteria"));
-		// //$NON-NLS-1$ //$NON-NLS-2$
-		// outerForEachElement.addAttribute(new Attribute("separator", "or"));
-		// //$NON-NLS-1$ //$NON-NLS-2$
-		// whereElement.addElement(outerForEachElement);
-		//
-		// XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
-		// ifElement.addAttribute(new Attribute("test", "criteria.valid"));
-		// //$NON-NLS-1$ //$NON-NLS-2$
-		// outerForEachElement.addElement(ifElement);
-		//
-		// XmlElement trimElement = new XmlElement("trim"); //$NON-NLS-1$
-		// trimElement.addAttribute(new Attribute("prefix", "(")); //$NON-NLS-1$
-		// //$NON-NLS-2$
-		// trimElement.addAttribute(new Attribute("suffix", ")")); //$NON-NLS-1$
-		// //$NON-NLS-2$
-		// trimElement.addAttribute(new Attribute("prefixOverrides", "and"));
-		// //$NON-NLS-1$ //$NON-NLS-2$
-		//
-		// ifElement.addElement(trimElement);
-		//
-		// trimElement.addElement(getMiddleForEachElement(null));
-		//
-		// for (IntrospectedColumn introspectedColumn : introspectedTable
-		// .getNonBLOBColumns()) {
-		// if (stringHasValue(introspectedColumn
-		// .getTypeHandler())) {
-		// trimElement
-		// .addElement(getMiddleForEachElement(introspectedColumn));
-		// }
-		// }
+		
 
 //		if (context.getPlugins().sqlMapExampleWhereClauseElementGenerated(answer, introspectedTable)) {
 			parentElement.addElement(answer);

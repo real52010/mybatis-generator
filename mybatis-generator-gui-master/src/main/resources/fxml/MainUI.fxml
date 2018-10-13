@@ -226,7 +226,7 @@
 												<HBox prefHeight="25.0" prefWidth="457.0">
 													<children>
       														<CheckBox fx:id="offsetLimitCheckBox" minWidth="100.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="215.0" selected="true" text="支持分页" />
-      														<CheckBox fx:id="orderByCauseCheckBox" minWidth="100.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="215.0" selected="true" text="支持排序" />
+      														<CheckBox fx:id="orderByClauseCheckBox" minWidth="100.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="215.0" selected="true" text="支持排序" />
 													</children>
 												</HBox>
 												<HBox prefHeight="45.0" prefWidth="463.0">

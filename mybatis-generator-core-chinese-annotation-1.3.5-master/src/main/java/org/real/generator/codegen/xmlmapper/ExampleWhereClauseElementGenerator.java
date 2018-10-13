@@ -48,9 +48,11 @@ public class ExampleWhereClauseElementGenerator extends AbstractXmlElementGenera
 		}
 
 		context.getCommentGenerator().addComment(answer);
-
+		XmlElement rootIfElement = new XmlElement("if"); //$NON-NLS-1$
+		rootIfElement.addAttribute(new Attribute("test", "example != null")); //$NON-NLS-1$ //$NON-NLS-2$
+		answer.addElement(rootIfElement);
 		XmlElement whereElement = new XmlElement("where"); //$NON-NLS-1$
-		answer.addElement(whereElement);
+		rootIfElement.addElement(whereElement);
 
 		XmlElement outerForEachElement = new XmlElement("foreach"); //$NON-NLS-1$
 		if (isForUpdateByExample) {
