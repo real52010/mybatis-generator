@@ -80,6 +80,16 @@ public class GeneratorConfig {
 
 	private String exampleTargetProject;
 	
+	private String tableAliasName;
+	
+	public String getTableAliasName() {
+		return tableAliasName;
+	}
+
+	public void setTableAliasName(String tableAliasName) {
+		this.tableAliasName = tableAliasName;
+	}
+
 	public String getName() {
 		return name;
 	}

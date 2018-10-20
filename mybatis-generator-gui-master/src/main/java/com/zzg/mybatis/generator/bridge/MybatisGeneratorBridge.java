@@ -77,6 +77,9 @@ public class MybatisGeneratorBridge {
 			tableConfig.setGeneratedKey(new GeneratedKey(generatorConfig.getGenerateKeys(),
 					selectedDatabaseConfig.getDbType(), true, null));
 		}
+		if (StringUtils.isNoneEmpty(generatorConfig.getTableAliasName())) {
+			tableConfig.setAlias(generatorConfig.getTableAliasName());
+		}
 //
 //		if (generatorConfig.getMapperName() != null) {
 //			tableConfig.setMapperName(generatorConfig.getMapperName());
@@ -139,6 +142,7 @@ public class MybatisGeneratorBridge {
 		if (generatorConfig.isSupportLombok()) {
 			tableConfig.addProperty("supportLombok", "true");
 		}
+		
 //	    public static final String COMMENT_GENERATOR_ADD_JPAANNOTATIONS = "isAnnotations"; //$NON-NLS-1$
 	    
 //		private String mapperNamePostfix;

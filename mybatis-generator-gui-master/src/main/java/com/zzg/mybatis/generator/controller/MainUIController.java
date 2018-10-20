@@ -117,7 +117,8 @@ public class MainUIController extends BaseFXController {
 
 	@FXML
 	private CheckBox supportLombokCheckBox;
-
+	@FXML
+	private TextField tableAliasNameFeild;
 	
 	// Current selected databaseConfig
 	private DatabaseConfig selectedDatabaseConfig;
@@ -463,6 +464,7 @@ public class MainUIController extends BaseFXController {
 		generatorConfig.setExampleTargetPackage(exampleTargetPackage.getText());
 		generatorConfig.setExampleTargetProject(exampleTargetProject.getText());
 		generatorConfig.setSupportLombok(supportLombokCheckBox.isSelected());
+		generatorConfig.setTableAliasName(tableAliasNameFeild.getText());
 		return generatorConfig;
 	}
 
@@ -493,6 +495,7 @@ public class MainUIController extends BaseFXController {
 		mapperNamePostfix.setText(generatorConfig.getMapperNamePostfix());
 		mappingFilePostfix.setText(generatorConfig.getMappingFilePostfix());
 		supportLombokCheckBox.setSelected(generatorConfig.isSupportLombok());
+		tableAliasNameFeild.setText(generatorConfig.getTableAliasName());
 		setConfigName(generatorConfig.getName());
 	}
 

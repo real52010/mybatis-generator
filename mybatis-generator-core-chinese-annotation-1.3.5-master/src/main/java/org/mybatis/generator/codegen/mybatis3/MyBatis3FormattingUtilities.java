@@ -101,10 +101,11 @@ public class MyBatis3FormattingUtilities {
                 sb.append(introspectedColumn.getContext()
                         .getBeginningDelimiter());
             }
-            sb.append(introspectedColumn.getTableAlias());
-            sb.append('_');
-            sb.append(escapeStringForMyBatis3(introspectedColumn
-                    .getActualColumnName()));
+//            sb.append(introspectedColumn.getTableAlias());
+//            sb.append('_');
+//            sb.append(escapeStringForMyBatis3(introspectedColumn
+//                    .getActualColumnName()));
+            sb.append(introspectedColumn.getJavaProperty());
             if (introspectedColumn.isColumnNameDelimited()) {
                 sb.append(introspectedColumn.getContext().getEndingDelimiter());
             }
@@ -205,9 +206,10 @@ public class MyBatis3FormattingUtilities {
         if (stringHasValue(introspectedColumn.getTableAlias())) {
             StringBuilder sb = new StringBuilder();
 
-            sb.append(introspectedColumn.getTableAlias());
-            sb.append('_');
-            sb.append(introspectedColumn.getActualColumnName());
+//            sb.append(introspectedColumn.getTableAlias());
+//            sb.append('_');
+//            sb.append(introspectedColumn.getActualColumnName());
+            sb.append(introspectedColumn.getJavaProperty());
             return sb.toString();
         } else {
             return introspectedColumn.getActualColumnName();

@@ -74,7 +74,7 @@ public class ResultMapWithoutBLOBsElementGenerator extends AbstractXmlElementGen
 
 	private void addResultMapElements(XmlElement answer) {
 		//因为会保证字段完全相同 。所以字段可以全部忽略.
-		/**
+	
 		for (IntrospectedColumn introspectedColumn : introspectedTable.getPrimaryKeyColumns()) {
 			XmlElement resultElement = new XmlElement("id"); //$NON-NLS-1$
 
@@ -112,7 +112,7 @@ public class ResultMapWithoutBLOBsElementGenerator extends AbstractXmlElementGen
 
 			answer.addElement(resultElement);
 		}
-		**/
+		
 	}
 
 	private void addResultMapConstructorElements(XmlElement answer) {
