@@ -103,8 +103,8 @@ public class RealJavaMapperGenerator extends JavaMapperGenerator {
 
 		addSelectMethod(interfaze);
 		addSelectByExampleMethod(interfaze);
-		addSelectIndexColumnMethod(interfaze);
 		addCountByExampleMethod(interfaze);
+		addSelectIndexColumnMethod(interfaze);
 
 		List<CompilationUnit> answer = new ArrayList<CompilationUnit>();
 		if (context.getPlugins().clientGenerated(interfaze, null, introspectedTable)) {

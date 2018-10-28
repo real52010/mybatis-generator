@@ -96,7 +96,7 @@ public class MyBatis3FormattingUtilities {
             StringBuilder sb = new StringBuilder();
 
             sb.append(getAliasedEscapedColumnName(introspectedColumn));
-            sb.append(" as "); //$NON-NLS-1$
+//            sb.append(" as "); //$NON-NLS-1$
             if (introspectedColumn.isColumnNameDelimited()) {
                 sb.append(introspectedColumn.getContext()
                         .getBeginningDelimiter());
@@ -105,7 +105,8 @@ public class MyBatis3FormattingUtilities {
 //            sb.append('_');
 //            sb.append(escapeStringForMyBatis3(introspectedColumn
 //                    .getActualColumnName()));
-            sb.append(introspectedColumn.getJavaProperty());
+            //mapping namme
+//            sb.append(introspectedColumn.getJavaProperty());
             if (introspectedColumn.isColumnNameDelimited()) {
                 sb.append(introspectedColumn.getContext().getEndingDelimiter());
             }
@@ -208,8 +209,8 @@ public class MyBatis3FormattingUtilities {
 
 //            sb.append(introspectedColumn.getTableAlias());
 //            sb.append('_');
-//            sb.append(introspectedColumn.getActualColumnName());
-            sb.append(introspectedColumn.getJavaProperty());
+            sb.append(introspectedColumn.getActualColumnName());
+//            sb.append(introspectedColumn.getJavaProperty());
             return sb.toString();
         } else {
             return introspectedColumn.getActualColumnName();

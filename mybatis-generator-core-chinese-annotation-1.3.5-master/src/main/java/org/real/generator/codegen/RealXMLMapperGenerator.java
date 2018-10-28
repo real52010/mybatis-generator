@@ -94,9 +94,8 @@ public class RealXMLMapperGenerator extends XMLMapperGenerator {
 
 		addSelectByPrimaryKeyElementElement(answer);
 		addSelectByExampleElementElement(answer);
-		addSelectByIndexColumnMethod(answer);
-
 		addCountByExampleElementElement(answer);
+		addSelectByIndexColumnMethod(answer);
 		addVirtualDeleteByExampleElement(answer);
 		addVirtualDeleteByPrimaryKeyElement(answer);
 		addVirtualDeleteIndexColumnMethod(answer);
