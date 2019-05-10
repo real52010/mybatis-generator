@@ -39,20 +39,23 @@ public class UpdateBatchBySelectiveElementGenerator extends AbstractXmlElementGe
 
 	@Override
 	public void addElements(XmlElement parentElement) {
+	
+		parentElement.addElement(new TextElement(" <!--该方法不推荐使用，可能会导致阻塞，如要使用请打开数据库连接配置allowMutiQueries -->"));
 		XmlElement answer = new XmlElement("update"); //$NON-NLS-1$
-
-		String fqjt = introspectedTable.getExampleType();
+ 
 		FullyQualifiedJavaType parameterType = new FullyQualifiedJavaType("java.util.List");
 		answer.addAttribute(new Attribute("id", "updateBatchBySelective")); //$NON-NLS-1$
 		answer.addAttribute(new Attribute("parameterType", parameterType.getFullyQualifiedName())); //$NON-NLS-1$
-
+		StringBuilder sb = new StringBuilder();
+		
 		context.getCommentGenerator().addComment(answer);
+		
 		XmlElement listElement = new XmlElement("foreach");
 		listElement.addAttribute(new Attribute("collection", "list"));
 		listElement.addAttribute(new Attribute("item", "record"));
 		listElement.addAttribute(new Attribute("index", "index"));
 		listElement.addAttribute(new Attribute("open", ""));
-		listElement.addAttribute(new Attribute("separator", "separator"));
+		listElement.addAttribute(new Attribute("separator", ";"));
 		// StringBuilder sb = new StringBuilder();
 		// sb.append("delete from "); //$NON-NLS-1$
 		// sb.append(introspectedTable
@@ -63,10 +66,13 @@ public class UpdateBatchBySelectiveElementGenerator extends AbstractXmlElementGe
 		// "Base_Update_Column_List"));
 		// answer.addElement(includeElement)
 		// answer.addElement(getExampleIncludeElement());;
-
+		sb.append("update "); //$NON-NLS-1$
+		sb.append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
+		listElement.addElement(new TextElement(sb.toString()));
+		
 		listElement.addElement(getUpdateIncludeElement());
 
-		StringBuilder sb = new StringBuilder();
+		sb.setLength(0);
 		boolean and = false;
 		for (IntrospectedColumn introspectedColumn : introspectedTable.getPrimaryKeyColumns()) {
 			sb.setLength(0);
@@ -89,17 +95,7 @@ public class UpdateBatchBySelectiveElementGenerator extends AbstractXmlElementGe
 //		}
 	}
 
-	protected XmlElement getExampleIncludeElement() {
-//		XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
-//		ifElement.addAttribute(new Attribute("test", "_parameter != null")); //$NON-NLS-1$ //$NON-NLS-2$
-
-		XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
-		includeElement.addAttribute(new Attribute("refid", //$NON-NLS-1$
-				"Example_Where_Clause"));
-//		ifElement.addElement(includeElement);
-
-		return includeElement;
-	}
+ 
 
 	protected XmlElement getUpdateIncludeElement() {
 		XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$

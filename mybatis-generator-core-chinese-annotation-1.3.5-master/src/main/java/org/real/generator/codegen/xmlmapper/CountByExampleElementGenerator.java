@@ -69,11 +69,5 @@ public class CountByExampleElementGenerator extends AbstractXmlElementGenerator 
 
 		return includeElement;
 	}
-
-	protected XmlElement getUpdateIncludeElement() {
-		XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
-		includeElement.addAttribute(new Attribute("refid", "Base_Update_Column_List"));
-
-		return includeElement;
-	}
+ 
 }

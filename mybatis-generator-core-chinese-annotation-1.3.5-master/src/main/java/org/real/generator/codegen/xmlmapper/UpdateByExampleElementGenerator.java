@@ -57,7 +57,10 @@ public class UpdateByExampleElementGenerator extends AbstractXmlElementGenerator
 		// "Base_Update_Column_List"));
 		// answer.addElement(includeElement)
 		// answer.addElement(getExampleIncludeElement());;
-
+		StringBuilder sb = new StringBuilder();
+		sb.append("update "); //$NON-NLS-1$
+		sb.append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
+		answer.addElement(new TextElement(sb.toString()));
 		answer.addElement(getUpdateIncludeElement());
 		answer.addElement(getExampleIncludeElement());
 		answer.addElement(getUnExampleIncludeElement());

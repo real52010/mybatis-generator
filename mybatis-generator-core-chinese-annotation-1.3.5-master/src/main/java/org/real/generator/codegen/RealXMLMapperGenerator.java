@@ -6,27 +6,21 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.mybatis.generator.api.FullyQualifiedTable;
 import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.XMLMapperGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.AbstractXmlElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.BaseColumnListElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.UpdateByExampleSelectiveElementGenerator;
-import org.real.generator.codegen.xmlmapper.UpdateByPrimaryKeyWithoutBLOBsElementGenerator;
-import org.real.generator.codegen.xmlmapper.UpdateBySelectiveElementGenerator;
-import org.real.generator.codegen.xmlmapper.VirtualDeleteByExampleElementGenerator;
-import org.real.generator.codegen.xmlmapper.VirtualDeleteByIndexColumnElementGenerator;
-import org.real.generator.codegen.xmlmapper.VirtualDeleteByPrimaryKeyElementGenerator;
-import org.real.generator.codegen.xmlmapper.InsertBatchElementGenerator;
+import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.real.generator.RealInsoIntrospectedTable;
 import org.real.generator.codegen.xmlmapper.BaseInsertColumnListElementGenerator;
 import org.real.generator.codegen.xmlmapper.BaseUpdateColumnListElementGenerator;
+import org.real.generator.codegen.xmlmapper.BatchInsertColumnListElementGenerator;
 import org.real.generator.codegen.xmlmapper.CountByExampleElementGenerator;
 import org.real.generator.codegen.xmlmapper.DeleteByExampleElementGenerator;
 import org.real.generator.codegen.xmlmapper.DeleteByIndexColumnElementGenerator;
@@ -34,6 +28,7 @@ import org.real.generator.codegen.xmlmapper.DeleteByPrimaryKeyElementGenerator;
 import org.real.generator.codegen.xmlmapper.ExampleOrderByClauseElementGenerator;
 import org.real.generator.codegen.xmlmapper.ExamplePaginClauseElementGenerator;
 import org.real.generator.codegen.xmlmapper.ExampleWhereClauseElementGenerator;
+import org.real.generator.codegen.xmlmapper.InsertBatchElementGenerator;
 import org.real.generator.codegen.xmlmapper.InsertElementGenerator;
 import org.real.generator.codegen.xmlmapper.ResultMapWithoutBLOBsElementGenerator;
 import org.real.generator.codegen.xmlmapper.SelectByExampleElementGenerator;
@@ -42,7 +37,11 @@ import org.real.generator.codegen.xmlmapper.SelectByPrimaryKeyElementGenerator;
 import org.real.generator.codegen.xmlmapper.UpdateBatchBySelectiveElementGenerator;
 import org.real.generator.codegen.xmlmapper.UpdateByExampleElementGenerator;
 import org.real.generator.codegen.xmlmapper.UpdateByIndexColumnElementGenerator;
-import org.mybatis.generator.exception.InvalidConfigurationException;
+import org.real.generator.codegen.xmlmapper.UpdateByPrimaryKeyWithoutBLOBsElementGenerator;
+import org.real.generator.codegen.xmlmapper.UpdateBySelectiveElementGenerator;
+import org.real.generator.codegen.xmlmapper.VirtualDeleteByExampleElementGenerator;
+import org.real.generator.codegen.xmlmapper.VirtualDeleteByIndexColumnElementGenerator;
+import org.real.generator.codegen.xmlmapper.VirtualDeleteByPrimaryKeyElementGenerator;
 
 import test.RealTest;
 
@@ -78,6 +77,7 @@ public class RealXMLMapperGenerator extends XMLMapperGenerator {
 		addExamplePaginClauseElement(answer);
 		addBaseColumnListElement(answer);
 		addBaseInsertColumnListElement(answer);
+		addBatchInsertColumnListElement(answer);
 		addBaseUpdateColumnListElement(answer);
 
 		addInsertElement(answer);
@@ -297,7 +297,13 @@ public class RealXMLMapperGenerator extends XMLMapperGenerator {
 		AbstractXmlElementGenerator elementGenerator = new BaseInsertColumnListElementGenerator();
 		initializeAndExecuteGenerator(elementGenerator, parentElement);
 	}
+	protected void addBatchInsertColumnListElement(XmlElement parentElement) {
+		AbstractXmlElementGenerator elementGenerator = new BatchInsertColumnListElementGenerator();
+		initializeAndExecuteGenerator(elementGenerator, parentElement);
+	}
 
+	
+	
 	protected void addBaseUpdateColumnListElement(XmlElement parentElement) {
 		AbstractXmlElementGenerator elementGenerator = new BaseUpdateColumnListElementGenerator();
 		initializeAndExecuteGenerator(elementGenerator, parentElement);

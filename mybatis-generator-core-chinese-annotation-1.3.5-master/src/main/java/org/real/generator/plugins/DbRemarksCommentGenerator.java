@@ -108,7 +108,7 @@ public class DbRemarksCommentGenerator implements CommentGenerator {
 	    	methodCommentMap.put("addUpdateBySelective"," 根据对象里的字段修改");
 	    	methodCommentMap.put("updateByExampleSelective"," 根据条件修改对应字段");
 	    	methodCommentMap.put("updateByExample"," 根据条件修改所有字段");
-	    	methodCommentMap.put("updateBatchBySelective"," 根据列表里的字段批量修改");
+	    	methodCommentMap.put("updateBatchBySelective"," 根据列表里的字段批量修改(必须含ID)，\r     * 该方法不推荐使用，可能会导致阻塞，如要使用请打开数据库连接配置allowMutiQueries");
 	    	methodCommentMap.put("updateByPrimaryKeySelective"," 根据ID修改对应字段");
 	    	methodCommentMap.put("updateByPrimaryKey"," 根据ID修改所有字段(必须含ID）");
 	    	methodCommentMap.put("updateByPrimaryKeyWithBLOBs"," 根据ID修改字段（包含二进制大对象）");

@@ -34,7 +34,7 @@ public class RealTest {
         configuration.addContext(context);
         context.addProperty("javaFileEncoding", "UTF-8");
 //	    String connectorLibPath = ConfigHelper.findConnectorLibPath(DbType.MySQL.toString());
-	    configuration.addClasspathEntry("D:/gitserver/mybatis-generator/mybatis-code/lib/mysql-connector-java-5.1.22-bin.jar");
+	    configuration.addClasspathEntry("D:\\java\\.m2\\mysql\\mysql-connector-java\\5.1.46\\mysql-connector-java-5.1.46.jar");
         // Table configuration
         TableConfiguration tableConfig = new TableConfiguration(context);
         tableConfig.setTableName("userprofile");
@@ -69,9 +69,9 @@ public class RealTest {
 //        }
         JDBCConnectionConfiguration jdbcConfig = new JDBCConnectionConfiguration();
         jdbcConfig.setDriverClass("com.mysql.jdbc.Driver");
-        jdbcConfig.setConnectionURL("jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8");
-        jdbcConfig.setUserId("root");
-        jdbcConfig.setPassword("root");
+        jdbcConfig.setConnectionURL("jdbc:mysql://118.24.122.242:3306/fortune?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8");
+        jdbcConfig.setUserId("fortune");
+        jdbcConfig.setPassword("123456");
         String projectPath="D:\\GitHub\\mybatis-generator\\springboot-mybatis-demo";
         // java model
         JavaModelGeneratorConfiguration modelConfig = new JavaModelGeneratorConfiguration();
@@ -127,10 +127,10 @@ public class RealTest {
             pluginConfiguration3.setConfigurationType("org.real.generator.plugins.GeneratIDPlugin");
             context.addPluginConfiguration(pluginConfiguration3);
             
-            PluginConfiguration pluginConfiguration4 = new PluginConfiguration();
-            pluginConfiguration4.addProperty("type", "org.real.generator.plugins.GeneratIndexColumnPlugin");
-            pluginConfiguration4.setConfigurationType("org.real.generator.plugins.GeneratIndexColumnPlugin");
-            context.addPluginConfiguration(pluginConfiguration4);
+//            PluginConfiguration pluginConfiguration4 = new PluginConfiguration();
+//            pluginConfiguration4.addProperty("type", "org.real.generator.plugins.GeneratIndexColumnPlugin");
+//            pluginConfiguration4.setConfigurationType("org.real.generator.plugins.GeneratIndexColumnPlugin");
+//            context.addPluginConfiguration(pluginConfiguration4);
             
 //            PluginConfiguration pluginConfiguration3 = new PluginConfiguration();
 //            pluginConfiguration3.addProperty("type", "org.mybatis.generator.plugins.MapperPlugin");

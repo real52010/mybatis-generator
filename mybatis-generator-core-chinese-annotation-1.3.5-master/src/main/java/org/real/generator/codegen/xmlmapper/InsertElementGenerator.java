@@ -76,7 +76,10 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
 				}
 			}
 		}
-
+		StringBuilder sb= new StringBuilder();
+		sb.append("insert into "); //$NON-NLS-1$
+		sb.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());
+		answer.addElement(new TextElement(sb.toString()));
 		// <include refid="Base_Insert_List" />
 		XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
 		includeElement.addAttribute(new Attribute("refid", "Base_Insert_Column_List"));

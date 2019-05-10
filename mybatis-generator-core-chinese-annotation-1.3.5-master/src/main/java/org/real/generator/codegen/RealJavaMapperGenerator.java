@@ -353,7 +353,7 @@ public class RealJavaMapperGenerator extends JavaMapperGenerator {
 		// context.getCommentGenerator().addGeneralMethodComment(method,
 		// introspectedTable);
 		method.addJavaDocLine("/**");
-		method.addJavaDocLine(getTabIndexJavaMethodComment("根据%s查询，暂不支持分页查询", tableIndex));
+		method.addJavaDocLine(getTabIndexJavaMethodComment("根据%s查询", tableIndex));
 		method.addJavaDocLine("**/");
 		interfaze.addMethod(method);
 

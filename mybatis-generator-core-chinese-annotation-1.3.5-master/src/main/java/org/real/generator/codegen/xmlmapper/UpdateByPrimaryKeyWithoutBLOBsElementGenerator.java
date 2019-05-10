@@ -49,10 +49,14 @@ public class UpdateByPrimaryKeyWithoutBLOBsElementGenerator extends AbstractXmlE
 				"map"));
 
 		context.getCommentGenerator().addComment(answer);
+		StringBuilder sb = new StringBuilder();
+		sb.append("update "); //$NON-NLS-1$
+		sb.append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
+		answer.addElement(new TextElement(sb.toString()));
 		XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
 		includeElement.addAttribute(new Attribute("refid", "Base_Update_Column_List"));
 		answer.addElement(includeElement);
-		StringBuilder sb = new StringBuilder();
+		sb.setLength(0);
 		// sb.append("update "); //$NON-NLS-1$
 		// sb.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());
 		// answer.addElement(new TextElement(sb.toString()));

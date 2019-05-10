@@ -57,9 +57,12 @@ public class UpdateBySelectiveElementGenerator extends AbstractXmlElementGenerat
 		// "Base_Update_Column_List"));
 		// answer.addElement(includeElement)
 		// answer.addElement(getExampleIncludeElement());;
-
-		answer.addElement(getUpdateIncludeElement());
 		StringBuilder sb = new StringBuilder();
+		sb.append("update "); //$NON-NLS-1$
+		sb.append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
+		answer.addElement(new TextElement(sb.toString()));
+		answer.addElement(getUpdateIncludeElement());
+		sb.setLength(0);
 		boolean and = false;
 		for (IntrospectedColumn introspectedColumn : introspectedTable.getPrimaryKeyColumns()) {
 			sb.setLength(0);

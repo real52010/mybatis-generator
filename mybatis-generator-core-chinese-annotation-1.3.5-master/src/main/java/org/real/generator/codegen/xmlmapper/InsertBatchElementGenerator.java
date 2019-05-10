@@ -18,6 +18,7 @@ package org.real.generator.codegen.xmlmapper;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.xml.Attribute;
+import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.AbstractXmlElementGenerator;
 import org.mybatis.generator.config.GeneratedKey;
@@ -71,13 +72,21 @@ public class InsertBatchElementGenerator extends AbstractXmlElementGenerator {
 				}
 			}
 		}
-
+		StringBuilder sb= new StringBuilder();
+		sb.append("insert into "); //$NON-NLS-1$
+		sb.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());
+		answer.addElement(new TextElement(sb.toString()));
+		XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
+		includeElement.addAttribute(new Attribute("refid", "Batch_Insert_Column_List"));
+		answer.addElement(includeElement);
+		
+		answer.addElement(new TextElement(" <!--该方式不推荐使用，可能会导致阻塞，如要使用请打开数据库连接配置allowMutiQueries "));
 		XmlElement listElement = new XmlElement("foreach");
 		listElement.addAttribute(new Attribute("collection", "list"));
 		listElement.addAttribute(new Attribute("item", "record"));
 		listElement.addAttribute(new Attribute("index", "index"));
 		listElement.addAttribute(new Attribute("open", ""));
-		listElement.addAttribute(new Attribute("separator", "separator"));
+		listElement.addAttribute(new Attribute("separator", ";"));
 		// <foreach collection="list" item="record" index="index" open=""
 		// close="" separator=";">
 		// <include refid="Base_Insert_List" />
@@ -85,11 +94,15 @@ public class InsertBatchElementGenerator extends AbstractXmlElementGenerator {
 		// </foreach>
 
 		// <include refid="Base_Insert_List" />
-		XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
+		
+	
+		
+		 includeElement = new XmlElement("include"); //$NON-NLS-1$
 		includeElement.addAttribute(new Attribute("refid", "Base_Insert_Column_List"));
 
 		listElement.addElement(includeElement);
 		answer.addElement(listElement);
+		answer.addElement(new TextElement("  -->"));
 		// StringBuilder insertClause = new StringBuilder();
 		// StringBuilder valuesClause = new StringBuilder();
 		//

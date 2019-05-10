@@ -118,14 +118,7 @@ public class SelectByPrimaryKeyElementGenerator extends AbstractXmlElementGenera
 
 		return includeElement;
 	}
-
-	protected XmlElement getUpdateIncludeElement() {
-		XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
-		includeElement.addAttribute(new Attribute("refid", "Base_Update_Column_List"));
-
-		return includeElement;
-	}
-
+ 
 	protected XmlElement getOrderByIncludeElement() {
 		XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
 		includeElement.addAttribute(new Attribute("refid", "Example_OrderBy_Clause"));

@@ -77,9 +77,9 @@ public class BaseInsertColumnListElementGenerator extends AbstractXmlElementGene
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("insert into "); //$NON-NLS-1$
-		sb.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());
-		answer.addElement(new TextElement(sb.toString()));
+//		sb.append("insert into "); //$NON-NLS-1$
+//		sb.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());
+//		answer.addElement(new TextElement(sb.toString()));
 
 		XmlElement insertTrimElement = new XmlElement("trim"); //$NON-NLS-1$
 		insertTrimElement.addAttribute(new Attribute("prefix", "(")); //$NON-NLS-1$ //$NON-NLS-2$
