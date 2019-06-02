@@ -324,7 +324,11 @@ public class RealJavaMapperGenerator extends JavaMapperGenerator {
 	protected void addSelectMethod(Interface interfaze, TableIndex tableIndex) {
 
 		Method method = new Method();
-		method.setName(getTabIndexJavaMethodName("selectBy", tableIndex));
+		if (tableIndex.isUnique()) {
+			method.setName(getTabIndexJavaMethodName("getBy", tableIndex));
+		}else {
+			method.setName(getTabIndexJavaMethodName("selectBy", tableIndex));
+		}
 		if (tableIndex.isUnique()) {
 			method.setReturnType(baseRecordType);
 		} else {
