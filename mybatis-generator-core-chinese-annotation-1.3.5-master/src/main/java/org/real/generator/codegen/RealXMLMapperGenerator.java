@@ -72,10 +72,12 @@ public class RealXMLMapperGenerator extends XMLMapperGenerator {
 		context.getCommentGenerator().addRootComment(answer);
 
 		addResultMapWithoutBLOBsElement(answer);
+        addResultMapWithBLOBsElement(answer);
 		addExampleWhereClauseElement(answer);
 		addExampleOrderByClauseElement(answer);
 		addExamplePaginClauseElement(answer);
 		addBaseColumnListElement(answer);
+		addBlobColumnListElement(answer);
 		addBaseInsertColumnListElement(answer);
 		addBatchInsertColumnListElement(answer);
 		addBaseUpdateColumnListElement(answer);
@@ -262,6 +264,8 @@ public class RealXMLMapperGenerator extends XMLMapperGenerator {
 		AbstractXmlElementGenerator elementGenerator = new ResultMapWithoutBLOBsElementGenerator(false);
 		initializeAndExecuteGenerator(elementGenerator, parentElement);
 	}
+	
+	
 
 	@Override
 	protected void addExampleWhereClauseElement(XmlElement parentElement) {

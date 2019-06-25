@@ -44,8 +44,7 @@ public class BaseColumnListElementGenerator extends AbstractXmlElementGenerator 
         context.getCommentGenerator().addComment(answer);
 
         StringBuilder sb = new StringBuilder();
-        Iterator<IntrospectedColumn> iter = introspectedTable
-                .getNonBLOBColumns().iterator();
+        Iterator<IntrospectedColumn> iter = introspectedTable.getNonBLOBColumns().iterator();
         while (iter.hasNext()) {
             sb.append(MyBatis3FormattingUtilities.getSelectListPhrase(iter
                     .next()));
