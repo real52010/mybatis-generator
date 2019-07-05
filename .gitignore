@@ -1,2 +1,6 @@
 
 *.class
+.idea/
+simple-springboot/.apt_generated/
+simple-springboot/.apt_generated_tests/
+simple-springboot/target/test-classes/
