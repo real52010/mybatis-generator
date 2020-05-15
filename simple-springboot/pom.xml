@@ -32,7 +32,7 @@
 		<hutool.version>4.1.1</hutool.version>
 		<lombok.version>1.16.18</lombok.version>
 		<dozer.version>5.5.1</dozer.version>
-		<fasterxml-jackson.version>2.9.6</fasterxml-jackson.version>
+		<fasterxml-jackson.version>2.11.0</fasterxml-jackson.version>
 
 	</properties>
 
